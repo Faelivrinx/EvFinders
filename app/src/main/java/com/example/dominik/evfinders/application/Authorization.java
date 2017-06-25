@@ -2,11 +2,8 @@ package com.example.dominik.evfinders.application;
 
 import android.content.SharedPreferences;
 
-import com.example.dominik.evfinders.di.component.AuthorizationComponent;
-import com.example.dominik.evfinders.di.component.DaggerAuthorizationComponent;
-import com.example.dominik.evfinders.di.module.AuthorizationModule;
 
-import javax.inject.Inject;
+
 
 /**
  * Created by Dominik on 22.06.2017.

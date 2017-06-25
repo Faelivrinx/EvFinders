@@ -34,16 +34,16 @@ public abstract class BaseAuthActivity extends AppCompatActivity{
         setContentView(getContentView());
         onViewReady(savedInstanceState, getIntent());
 
-        checkAuthorization();
+       // checkAuthorization();
     }
 
     private void checkAuthorization() {
-        if(authorization.hasAuthorization()){
-            // setResult(RESULT_OK);
-            //  return;
-        } else {
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+//        if(authorization.hasAuthorization()){
+//            // setResult(RESULT_OK);
+//            //  return;
+//        } else {
+//            startActivity(new Intent(this, LoginActivity.class));
+//        }
     }
 
 

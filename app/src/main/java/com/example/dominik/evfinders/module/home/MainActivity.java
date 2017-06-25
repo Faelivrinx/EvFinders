@@ -8,11 +8,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
-import com.example.dominik.evfinders.application.Authorization;
-import com.example.dominik.evfinders.base.BaseActivity;
+
 import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.di.component.DaggerAuthorizationComponent;
 import com.example.dominik.evfinders.di.module.AuthorizationModule;
+import com.example.dominik.evfinders.mvp.presenter.MapPresenter;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import javax.inject.Inject;
 
@@ -21,11 +24,16 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseAuthActivity {
 
+    @Inject
+    MapPresenter mapPresenter;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         ButterKnife.bind(this);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
+        mapFragment.getMapAsync(mapPresenter);
 
     }
 
@@ -41,4 +49,5 @@ public class MainActivity extends BaseAuthActivity {
     protected int getContentView() {
         return R.layout.activity_main;
     }
+
 }
