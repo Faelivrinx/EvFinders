@@ -2,6 +2,8 @@ package com.example.dominik.evfinders.di.module;
 
 import android.content.Context;
 
+import com.example.dominik.evfinders.di.scope.PerApplication;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,9 +21,7 @@ public class ApplicationModule {
         this.context = context;
     }
 
-
-
-    @Singleton
+    @PerApplication
     @Provides
     Context context(){
         return context;
