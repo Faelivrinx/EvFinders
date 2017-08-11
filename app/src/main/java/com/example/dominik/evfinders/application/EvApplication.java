@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.dominik.evfinders.di.component.ApplicationComponent;
 import com.example.dominik.evfinders.di.component.DaggerApplicationComponent;
 import com.example.dominik.evfinders.di.module.ApplicationModule;
+import com.example.dominik.evfinders.di.module.AuthorizationModule;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class EvApplication extends Application {
     private void initializeApplicationComponent() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .authorizationModule(new AuthorizationModule())
                 .build();
     }
 

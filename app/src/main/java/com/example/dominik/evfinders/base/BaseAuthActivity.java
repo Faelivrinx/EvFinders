@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.example.dominik.evfinders.application.Authorization;
 import com.example.dominik.evfinders.application.EvApplication;
 import com.example.dominik.evfinders.di.component.ApplicationComponent;
-import com.example.dominik.evfinders.di.component.AuthorizationComponent;
-import com.example.dominik.evfinders.di.component.DaggerAuthorizationComponent;
-import com.example.dominik.evfinders.di.module.AuthorizationModule;
 
 import javax.inject.Inject;
 
@@ -19,9 +16,8 @@ import javax.inject.Inject;
  * Created by Dominik on 22.06.2017.
  */
 
-public abstract class BaseAuthActivity extends AppCompatActivity{
-
-    AuthorizationComponent authorizationComponent;
+public abstract class BaseAuthActivity extends AppCompatActivity {
+    private static final String TAG = BaseAuthActivity.class.getSimpleName();
 
     @Inject
     Authorization authorization;
@@ -32,10 +28,11 @@ public abstract class BaseAuthActivity extends AppCompatActivity{
         setContentView(getContentView());
         onViewReady(savedInstanceState, getIntent());
 
-       // checkAuthorization();
+        // checkAuthorization();
     }
 
-    private void checkAuthorization () {
+    // FIXME: 8/11/2017 implement working version of check authorization
+    private void checkAuthorization() {
 //        if(authorization.hasAuthorization()){
 //            // setResultRESULT_OK);
 //            //  return;
@@ -46,28 +43,15 @@ public abstract class BaseAuthActivity extends AppCompatActivity{
 
 
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        resolveDepedency();
-
+        this.resolveDepedency();
     }
 
-    protected void resolveDepedency(){
-        authorizationComponent = DaggerAuthorizationComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .authorizationModule(new AuthorizationModule())
-                .build();
-    }
+    protected abstract void resolveDepedency();
 
     protected abstract int getContentView();
 
-    public ApplicationComponent getApplicationComponent(){
+    public ApplicationComponent getApplicationComponent() {
         return ((EvApplication) getApplication()).getApplicationComponent();
     }
 
-    public AuthorizationComponent getAuthorizationComponent() {
-        return authorizationComponent;
-    }
-
-    public Authorization getAuthorization() {
-        return authorization;
-    }
 }
