@@ -2,9 +2,9 @@ package com.example.dominik.evfinders.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.example.dominik.evfinders.application.Authorization;
 import com.example.dominik.evfinders.application.EvApplication;
@@ -12,8 +12,6 @@ import com.example.dominik.evfinders.di.component.ApplicationComponent;
 import com.example.dominik.evfinders.di.component.AuthorizationComponent;
 import com.example.dominik.evfinders.di.component.DaggerAuthorizationComponent;
 import com.example.dominik.evfinders.di.module.AuthorizationModule;
-import com.example.dominik.evfinders.module.home.MainActivity;
-import com.example.dominik.evfinders.module.login.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -37,9 +35,9 @@ public abstract class BaseAuthActivity extends AppCompatActivity{
        // checkAuthorization();
     }
 
-    private void checkAuthorization() {
+    private void checkAuthorization () {
 //        if(authorization.hasAuthorization()){
-//            // setResult(RESULT_OK);
+//            // setResultRESULT_OK);
 //            //  return;
 //        } else {
 //            startActivity(new Intent(this, LoginActivity.class));

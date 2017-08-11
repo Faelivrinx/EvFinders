@@ -13,6 +13,7 @@ import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.di.component.DaggerAuthorizationComponent;
 import com.example.dominik.evfinders.di.module.AuthorizationModule;
 import com.example.dominik.evfinders.mvp.presenter.MapPresenter;
+import com.example.dominik.evfinders.mvp.view.MapView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseAuthActivity {
+public class MainActivity extends BaseAuthActivity implements MapView{
 
     @Inject
     MapPresenter mapPresenter;
@@ -42,7 +43,8 @@ public class MainActivity extends BaseAuthActivity {
         DaggerAuthorizationComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .authorizationModule(new AuthorizationModule())
-                .build().inject(this);
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -50,4 +52,13 @@ public class MainActivity extends BaseAuthActivity {
         return R.layout.activity_main;
     }
 
+    @Override
+    public void onLongMapClick() {
+
+    }
+
+    @Override
+    public void onEventClick() {
+
+    }
 }

@@ -5,4 +5,5 @@ package com.example.dominik.evfinders.mvp.view;
  */
 
 public interface BaseView {
+
 }
