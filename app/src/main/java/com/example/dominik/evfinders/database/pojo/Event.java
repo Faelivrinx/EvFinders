@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.mvp.model;
+package com.example.dominik.evfinders.database.pojo;
 
 import java.util.List;
 

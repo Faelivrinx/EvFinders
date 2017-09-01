@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:layout_height="match_parent"
-    tools:context="com.example.dominik.evfinders.module.home.MainActivity">
+    tools:context=".mvp.home.MainActivity">
 
   <fragment
       xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +13,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:name="com.google.android.gms.maps.SupportMapFragment"
-      tools:context="com.example.dominik.evfinders.module.home.MainActivity"/>
+      tools:context=".mvp.home.MainActivity"/>
 
 </LinearLayout>
