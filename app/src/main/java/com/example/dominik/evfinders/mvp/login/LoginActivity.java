@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.module.login;
+package com.example.dominik.evfinders.mvp.login;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseActivity;
@@ -9,7 +9,6 @@ import com.example.dominik.evfinders.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
 
-    @Override
     protected void resolveDepedency() {
 
     }

@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.mvp.model;
+package com.example.dominik.evfinders.database.pojo;
 
 /**
  * Created by Dominik on 23.06.2017.
