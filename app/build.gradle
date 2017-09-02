@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'jacoco'
 android {
     compileSdkVersion 26
     buildToolsVersion "25.0.3"
@@ -13,6 +13,11 @@ android {
         multiDexEnabled true
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
+
     packagingOptions{
         exclude 'META-INF/rxjava.properties'
     }
@@ -24,6 +29,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
 
@@ -76,6 +92,7 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
     testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+    testCompile "org.robolectric:robolectric:3.4.2"
 
     // Android Testing Support Library's runner and rules
     androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
@@ -96,4 +113,21 @@ configurations.compile.dependencies.each { compileDependency ->
         configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
             configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
         }
+
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }

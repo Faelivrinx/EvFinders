@@ -2,6 +2,8 @@ package com.example.dominik.evfinders.mvp.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
@@ -25,6 +28,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     private GoogleMap googleMap;
 
+    @BindView(R.id.activity_main_progressBar)
+    ProgressBar progressBar;
 
     @Inject
     MapPresenter presenter;
@@ -34,6 +39,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
+        presenter.getEvents();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
         mapFragment.getMapAsync(this);
@@ -46,12 +53,11 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void showEvents(List<Event> events) {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showProgressBar() {
-
     }
 
     @Override

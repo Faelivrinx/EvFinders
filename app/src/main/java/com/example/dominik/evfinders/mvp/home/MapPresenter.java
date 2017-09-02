@@ -1,7 +1,11 @@
 package com.example.dominik.evfinders.mvp.home;
 
 import com.example.dominik.evfinders.base.BaseView;
+import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.IMapRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,7 +40,8 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void getEvents() {
-
+        List<Event> events = repository.getEvents();
+        view.showEvents(events);
     }
 
 }
