@@ -1,6 +1,7 @@
 package com.example.dominik.evfinders.di;
 
 import com.example.dominik.evfinders.application.EvApplication;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import dagger.Component;
 import dagger.android.AndroidInjector;
@@ -12,6 +13,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 
 @Component(modules ={
         ApplicationModule.class,
+        PrefsModule.class,
         AndroidSupportInjectionModule.class,
         AndroidBindingModule.class
 })
