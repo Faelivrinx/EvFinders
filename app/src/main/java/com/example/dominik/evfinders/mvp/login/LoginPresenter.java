@@ -1,6 +1,6 @@
 package com.example.dominik.evfinders.mvp.login;
 
-import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
+import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
 
 import java.util.concurrent.TimeUnit;

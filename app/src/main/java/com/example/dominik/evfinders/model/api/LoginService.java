@@ -1,12 +1,11 @@
 package com.example.dominik.evfinders.model.api;
 
 
-import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
+import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**

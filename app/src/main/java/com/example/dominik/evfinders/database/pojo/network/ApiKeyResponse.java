@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.database.pojo;
+package com.example.dominik.evfinders.database.pojo.network;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Dominik on 05.09.2017.
  */
 
-public class ApiKeyResponse {
+public class ApiKeyResponse implements Response {
 
     @SerializedName("name")
     private String name;
@@ -27,5 +27,10 @@ public class ApiKeyResponse {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int getStatus() {
+        return 200;
     }
 }
