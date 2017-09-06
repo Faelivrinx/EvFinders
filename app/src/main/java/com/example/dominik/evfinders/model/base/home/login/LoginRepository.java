@@ -1,6 +1,6 @@
 package com.example.dominik.evfinders.model.base.home.login;
 
-import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
+import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
