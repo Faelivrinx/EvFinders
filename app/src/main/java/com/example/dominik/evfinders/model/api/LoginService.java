@@ -4,9 +4,8 @@ package com.example.dominik.evfinders.model.api;
 import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
-import retrofit2.Call;
-import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
@@ -16,7 +15,8 @@ import retrofit2.http.POST;
 
 public interface LoginService {
 
-    @GET("message")
-    Observable<ApiKeyResponse> getToken();
+    @FormUrlEncoded
+    @POST("login")
+    Observable<ApiKeyResponse> getToken(@Field("username") String username, @Field("password") String password);
 
 }

@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.model.base.home.login;
 
+import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -9,7 +11,7 @@ import io.reactivex.Single;
 
 public interface ILoginRepository {
 
-    Observable<String> getLoginReponse();
+    Observable<ApiKeyResponse> getLoginResponse(String username, String password);
 
-    void saveKey(String key);
+    void saveKey(ApiKeyResponse key);
 }

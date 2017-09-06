@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.model.base.home.login;
 
+import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 
@@ -22,14 +23,17 @@ public class MockedLoginRepository implements ILoginRepository {
     }
 
     @Override
-    public Observable<String> getLoginReponse() {
-        String secureKey = "F4214DS543AFDSA5435FDS54353AFDSA";
+    public Observable<ApiKeyResponse> getLoginResponse(String username, String password) {
+        ApiKeyResponse response = new ApiKeyResponse();
+        response.setName("api_key");
+        response.setValue("vd32dfas$#@$fdsg$%#dvs");
 
-        return Observable.fromArray(secureKey).delay(4, TimeUnit.SECONDS);
+
+        return Observable.fromArray(response);
     }
 
     @Override
-    public void saveKey(String value) {
-        prefs.save(Prefs.API_KEY, value);
+    public void saveKey(ApiKeyResponse value) {
+        prefs.save(Prefs.API_KEY, value.getValue());
     }
 }

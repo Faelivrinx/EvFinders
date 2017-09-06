@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.login;
 
+import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
 
 import java.util.concurrent.TimeUnit;
@@ -8,7 +9,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Dominik on 05.09.2017.
  */
 
-public class LoginPresenter implements LoginContract.Presenter, Observer<String> {
+public class LoginPresenter implements LoginContract.Presenter, Observer<ApiKeyResponse> {
 
     private LoginContract.View view;
     private ILoginRepository repository;
@@ -43,10 +43,9 @@ public class LoginPresenter implements LoginContract.Presenter, Observer<String>
     public void login(String username, String password) {
         view.showProgressDialog();
         if (validateData(username, password)) {
-            Observable<String> loginReponse = repository.getLoginReponse();
+            Observable<ApiKeyResponse> loginReponse = repository.getLoginResponse(username, password);
             loginReponse.subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .filter(s -> s != null)
                     .timeout(10, TimeUnit.SECONDS)
                     .subscribe(this);
         } else {
@@ -63,24 +62,23 @@ public class LoginPresenter implements LoginContract.Presenter, Observer<String>
 
     @Override
     public void onSubscribe(Disposable d) {
-        view.showToast("Getting key");
     }
 
     @Override
-    public void onNext(String key) {
+    public void onNext(ApiKeyResponse key) {
         repository.saveKey(key);
         // TODO: 05.09.2017 Start main activity
     }
 
     @Override
     public void onError(Throwable e) {
+        e.printStackTrace();
         view.hideProgressDialog();
-        view.showToast("Error Connection");
+        view.showToast("Can't login");
     }
 
     @Override
     public void onComplete() {
         view.hideProgressDialog();
-        view.showToast("Complete");
     }
 }

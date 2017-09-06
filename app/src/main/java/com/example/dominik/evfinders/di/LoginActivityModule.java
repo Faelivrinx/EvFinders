@@ -8,6 +8,8 @@ import com.example.dominik.evfinders.mvp.login.LoginPresenter;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -23,47 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 abstract class LoginActivityModule {
 
-    @ActivityScope
-    @Provides
-    static OkHttpClient provideOkhttpClient(IPrefs prefs){
-        return new OkHttpClient.Builder()
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                .addInterceptor(chain -> {
-                    Request request = chain.request();
-
-                    request.newBuilder().addHeader("Authorization", "d0763edaa9d9bd2a9516280e9044d885");
-
-                    return chain.proceed(request);
-                })
-                .build();
-    }
 
     @ActivityScope
     @Provides
-    static RxJava2CallAdapterFactory adapterFactory(){
-        return RxJava2CallAdapterFactory.create();
-    }
-    @ActivityScope
-    @Provides
-    static GsonConverterFactory gsonConverterFactory(){
-        return GsonConverterFactory.create();
-    }
-
-    @ActivityScope
-    @Provides
-    static Retrofit provideRetrofit(OkHttpClient client, GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory adapterFactory){
-        return new Retrofit.Builder()
-                .baseUrl("http://jurasz-dev.pl/index.php/")
-                .addConverterFactory(gsonConverterFactory)
-                .addCallAdapterFactory(adapterFactory)
-                .client(client)
-                .build();
-    }
-
-    @ActivityScope
-    @Provides
-     static LoginService provideService(Retrofit retrofit){
+     static LoginService provideService(@Named("non-auth") Retrofit retrofit){
         return retrofit.create(LoginService.class);
     }
 

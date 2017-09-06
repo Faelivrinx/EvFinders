@@ -3,6 +3,7 @@ package com.example.dominik.evfinders.model.base.home.login;
 import com.example.dominik.evfinders.database.pojo.ApiKeyResponse;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import javax.inject.Inject;
 
@@ -24,13 +25,12 @@ public class LoginRepository implements ILoginRepository{
     }
 
     @Override
-    public Observable<String> getLoginReponse() {
-        Observable<ApiKeyResponse> test = service.getToken();
-        return null;
+    public Observable<ApiKeyResponse> getLoginResponse(String username, String password) {
+        return service.getToken(username, password).filter(apiKeyResponse -> apiKeyResponse != null);
     }
 
     @Override
-    public void saveKey(String key) {
-
+    public void saveKey(ApiKeyResponse key) {
+        prefs.save(Prefs.API_KEY, key.getValue());
     }
 }
