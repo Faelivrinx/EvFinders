@@ -39,7 +39,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        presenter.getEvents();
+//        presenter.getEvents();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
         mapFragment.getMapAsync(this);

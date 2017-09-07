@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.mvp.register;
 
+import android.content.Intent;
+
 import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 import com.example.dominik.evfinders.database.pojo.User;
 import com.example.dominik.evfinders.database.pojo.network.UserRequest;
@@ -91,7 +93,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, Observer<R
 
     @Override
     public void onComplete() {
-        view.showToast("Completed");
+        view.startActivity();
         view.hideProgressDialog();
     }
+
+
 }

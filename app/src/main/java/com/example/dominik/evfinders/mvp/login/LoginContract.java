@@ -17,6 +17,8 @@ public interface LoginContract {
 
         void showProgressDialog();
 
+        void startActivity();
+
     }
 
     interface Presenter extends BasePresenter{

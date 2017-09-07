@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseActivity;
+import com.example.dominik.evfinders.mvp.home.MainActivity;
 
 import javax.inject.Inject;
 
@@ -26,19 +27,23 @@ import dagger.android.AndroidInjection;
 
 public class RegisterActivity extends BaseActivity implements RegisterContract.View {
 
-    @BindView(R.id.activity_register_etUsername)    EditText etUsername;
-    @BindView(R.id.activity_register_etPassword)    EditText etPassword;
-    @BindView(R.id.activity_register_etEmail)       EditText etEmail;
+    @BindView(R.id.activity_register_etUsername)
+    EditText etUsername;
+    @BindView(R.id.activity_register_etPassword)
+    EditText etPassword;
+    @BindView(R.id.activity_register_etEmail)
+    EditText etEmail;
 
 
-    @Inject  RegisterPresenter presenter;
+    @Inject
+    RegisterPresenter presenter;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
     private TextView alertMessage;
 
     @OnClick(R.id.activity_register_btnRegister)
-    public void onRegisterClick(){
+    public void onRegisterClick() {
         presenter.register(
                 etUsername.getText().toString(),
                 etPassword.getText().toString(),
@@ -93,5 +98,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     protected void onDestroy() {
         presenter.detach();
         super.onDestroy();
+    }
+
+    @Override
+    public void startActivity() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
