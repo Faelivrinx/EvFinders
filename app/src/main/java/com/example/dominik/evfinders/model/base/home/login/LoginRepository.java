@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.model.base.home.login;
 
+import android.util.Log;
+
 import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
@@ -31,6 +33,7 @@ public class LoginRepository implements ILoginRepository{
 
     @Override
     public void saveKey(ApiKeyResponse key) {
+        Log.d("LoginRepository", "saveKey: " + key.getValue());
         prefs.save(Prefs.API_KEY, key.getValue());
     }
 }

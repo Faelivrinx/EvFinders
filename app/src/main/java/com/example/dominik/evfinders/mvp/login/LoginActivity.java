@@ -1,6 +1,7 @@
 package com.example.dominik.evfinders.mvp.login;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseActivity;
+import com.example.dominik.evfinders.mvp.home.MainActivity;
 
 import javax.inject.Inject;
 
@@ -76,6 +78,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     public void showProgressDialog() {
         alertMessage.setText("Getting key");
         alertDialog.show();
+    }
+
+    @Override
+    public void startActivity() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     //LifeCycle Region

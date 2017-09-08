@@ -31,4 +31,11 @@ public class Prefs implements IPrefs{
 
     @Override
     public String get(String key){ return preferences.getString(key, "");}
+
+    @Override
+    public boolean del(String key) {
+        editor.remove(API_KEY);
+        editor.apply();
+        return true;
+    }
 }

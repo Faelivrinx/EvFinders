@@ -5,6 +5,7 @@ import com.example.dominik.evfinders.database.pojo.User;
 import com.example.dominik.evfinders.database.pojo.network.UserRequest;
 import com.example.dominik.evfinders.model.api.RegisterService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import javax.inject.Inject;
 
@@ -33,6 +34,6 @@ public class RegisterRepository implements IRegisterRepository {
 
     @Override
     public void saveKey(ApiKeyResponse key) {
-
+        prefs.save(Prefs.API_KEY, key.getValue());
     }
 }

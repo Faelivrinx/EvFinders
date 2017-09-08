@@ -16,9 +16,13 @@ public interface MapContract {
 
         void showEvents(List<Event> events);
 
+        void onLogoutClicked();
+
         void showProgressBar();
 
         void hideProgressBar();
+
+        void startActivity();
     }
 
     interface Presenter extends BasePresenter {
@@ -28,6 +32,8 @@ public interface MapContract {
         void detach();
 
         void getEvents();
+
+        void logoutUser();
 
     }
 

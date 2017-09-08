@@ -8,4 +8,6 @@ public interface IPrefs {
 
     void save(String key, String value);
     String get(String key);
+
+    boolean del(String key);
 }

@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.mvp.register;
 
+import android.content.Intent;
+
 import com.example.dominik.evfinders.mvp.login.LoginContract;
 
 /**
@@ -15,6 +17,8 @@ public interface RegisterContract {
         void hideProgressDialog();
 
         void showProgressDialog();
+
+        void startActivity();
     }
 
     interface Presenter {

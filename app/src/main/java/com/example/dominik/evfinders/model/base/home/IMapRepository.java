@@ -11,4 +11,6 @@ import java.util.List;
 public interface IMapRepository {
 
     List<Event> getEvents();
+
+    boolean removeUserKey();
 }

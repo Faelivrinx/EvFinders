@@ -3,6 +3,7 @@ package com.example.dominik.evfinders.di;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
 import com.example.dominik.evfinders.mvp.register.RegisterActivity;
+import com.example.dominik.evfinders.mvp.start.StartActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -30,4 +31,10 @@ abstract class AndroidBindingModule {
             RegisterActivityModule.class
     })
     abstract RegisterActivity registerActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            StartActivityModule.class
+    })
+    abstract StartActivity startActivity();
 }

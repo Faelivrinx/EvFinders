@@ -79,6 +79,7 @@ public class LoginPresenter implements LoginContract.Presenter, Observer<ApiKeyR
 
     @Override
     public void onComplete() {
+        view.startActivity();
         view.hideProgressDialog();
     }
 }

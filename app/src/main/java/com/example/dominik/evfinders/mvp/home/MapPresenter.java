@@ -44,4 +44,12 @@ public class MapPresenter implements MapContract.Presenter {
         view.showEvents(events);
     }
 
+    @Override
+    public void logoutUser() {
+        view.showProgressBar();
+        if (repository.removeUserKey()){
+            view.startActivity();
+        }
+    }
+
 }

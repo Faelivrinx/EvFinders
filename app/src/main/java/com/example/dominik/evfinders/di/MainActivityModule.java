@@ -1,7 +1,9 @@
 package com.example.dominik.evfinders.di;
 
 import com.example.dominik.evfinders.model.base.home.IMapRepository;
+import com.example.dominik.evfinders.model.base.home.MapRepository;
 import com.example.dominik.evfinders.model.base.home.MockMapRepository;
+import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.mvp.home.MapPresenter;
 
 import dagger.Module;
@@ -15,8 +17,8 @@ abstract class MainActivityModule {
 
     @ActivityScope
     @Provides
-    static IMapRepository repository(){
-        return new MockMapRepository();
+    static IMapRepository repository(IPrefs prefs){
+        return new MapRepository(prefs);
     }
 
     @ActivityScope
