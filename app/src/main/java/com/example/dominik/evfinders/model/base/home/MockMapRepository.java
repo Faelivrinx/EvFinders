@@ -14,4 +14,9 @@ public class MockMapRepository implements IMapRepository{
     public List<Event> getEvents() {
         return null;
     }
+
+    @Override
+    public boolean removeUserKey() {
+        return false;
+    }
 }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:layout_height="match_parent"
-    tools:context=".mvp.home.MainActivity">
+    android:id="@+id/activity_main_drawer_layout"
+    tools:context=".mvp.home.MainActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-  <ProgressBar
-      android:id="@+id/activity_main_progressBar"
-      android:visibility="gone"
+  <include layout="@layout/app_bar_main"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="match_parent"/>
 
   <fragment
       xmlns:tools="http://schemas.android.com/tools"
@@ -21,4 +22,14 @@
       android:name="com.google.android.gms.maps.SupportMapFragment"
       tools:context=".mvp.home.MainActivity"/>
 
-</LinearLayout>
+
+  <android.support.design.widget.NavigationView
+      android:id="@+id/activity_main_nav_view"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:fitsSystemWindows="true"
+      app:headerLayout="@layout/nav_header_map"
+      app:menu="@menu/activity_main_drawer" />
+
+</android.support.v4.widget.DrawerLayout>

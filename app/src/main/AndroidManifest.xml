@@ -12,18 +12,20 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBVU5di9i8eyt6WZ2DfXGp3H3lZumiADB8"/>
-        <activity android:name=".mvp.start.StartActivity">
+            android:value="AIzaSyBVU5di9i8eyt6WZ2DfXGp3H3lZumiADB8" />
+
+        <activity
+            android:name=".mvp.home.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.home.MainActivity"/>
+        <activity android:name=".mvp.start.StartActivity" />
         <activity android:name=".mvp.login.LoginActivity" />
         <activity android:name=".mvp.register.RegisterActivity" />
-
     </application>
 
 </manifest>

@@ -59,4 +59,9 @@ public class StartActivity extends BaseActivity implements StartContract.View{
     public void hideDialog() {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }
