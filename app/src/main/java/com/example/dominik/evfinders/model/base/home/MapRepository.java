@@ -35,4 +35,9 @@ public class MapRepository implements IMapRepository {
         return prefs.del(Prefs.API_KEY);
     }
 
+    @Override
+    public boolean removeFcmToken() {
+        return prefs.del(Prefs.FCM_TOKEN);
+    }
+
 }

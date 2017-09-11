@@ -13,4 +13,6 @@ public interface IMapRepository {
     List<Event> getEvents();
 
     boolean removeUserKey();
+
+    boolean removeFcmToken();
 }

@@ -42,15 +42,21 @@ public class LoginPresenter implements LoginContract.Presenter, Observer<ApiKeyR
     @Override
     public void login(String username, String password) {
         view.showProgressDialog();
-        if (validateData(username, password)) {
-            Observable<ApiKeyResponse> loginReponse = repository.getLoginResponse(username, password);
-            loginReponse.subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .timeout(10, TimeUnit.SECONDS)
-                    .subscribe(this);
+        String fcmToken = repository.getFcmToken();
+        if (!fcmToken.isEmpty()) {
+            if (validateData(username, password)) {
+                Observable<ApiKeyResponse> loginReponse = repository.getLoginResponse(username, password, fcmToken);
+                loginReponse.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .timeout(10, TimeUnit.SECONDS)
+                        .subscribe(this);
+            } else {
+                view.hideProgressDialog();
+                view.showToast("Wrong data");
+            }
         } else {
             view.hideProgressDialog();
-            view.showToast("Wrong data");
+            view.showToast("Refresh FCM key");
         }
 
     }

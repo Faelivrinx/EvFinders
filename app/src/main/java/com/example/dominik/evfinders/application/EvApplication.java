@@ -2,8 +2,11 @@ package com.example.dominik.evfinders.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 import com.example.dominik.evfinders.di.DaggerApplicationComponent;
+import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import javax.inject.Inject;
 
@@ -23,6 +26,7 @@ public class EvApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        startService(new Intent(this, FcmService.class));
     }
 
     @Override

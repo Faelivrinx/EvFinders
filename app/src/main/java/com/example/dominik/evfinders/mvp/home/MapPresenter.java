@@ -1,9 +1,13 @@
 package com.example.dominik.evfinders.mvp.home;
 
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.base.BaseView;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.IMapRepository;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,9 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void logoutUser() {
+        new DeleteToken().execute();
+
+        repository.removeFcmToken();
         view.showProgressBar();
         if (repository.removeUserKey()){
             view.startActivity();

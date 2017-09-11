@@ -19,4 +19,9 @@ public class MockMapRepository implements IMapRepository{
     public boolean removeUserKey() {
         return false;
     }
+
+    @Override
+    public boolean removeFcmToken() {
+        return false;
+    }
 }

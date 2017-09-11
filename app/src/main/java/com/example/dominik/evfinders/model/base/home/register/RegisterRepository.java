@@ -29,6 +29,8 @@ public class RegisterRepository implements IRegisterRepository {
 
     @Override
     public Observable<Response<ApiKeyResponse>> getRegisterResponse(UserRequest userRequest) {
+        String fcm_token = prefs.get(Prefs.FCM_TOKEN);
+        userRequest.setFcm_token(fcm_token);
         return service.register(userRequest);
     }
 

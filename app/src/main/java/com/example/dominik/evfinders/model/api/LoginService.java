@@ -16,6 +16,6 @@ public interface LoginService {
 
     @FormUrlEncoded
     @POST("login")
-    Observable<ApiKeyResponse> getToken(@Field("username") String username, @Field("password") String password);
+    Observable<ApiKeyResponse> getToken(@Field("username") String username, @Field("password") String password, @Field("fcm_token") String fcm_token);
 
 }
