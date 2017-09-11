@@ -1,24 +1,13 @@
-package com.example.dominik.evfinders.database.pojo;
+package com.example.dominik.evfinders.database.pojo.network;
 
 /**
- * Created by Dominik on 23.06.2017.
+ * Created by Dominik on 11.09.2017.
  */
 
-public class Friend {
-    private String imagePath;
-
+public class FriendResponse {
 
     private String username;
     private String name;
-
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 
     public String getUsername() {
         return username;

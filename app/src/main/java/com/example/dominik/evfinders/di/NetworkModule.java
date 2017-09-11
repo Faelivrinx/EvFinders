@@ -71,7 +71,7 @@ public class NetworkModule {
     @Named("auth")
     static Retrofit provideRetrofitAuth(@Named("auth") OkHttpClient client, GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory adapterFactory){
         return new Retrofit.Builder()
-                .baseUrl("http://jurasz-dev.pl/login.php/")
+                .baseUrl("http://jurasz-dev.pl/index.php/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(adapterFactory)
                 .client(client)

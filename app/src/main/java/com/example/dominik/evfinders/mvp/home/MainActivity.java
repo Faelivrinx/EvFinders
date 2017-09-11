@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.start.StartActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,6 +66,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(getNavItem());
     }
 
     @Override
@@ -76,6 +78,11 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     protected int getContentView() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected int getNavItem() {
+        return R.id.nav_map;
     }
 
     @Override
@@ -113,6 +120,10 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_logout){
             onLogoutClicked();
+        } else if(item.getItemId() == R.id.nav_friends){
+            Intent intent = new Intent(this, FriendsListActivity.class);
+            intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_friends);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
