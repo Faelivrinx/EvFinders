@@ -2,6 +2,9 @@ package com.example.dominik.evfinders.model.base.home.friends;
 
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.database.pojo.network.FriendResponse;
+import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -15,7 +18,8 @@ import retrofit2.Response;
 public interface IFriendsRepository {
 
     Observable<Response<List<FriendResponse>>> getFriends();
-    Observable<Response<String>> delFriend(String username);
-    Observable<Response<Friend>> addFriends(String username);
+    Observable<Response<TaskResponse>> delFriend(String username);
+    Observable<Response<TaskResponse>> addFriends(String username);
+    Observable<Response<TaskResponse>> addFriendsRequest(String username);
 
 }

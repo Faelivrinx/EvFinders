@@ -4,11 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.dominik.evfinders.application.services.FCMFriendService;
+import com.example.dominik.evfinders.application.services.FcmService;
 import com.example.dominik.evfinders.di.DaggerApplicationComponent;
-import com.example.dominik.evfinders.model.repo.IPrefs;
-import com.example.dominik.evfinders.model.repo.Prefs;
-
-import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
@@ -19,6 +17,8 @@ import dagger.android.DaggerApplication;
 
 public class EvApplication extends DaggerApplication {
 
+    private static Context context;
+
 
     public EvApplication() {
     }
@@ -26,7 +26,9 @@ public class EvApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         startService(new Intent(this, FcmService.class));
+        startService(new Intent(this, FCMFriendService.class));
     }
 
     @Override
@@ -39,5 +41,7 @@ public class EvApplication extends DaggerApplication {
         super.onTerminate();
     }
 
-
+    public static Context getApplication() {
+        return context;
+    }
 }

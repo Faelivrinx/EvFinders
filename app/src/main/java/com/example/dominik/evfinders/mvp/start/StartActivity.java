@@ -1,30 +1,19 @@
 package com.example.dominik.evfinders.mvp.start;
 
-import android.app.Notification;
-import android.app.RemoteInput;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseActivity;
-import com.google.android.gms.cast.framework.media.NotificationAction;
-import com.google.android.gms.iid.InstanceID;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Dominik on 07.09.2017.
@@ -33,6 +22,8 @@ import io.reactivex.schedulers.Schedulers;
 public class StartActivity extends BaseActivity implements StartContract.View{
 
     @Inject StartPresenter presenter;
+
+    private int notificationId = 1;
 
 
     @Override
@@ -62,11 +53,7 @@ public class StartActivity extends BaseActivity implements StartContract.View{
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     @OnClick(R.id.activity_start_test)
     public void onTestClick(){
-        RemoteInput remoteInput = new RemoteInput.Builder("key_text_reply")
-                .setLabel("Reply")
-                .build();
 
-        Notification.Action action = new Notification.Action.Builder(R.mipmap.ic_friends, "Friends",)
     }
 
     @Override

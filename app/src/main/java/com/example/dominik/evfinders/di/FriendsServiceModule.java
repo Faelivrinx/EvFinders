@@ -2,6 +2,7 @@ package com.example.dominik.evfinders.di;
 
 import android.util.Log;
 
+import com.example.dominik.evfinders.application.services.FcmFriendPresenter;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.base.home.friends.FriendsRepository;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
@@ -15,12 +16,11 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 
 /**
- * Created by Dominik on 11.09.2017.
+ * Created by Dominik on 12.09.2017.
  */
 
 @Module
-abstract class FriendsActivityModule {
-
+abstract class FriendsServiceModule {
 
     @ActivityScope
     @Provides
@@ -30,13 +30,13 @@ abstract class FriendsActivityModule {
 
     @ActivityScope
     @Provides
-    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service){
+    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service) {
         return new FriendsRepository(prefs, service);
     }
 
     @ActivityScope
     @Provides
-    static FriendsPresenter providePresenter(IFriendsRepository repository){
-        return new FriendsPresenter(repository);
+    static FcmFriendPresenter providePresenter(IFriendsRepository repository) {
+        return new FcmFriendPresenter(repository);
     }
 }

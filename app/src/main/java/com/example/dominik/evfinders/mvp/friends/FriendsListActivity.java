@@ -1,10 +1,10 @@
 package com.example.dominik.evfinders.mvp.friends;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
@@ -28,6 +31,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 
 /**
@@ -43,6 +47,12 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     @BindView(R.id.activity_friends_list_drawer_layout)   DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)                               Toolbar toolbar;
 
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
+    private EditText etDialogUsername;
+    private Button btnDialogAccept;
+    private Button btnDialogCancel;
+
     @Inject FriendsPresenter presenter;
 
     private FriendsAdapter adapter;
@@ -56,10 +66,22 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         adapter = new FriendsAdapter(new ArrayList<>(), getLayoutInflater());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        createAlertDialog();
 
     }
 
+    private void createAlertDialog() {
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.add_friend_dialog, null);
+        alertDialogBuilder.setView(dialogView);
+        alertDialog = alertDialogBuilder.create();
+        etDialogUsername = dialogView.findViewById(R.id.dialog_add_friend_etUsername);
+        btnDialogAccept = dialogView.findViewById(R.id.dialog_add_friend_btnAdd);
+        btnDialogCancel = dialogView.findViewById(R.id.dialog_add_friend_btnCancel);
 
+        btnDialogAccept.setOnClickListener(view -> {});
+        btnDialogCancel.setOnClickListener(view -> {alertDialog.dismiss();});
+    }
 
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
 //        mapFragment.getMapAsync(this);
@@ -75,6 +97,11 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         NavigationView navigationView = (NavigationView) findViewById(R.id.activity_friends_list_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(getNavItem());
+    }
+
+    @OnClick(R.id.activity_friends_list_addFriend)
+    public void addFriendClicked(){
+        alertDialog.show();
     }
 
     @Override
@@ -106,17 +133,7 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     public void onFriendsLoaded(List<Friend> friends) {
         adapter.notifyDataChange(friends);
     }
-    @VisibleForTesting
-    private List<Friend> createFriends(){
-        List<Friend>friendList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Friend friend = new Friend();
-            friend.setName("User Username"+i);
-            friend.setUsername("User"+i);
-            friendList.add(friend);
-        }
-        return friendList;
-    }
+
 
     @Override
     protected void onStart() {

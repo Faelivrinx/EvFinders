@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.application;
+package com.example.dominik.evfinders.application.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,12 +8,10 @@ import android.util.Log;
 
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -30,12 +28,11 @@ public class FcmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         disposable = FirebaseInstanceIdService.GET_TOKEN_SUBJECT()
-                .subscribe(token -> savePrefs(token), Throwable::printStackTrace);
+                .subscribe(this::savePrefs, Throwable::printStackTrace);
         return START_NOT_STICKY;
     }
 
     private void savePrefs(String token) {
-        Log.d("FCMSERVICE", "savePrefs: " + token);
         prefs.save(Prefs.FCM_TOKEN, token);
     }
 

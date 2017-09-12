@@ -2,9 +2,12 @@ package com.example.dominik.evfinders.model.base.home.friends;
 
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.database.pojo.network.FriendResponse;
+import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -34,12 +37,17 @@ public class FriendsRepository implements IFriendsRepository {
     }
 
     @Override
-    public Observable<Response<String>> delFriend(String username) {
+    public Observable<Response<TaskResponse>> delFriend(String username) {
         return null;
     }
 
     @Override
-    public Observable<Response<Friend>> addFriends(String username) {
+    public Observable<Response<TaskResponse>> addFriends(String username) {
+        return service.addFriend(prefs.get(Prefs.API_KEY), username);
+    }
+
+    @Override
+    public Observable<Response<TaskResponse>> addFriendsRequest(String username) {
         return null;
     }
 }

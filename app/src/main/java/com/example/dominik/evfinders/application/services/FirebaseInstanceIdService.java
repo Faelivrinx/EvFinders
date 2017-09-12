@@ -1,4 +1,4 @@
-package com.example.dominik.evfinders.application;
+package com.example.dominik.evfinders.application.services;
 
 import android.util.Log;
 

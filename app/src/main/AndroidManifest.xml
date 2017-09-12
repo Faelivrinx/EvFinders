@@ -28,13 +28,19 @@
         <activity android:name=".mvp.register.RegisterActivity" />
         <activity android:name=".mvp.friends.FriendsListActivity" android:theme="@style/AppTheme.NoActionBar"/>
 
-        <service android:name=".application.FirebaseInstanceIdService">
+        <service android:name=".application.services.FirebaseInstanceIdService">
             <intent-filter >
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service android:name=".application.FcmService" />
-        <service android:name=".application.FirebaseMessagingService" />
+        <service android:name=".application.services.FcmService" />
+        <service android:name=".application.services.FirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".application.services.FCMFriendService" />
+
     </application>
     
 
