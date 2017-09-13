@@ -48,6 +48,6 @@ public class FriendsRepository implements IFriendsRepository {
 
     @Override
     public Observable<Response<TaskResponse>> addFriendsRequest(String username) {
-        return null;
+        return service.addFriendRequest(prefs.get(Prefs.API_KEY), username);
     }
 }

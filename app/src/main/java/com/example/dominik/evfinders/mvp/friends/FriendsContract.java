@@ -21,5 +21,6 @@ public interface FriendsContract {
         void attach(View view);
         void detach();
         void getFriendsList();
+        void addFriend(String username);
     }
 }

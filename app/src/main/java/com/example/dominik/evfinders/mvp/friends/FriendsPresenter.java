@@ -2,6 +2,7 @@ package com.example.dominik.evfinders.mvp.friends;
 
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.database.pojo.network.FriendResponse;
+import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
 
 import java.util.ArrayList;
@@ -37,6 +38,14 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
         friends.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
+    }
+
+    @Override
+    public void addFriend(String username) {
+        repository.addFriendsRequest(username)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkTaskResponse, Throwable::printStackTrace);
     }
 
     @Override
@@ -85,5 +94,17 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
     @Override
     public void detach() {
         view = null;
+    }
+
+    private void checkTaskResponse(Response<TaskResponse> response){
+        if (response.code() == 200){
+            if (response.body().getName().equals("success")){
+                view.showToast("Inviting send!");
+            } else {
+                view.showToast("Something went wrong!");
+            }
+        } else {
+                view.showToast("Something went wrong!");
+        }
     }
 }

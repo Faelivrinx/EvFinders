@@ -79,7 +79,11 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         btnDialogAccept = dialogView.findViewById(R.id.dialog_add_friend_btnAdd);
         btnDialogCancel = dialogView.findViewById(R.id.dialog_add_friend_btnCancel);
 
-        btnDialogAccept.setOnClickListener(view -> {});
+        btnDialogAccept.setOnClickListener(view -> {
+            presenter.addFriend(etDialogUsername.getText().toString());
+            etDialogUsername.setText("");
+            alertDialog.dismiss();
+        });
         btnDialogCancel.setOnClickListener(view -> {alertDialog.dismiss();});
     }
 

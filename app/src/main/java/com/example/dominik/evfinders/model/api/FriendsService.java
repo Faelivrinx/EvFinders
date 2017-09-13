@@ -25,7 +25,7 @@ public interface FriendsService {
     Observable<Response<List<FriendResponse>>> getFriends(@Header("Authorization") String key);
 
     @FormUrlEncoded
-    @POST("friend/request/add")
+    @POST("friend/request")
     Observable<Response<TaskResponse>> addFriendRequest(@Header("authorization") String key, @Field("username")String username);
 
     @FormUrlEncoded
