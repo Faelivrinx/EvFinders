@@ -7,10 +7,17 @@ package com.example.dominik.evfinders.database.pojo;
 public class Friend {
     private String imagePath;
 
-
     private String username;
     private String name;
+    private boolean isSelected;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getImagePath() {
         return imagePath;

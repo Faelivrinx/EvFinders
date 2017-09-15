@@ -13,6 +13,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Dominik on 11.09.2017.
@@ -41,6 +45,8 @@ import dagger.android.AndroidInjection;
 public class FriendsListActivity extends BaseAuthActivity implements FriendsContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = FriendsListActivity.class.getSimpleName();
+
+    private Boolean STATE = false;
 
 
     @BindView(R.id.activity_friends_list_recyclerView)    RecyclerView recyclerView;
@@ -56,18 +62,37 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     @Inject FriendsPresenter presenter;
 
     private FriendsAdapter adapter;
+    CompositeDisposable disposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         setNavigation();
         adapter = new FriendsAdapter(new ArrayList<>(), getLayoutInflater());
+        disposable.add(adapter.getSelectionModeSubject().subscribe(
+                selectionMode -> {
+                    STATE = selectionMode;
+                    invalidateOptionsMenu();
+                }
+        ));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         createAlertDialog();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (STATE) {
+            getMenuInflater().inflate(R.menu.friend_menu, menu);
+            return true;
+        }
+         else {
+            return  false;
+        }
     }
 
     private void createAlertDialog() {
@@ -153,6 +178,7 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
 
     @Override
     protected void onDestroy() {
+        disposable.dispose();
         presenter.detach();
         super.onDestroy();
     }
