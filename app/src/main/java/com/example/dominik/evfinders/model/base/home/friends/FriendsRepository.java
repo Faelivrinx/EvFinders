@@ -1,14 +1,17 @@
 package com.example.dominik.evfinders.model.base.home.friends;
 
 import com.example.dominik.evfinders.database.pojo.Friend;
+import com.example.dominik.evfinders.database.pojo.network.FriendDeleteRequest;
 import com.example.dominik.evfinders.database.pojo.network.FriendResponse;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,8 +40,11 @@ public class FriendsRepository implements IFriendsRepository {
     }
 
     @Override
-    public Observable<Response<TaskResponse>> delFriend(String username) {
-        return null;
+    public Observable<Response<TaskResponse>> delFriends(List<String> usernames) {
+        FriendDeleteRequest request = new FriendDeleteRequest();
+        request.setUsernames(usernames);
+        String s = new Gson().toJson(request);
+        return service.deleteFriends(prefs.get(Prefs.API_KEY), request);
     }
 
     @Override

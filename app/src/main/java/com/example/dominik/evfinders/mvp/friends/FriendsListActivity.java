@@ -171,6 +171,22 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_delete_friend:
+                List<Friend> selected = new ArrayList<>();
+                for (Friend friend : adapter.getFriendList()) {
+                    if (friend.isSelected()){
+                        selected.add(friend);
+                    }
+                }
+                presenter.deleteFriends(selected);
+                break;
+        }
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         presenter.getFriendsList();

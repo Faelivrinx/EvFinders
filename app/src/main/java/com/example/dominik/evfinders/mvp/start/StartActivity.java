@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.base.BaseActivity;
 
 import javax.inject.Inject;
@@ -53,7 +54,7 @@ public class StartActivity extends BaseActivity implements StartContract.View{
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     @OnClick(R.id.activity_start_test)
     public void onTestClick(){
-
+        new DeleteToken().execute();
     }
 
     @Override

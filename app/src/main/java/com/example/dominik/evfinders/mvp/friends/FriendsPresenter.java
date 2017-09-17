@@ -49,6 +49,23 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
     }
 
     @Override
+    public void deleteFriends(List<Friend> friends) {
+        List<String> usernames = getUsernames(friends);
+        repository.delFriends(usernames)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkTaskResponse, Throwable::printStackTrace);
+    }
+
+    private List<String> getUsernames(List<Friend> friends) {
+        List<String> usernames = new ArrayList<>();
+        for (Friend friend : friends) {
+            usernames.add(friend.getUsername());
+        }
+        return usernames;
+    }
+
+    @Override
     public void onSubscribe(Disposable d) {
 
     }
@@ -96,15 +113,16 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
         view = null;
     }
 
-    private void checkTaskResponse(Response<TaskResponse> response){
-        if (response.code() == 200){
-            if (response.body().getName().equals("success")){
-                view.showToast("Inviting send!");
+    private void checkTaskResponse(Response<TaskResponse> response) {
+        if (response.code() == 200) {
+            if (response.body().getName().equals("success")) {
+                view.showToast("Task success!");
+                getFriendsList();
             } else {
                 view.showToast("Something went wrong!");
             }
         } else {
-                view.showToast("Something went wrong!");
+            view.showToast("Something went wrong!");
         }
     }
 }

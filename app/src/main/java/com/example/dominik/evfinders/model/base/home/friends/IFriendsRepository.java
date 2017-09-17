@@ -18,7 +18,7 @@ import retrofit2.Response;
 public interface IFriendsRepository {
 
     Observable<Response<List<FriendResponse>>> getFriends();
-    Observable<Response<TaskResponse>> delFriend(String username);
+    Observable<Response<TaskResponse>> delFriends(List<String> usernames);
     Observable<Response<TaskResponse>> addFriends(String username);
     Observable<Response<TaskResponse>> addFriendsRequest(String username);
 

@@ -26,6 +26,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
     private List<Friend> friendList;
     private LayoutInflater inflater;
     private boolean selectionMode = false;
@@ -40,19 +41,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (!selectionMode) {
-//            View view = inflater.inflate(R.layout.list_item_firends, parent, false);
-//            return new ViewHolder(view);
-//        } else {
-//            switch (viewType) {
-//                case 0:
-//                    return new ViewHolder(inflater.inflate(R.layout.list_item_friends_unselected, parent, false));
-//                case 2:
-//                    return new ViewHolder(inflater.inflate(R.layout.list_item_firends_select, parent, false));
-//                default:
-//                    return new ViewHolder(inflater.inflate(R.layout.list_item_friends_unselected, parent, false));
-//            }
-//        }
         switch (viewType) {
             case 0:
                 return new ViewHolder(inflater.inflate(R.layout.list_item_firends, parent, false));
@@ -65,17 +53,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        //        Friend friend = friendList.get(position);
-//        holder.populate(friend.getImagePath(), friend.getUsername(), friend.getName());
-//        holder.itemView.setOnLongClickListener(view -> {
-//            selectionMode = !selectionMode;
-//            notifyDataSetChanged();
-//            return true;
-//        });
 
         holder.itemView.setOnLongClickListener(view -> {
             selectionMode = !selectionMode;
             selectionModeSubject.onNext(selectionMode);
+            unselectItems();
             notifyDataSetChanged();
             return true;
         });
@@ -112,6 +94,12 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    private void unselectItems() {
+        for (Friend friend : friendList) {
+            friend.setSelected(false);
+        }
+    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -142,6 +130,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public Observable<Boolean> getSelectionModeSubject() {
         return selectionModeSubject;
+    }
+
+
+    public List<Friend> getFriendList() {
+        return friendList;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
