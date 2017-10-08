@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dominik.evfinders">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:name=".application.EvApplication"
         android:allowBackup="true"
@@ -26,6 +29,23 @@
         <activity android:name=".mvp.start.StartActivity" />
         <activity android:name=".mvp.login.LoginActivity" />
         <activity android:name=".mvp.register.RegisterActivity" />
-    </application>
+
+        <activity android:name=".mvp.friends.FriendsListActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.events.EventsActivity" />
+
+        <service android:name=".application.services.FirebaseInstanceIdService">
+            <intent-filter >
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".application.services.FcmService" />
+        <service android:name=".application.services.FirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".application.services.FCMFriendService" />
+
+ </application>
 
 </manifest>

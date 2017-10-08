@@ -14,7 +14,15 @@ public class User {
     private String email;
     private String imgUrl;
     private boolean isEnable;
+    private int[] profile;
 
+    public int[] getProfile() {
+        return profile;
+    }
+
+    public void setProfile(int[] profile) {
+        this.profile = profile;
+    }
 
     public Long getId() {
         return id;

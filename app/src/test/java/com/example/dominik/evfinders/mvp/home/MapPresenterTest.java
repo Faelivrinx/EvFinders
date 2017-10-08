@@ -6,13 +6,17 @@ import com.example.dominik.evfinders.model.base.home.MockMapRepository;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyCollection;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Dominik on 01.09.2017.
@@ -46,6 +50,16 @@ public class MapPresenterTest {
 
     @Test
     public void getEvents() throws Exception {
+        verify(repository, times(1)).getEvents();
+    }
+
+    @Test
+    public void whenEventLoaded_thenViewShouldShow(){
+
+//        presenter.completeTask();
+//
+//        verify(view).showEvents(mockedList);
+
     }
 
 }
