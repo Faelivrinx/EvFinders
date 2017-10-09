@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public abstract class BaseAuthActivity extends AppCompatActivity {
     private static final String TAG = BaseAuthActivity.class.getSimpleName();
+    public static final String DRAWER_ITEM = "DRAWER_ITEM";
 
     @Inject
     IPrefs prefs;
@@ -43,5 +44,6 @@ public abstract class BaseAuthActivity extends AppCompatActivity {
     }
 
     protected abstract int getContentView();
+    protected abstract int getNavItem();
 
 }

@@ -24,6 +24,6 @@ public interface StartContract {
         void detach();
         void startRegisterActivity(Context context);
         void startLoginActivity(Context context);
-
+        void generateFCMToken();
     }
 }

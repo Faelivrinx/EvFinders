@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 
 public interface ILoginRepository {
 
-    Observable<ApiKeyResponse> getLoginResponse(String username, String password);
+    Observable<ApiKeyResponse> getLoginResponse(String username, String password, String fcm_token);
     void saveKey(ApiKeyResponse key);
+    String getFcmToken();
 }

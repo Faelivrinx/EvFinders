@@ -27,13 +27,18 @@ public class LoginRepository implements ILoginRepository{
     }
 
     @Override
-    public Observable<ApiKeyResponse> getLoginResponse(String username, String password) {
-        return service.getToken(username, password).filter(apiKeyResponse -> apiKeyResponse != null);
+    public Observable<ApiKeyResponse> getLoginResponse(String username, String password, String token) {
+        return service.getToken(username, password, token).filter(apiKeyResponse -> apiKeyResponse != null);
     }
 
     @Override
     public void saveKey(ApiKeyResponse key) {
         Log.d("LoginRepository", "saveKey: " + key.getValue());
         prefs.save(Prefs.API_KEY, key.getValue());
+    }
+
+    @Override
+    public String getFcmToken() {
+        return prefs.get(Prefs.FCM_TOKEN);
     }
 }

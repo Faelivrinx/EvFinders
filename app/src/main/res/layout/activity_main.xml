@@ -10,9 +10,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-  <include layout="@layout/app_bar_main"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
 
   <fragment
       xmlns:tools="http://schemas.android.com/tools"
@@ -22,6 +19,9 @@
       android:name="com.google.android.gms.maps.SupportMapFragment"
       tools:context=".mvp.home.MainActivity"/>
 
+  <include layout="@layout/app_bar_main"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
   <android.support.design.widget.NavigationView
       android:id="@+id/activity_main_nav_view"

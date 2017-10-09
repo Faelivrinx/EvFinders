@@ -1,6 +1,8 @@
 package com.example.dominik.evfinders.di;
 
 import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,13 +49,21 @@ public class NetworkModule {
     }
 
     @Provides
+    static Gson provideGsonBuilder(){
+        return new GsonBuilder()
+                .setLenient()
+                .create();
+    }
+
+    @Provides
     static RxJava2CallAdapterFactory adapterFactory(){
         return RxJava2CallAdapterFactory.create();
     }
 
     @Provides
-    static GsonConverterFactory gsonConverterFactory(){
-        return GsonConverterFactory.create();
+    static GsonConverterFactory gsonConverterFactory(Gson gson){
+        return GsonConverterFactory
+                .create(gson);
     }
 
     @Provides
@@ -71,7 +81,7 @@ public class NetworkModule {
     @Named("auth")
     static Retrofit provideRetrofitAuth(@Named("auth") OkHttpClient client, GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory adapterFactory){
         return new Retrofit.Builder()
-                .baseUrl("http://jurasz-dev.pl/login.php/")
+                .baseUrl("http://jurasz-dev.pl/index.php/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(adapterFactory)
                 .client(client)

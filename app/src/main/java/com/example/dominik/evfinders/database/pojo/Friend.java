@@ -5,32 +5,41 @@ package com.example.dominik.evfinders.database.pojo;
  */
 
 public class Friend {
-    private Long idEvent;
+    private String imagePath;
 
-    private Long idUser;
-    private Long idFriend;
+    private String username;
+    private String name;
+    private boolean isSelected;
 
-    public Long getIdEvent() {
-        return idEvent;
+    public boolean isSelected() {
+        return isSelected;
     }
 
-    public void setIdEvent(Long idEvent) {
-        this.idEvent = idEvent;
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
-    public Long getIdUser() {
-        return idUser;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public Long getIdFriend() {
-        return idFriend;
+    public String getUsername() {
+        return username;
     }
 
-    public void setIdFriend(Long idFriend) {
-        this.idFriend = idFriend;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

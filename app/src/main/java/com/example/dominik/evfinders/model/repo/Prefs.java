@@ -14,6 +14,7 @@ import javax.inject.Inject;
 public class Prefs implements IPrefs{
 
     public static final String API_KEY = "API_KEY";
+    public static final String FCM_TOKEN = "FCM_TOKEN";
 
     private final Context application;
     private final SharedPreferences preferences;
@@ -34,7 +35,7 @@ public class Prefs implements IPrefs{
 
     @Override
     public boolean del(String key) {
-        editor.remove(API_KEY);
+        editor.remove(key);
         editor.apply();
         return true;
     }

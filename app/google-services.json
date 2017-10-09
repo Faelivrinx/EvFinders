@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "876813699121",
+    "firebase_url": "https://evfinders.firebaseio.com",
+    "project_id": "evfinders",
+    "storage_bucket": "evfinders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876813699121:android:6e2ac5f5e27606a0",
+        "android_client_info": {
+          "package_name": "com.example.dominik.evfinders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876813699121-7rlgh9km5b5rj27mltrm6p1e9jinr8cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXKa1olAL4_s7wbiIomH62ZLb6fq-hbLs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
