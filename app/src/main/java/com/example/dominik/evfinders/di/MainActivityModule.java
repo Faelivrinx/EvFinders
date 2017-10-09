@@ -18,7 +18,7 @@ abstract class MainActivityModule {
     @ActivityScope
     @Provides
     static IMapRepository repository(IPrefs prefs){
-        return new MapRepository(prefs);
+        return new MockMapRepository( );
     }
 
     @ActivityScope

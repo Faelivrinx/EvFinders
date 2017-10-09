@@ -14,6 +14,7 @@ public class User {
     private String email;
     private String imgUrl;
     private boolean isEnable;
+    private int[] profile;
 
 
     public Long getId() {
@@ -75,5 +76,13 @@ public class User {
 
     public void setEnable(boolean enable) {
         isEnable = enable;
+    }
+
+    public int[] getProfile() {
+        return profile;
+    }
+
+    public void setProfile(int[] profile) {
+        this.profile = profile;
     }
 }

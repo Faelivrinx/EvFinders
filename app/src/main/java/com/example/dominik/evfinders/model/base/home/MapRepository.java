@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+
 /**
  * Created by Dominik on 25.08.2017.
  */
@@ -25,7 +27,7 @@ public class MapRepository implements IMapRepository {
     }
 
     @Override
-    public List<Event> getEvents() {
+    public Single<List<Event>> getEvents() {
         return null;
     }
 

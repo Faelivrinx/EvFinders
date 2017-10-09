@@ -13,11 +13,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by Dominik on 23.06.2017.
  */
 
-public class MapPresenter implements MapContract.Presenter {
+public class MapPresenter implements MapContract.Presenter, SingleObserver<List<Event>> {
 
     private IMapRepository repository;
     private MapContract.View view;
@@ -44,8 +48,8 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void getEvents() {
-        List<Event> events = repository.getEvents();
-        view.showEvents(events);
+        Single<List<Event>> events = repository.getEvents();
+        events.subscribe(this);
     }
 
     @Override
@@ -54,9 +58,24 @@ public class MapPresenter implements MapContract.Presenter {
 
         repository.removeFcmToken();
         view.showProgressBar();
-        if (repository.removeUserKey()){
+        if (repository.removeUserKey()) {
             view.startActivity();
         }
     }
 
+    @Override
+    public void onSubscribe(Disposable d) {
+        view.showProgressBar();
+    }
+
+    @Override
+    public void onSuccess(List<Event> events) {
+        view.showEvents(events);
+        view.hideProgressBar();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        view.hideProgressBar();
+    }
 }

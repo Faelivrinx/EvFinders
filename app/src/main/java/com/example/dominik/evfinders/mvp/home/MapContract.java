@@ -3,6 +3,7 @@ package com.example.dominik.evfinders.mvp.home;
 import com.example.dominik.evfinders.base.BasePresenter;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.base.BaseView;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface MapContract {
         void showProgressBar();
 
         void hideProgressBar();
+
+        void zoomMapToFirstEvent(LatLng eventPosition);
 
         void startActivity();
     }
