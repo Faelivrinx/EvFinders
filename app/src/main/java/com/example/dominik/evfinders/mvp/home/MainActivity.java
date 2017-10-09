@@ -29,6 +29,7 @@ import com.example.dominik.evfinders.database.pojo.Event;
 
 import com.example.dominik.evfinders.database.pojo.User;
 
+import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.start.StartActivity;
 import com.example.dominik.evfinders.utils.MarkerFactory;
 import com.google.android.gms.common.ConnectionResult;
@@ -78,20 +79,20 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
         // TODO: 08.10.2017 del
         User user = new User();
-        user.setProfile(new int[]{1,0,0,0,1,0,0,0,0,0,0,0,0,0,
-                1,1,0,1,1,0,0,0,0,1,0,0,0,
-                1,1,0,1,1,0,1,0,1,0,0,1,0});
+        user.setProfile(new int[]{1,3,0,0,6,0,0,0,0,0,0,0,0,0,
+                1,5,0,4,5,0,0,0,0,4,0,0,0,
+                1,6,0,3,4,0,2,0,5,0,0,1,0});
 
         User biegacz = new User();
-        biegacz.setProfile(new int[]{1,1,1,0,0,0,0,0,0,0,0,0,0,0,
-                1,0,0,0,0,0,1,0,0,0,0,0,0,
-                1,1,0,0,0,0,0,0,0,0,1,0,0});
+        biegacz.setProfile(new int[]{1,2,6,0,0,0,0,0,0,0,0,0,0,0,
+                1,0,0,0,0,0,4,0,0,0,0,0,0,
+                1,6,0,0,0,0,0,0,0,0,6,0,0});
 
         User kinoman = new User();
         kinoman.setProfile(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,
-                1,1,0,1,0,0,1,0,1,0,0,0,0});
-        recommendation = new RecommendationSystem(biegacz);
+                1,3,0,5,0,0,2,0,6,0,0,0,0});
+        recommendation = new RecommendationSystem(kinoman);
 }
 
 
@@ -194,6 +195,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_logout){
             onLogoutClicked();
+        } else if(item.getItemId() == R.id.nav_events){
+            startActivity(new Intent(this, EventsActivity.class));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

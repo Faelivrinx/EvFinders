@@ -58,7 +58,7 @@ public class MockMapRepository implements IMapRepository {
         koncertMetallica.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         koncertMetallica.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         koncertMetallica.setProfileVector(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                                                    1,0,0,1,0,0,0,0,0,0,0,0,0,
+                                                    6,0,0,6,0,0,0,0,0,0,0,0,0,
                                                     0,0,0,0,0,0,0,0,0,0,0,0,0});
         events.add(koncertMetallica);
 
@@ -69,7 +69,7 @@ public class MockMapRepository implements IMapRepository {
 
         meczPolskiPilkaNozna.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         meczPolskiPilkaNozna.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
-        meczPolskiPilkaNozna.setProfileVector(new int[]{1,1,0,0,0,0,0,0,0,0,0,0,0,0,
+        meczPolskiPilkaNozna.setProfileVector(new int[]{6,6,0,0,0,0,0,0,0,0,0,0,0,0,
                                                          0,0,0,0,0,0,0,0,0,0,0,0,0,
                                                          0,0,0,0,0,0,0,0,0,0,0,0,0});
         events.add(meczPolskiPilkaNozna);
@@ -83,7 +83,7 @@ public class MockMapRepository implements IMapRepository {
         filmWladcaPierscienia.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         filmWladcaPierscienia.setProfileVector(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,
-                1,1,0,0,0,0,0,0,1,0,0,0,0});
+                6,6,0,0,0,0,0,0,6,0,0,0,0});
         events.add(filmWladcaPierscienia);
 
         Event filmChlopakiNiePlacz = new Event();
@@ -95,7 +95,7 @@ public class MockMapRepository implements IMapRepository {
         filmChlopakiNiePlacz.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         filmChlopakiNiePlacz.setProfileVector(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,
-                1,0,1,1,0,0,0,0,0,0,0,0,0});
+                6,0,6,6,0,0,0,0,0,0,0,0,0});
         events.add(filmChlopakiNiePlacz);
 
         Event koncertDiscoPop = new Event();
@@ -106,7 +106,7 @@ public class MockMapRepository implements IMapRepository {
         koncertDiscoPop.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         koncertDiscoPop.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         koncertDiscoPop.setProfileVector(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                1,0,1,0,0,0,1,0,0,0,0,0,0,
+                6,0,6,0,0,0,6,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0});
         events.add(koncertDiscoPop);
 
@@ -117,7 +117,7 @@ public class MockMapRepository implements IMapRepository {
 
         bieganie.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         bieganie.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
-        bieganie.setProfileVector(new int[]{1,0,0,0,1,0,0,0,0,0,0,0,0,0,
+        bieganie.setProfileVector(new int[]{6,0,0,0,6,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,0,0,0});
         events.add(bieganie);

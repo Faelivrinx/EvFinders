@@ -24,7 +24,7 @@ public class RecommendationSystem implements Recommendation {
     @Override
     public List<Event> sortEventsByRecommendation(List<Event> events) {
         for (Event event : events) {
-            event.setCorrelation(measureCorrelation(user, event));
+            event.setCorrelation(measureCorrelationExtended(user, event));
         }
 
         Collections.sort(events, (event1, event2) -> {
@@ -59,6 +59,30 @@ public class RecommendationSystem implements Recommendation {
         for (int i = 0; i < 40; i++) {
             if(event.getProfileVector()[i] == 1){
                 sumEvent++;
+            }
+        }
+
+        return sum / (Math.sqrt(sumUser) * Math.sqrt(sumEvent));
+    }
+
+    private double measureCorrelationExtended(User user, Event event){
+        int sum = 0;
+        int sumUser = 0;
+        int sumEvent = 0;
+
+        for (int i = 0; i < 40; i++) {
+            sum += user.getProfile()[i] * event.getProfileVector()[i];
+        }
+
+        for (int i = 0; i < 40; i++) {
+            if(user.getProfile()[i] != 0){
+                sumUser += Math.pow(user.getProfile()[i], 2);
+            }
+        }
+
+        for (int i = 0; i < 40; i++) {
+            if(event.getProfileVector()[i] != 0){
+                sumEvent += Math.pow(event.getProfileVector()[i], 2);
             }
         }
 
