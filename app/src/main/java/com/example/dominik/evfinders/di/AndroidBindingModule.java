@@ -2,11 +2,13 @@ package com.example.dominik.evfinders.di;
 
 import com.example.dominik.evfinders.application.services.FcmService;
 import com.example.dominik.evfinders.application.services.FCMFriendService;
+import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
 import com.example.dominik.evfinders.mvp.register.RegisterActivity;
 import com.example.dominik.evfinders.mvp.start.StartActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -42,7 +44,7 @@ abstract class AndroidBindingModule {
     @ContributesAndroidInjector(modules = {
             StartActivityModule.class
     })
-    abstract StartActivity startActivity();
+    abstract StartActivityTest startActivity();
 
     @ActivityScope
     @ContributesAndroidInjector(modules = {
@@ -60,4 +62,9 @@ abstract class AndroidBindingModule {
     })
     abstract FCMFriendService friendsService();
 
+    @ActivityScope
+    @ContributesAndroidInjector(modules = {
+            EventsActivityModule.class
+    })
+    abstract EventsActivity eventsActivity();
 }

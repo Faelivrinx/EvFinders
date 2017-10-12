@@ -1,8 +1,7 @@
 package com.example.dominik.evfinders.di;
 
-import com.example.dominik.evfinders.model.base.home.IMapRepository;
-import com.example.dominik.evfinders.model.base.home.MapRepository;
-import com.example.dominik.evfinders.model.base.home.MockMapRepository;
+import com.example.dominik.evfinders.model.base.home.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.MockEventsRepository;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.mvp.home.MapPresenter;
 
@@ -17,13 +16,13 @@ abstract class MainActivityModule {
 
     @ActivityScope
     @Provides
-    static IMapRepository repository(IPrefs prefs){
-        return new MockMapRepository( );
+    static IEventsRepository repository(IPrefs prefs){
+        return new MockEventsRepository( prefs);
     }
 
     @ActivityScope
     @Provides
-    static MapPresenter porovidePresenter(IMapRepository repository){
+    static MapPresenter porovidePresenter(IEventsRepository repository){
         return new MapPresenter(repository);
     }
 }

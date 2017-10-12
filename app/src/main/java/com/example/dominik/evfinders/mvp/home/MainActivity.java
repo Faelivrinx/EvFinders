@@ -24,8 +24,10 @@ import android.widget.Toast;
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.start.StartActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -136,7 +138,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void startActivity() {
-        startActivity(new Intent(this, StartActivity.class));
+        startActivity(new Intent(this, StartActivityTest.class));
     }
 
     @Override
@@ -170,6 +172,10 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         } else if (item.getItemId() == R.id.nav_friends) {
             Intent intent = new Intent(this, FriendsListActivity.class);
             intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_friends);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.nav_events) {
+            Intent intent = new Intent(this, EventsActivity.class);
+            intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_events);
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);

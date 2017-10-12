@@ -41,4 +41,17 @@ public class LoginRepository implements ILoginRepository{
     public String getFcmToken() {
         return prefs.get(Prefs.FCM_TOKEN);
     }
+
+    @Override
+    public boolean removeFcmToken() {
+        return prefs.del(Prefs.FCM_TOKEN);
+    }
+
+    @Override
+    public boolean removeUserKey() {
+        Log.d("MapRepo", "key deleted: ");
+        return prefs.del(Prefs.API_KEY);
+    }
+
+
 }

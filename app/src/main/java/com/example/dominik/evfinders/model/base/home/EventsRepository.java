@@ -3,7 +3,6 @@ package com.example.dominik.evfinders.model.base.home;
 import android.util.Log;
 
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.repo.EventsRepo;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 
@@ -17,12 +16,12 @@ import io.reactivex.Single;
  * Created by Dominik on 25.08.2017.
  */
 
-public class MapRepository implements IMapRepository {
+public class EventsRepository implements IEventsRepository {
 
     private IPrefs prefs;
 
     @Inject
-    public MapRepository(IPrefs prefs) {
+    public EventsRepository(IPrefs prefs) {
         this.prefs = prefs;
     }
 

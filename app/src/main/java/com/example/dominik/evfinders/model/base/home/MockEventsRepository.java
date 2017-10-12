@@ -1,10 +1,16 @@
 package com.example.dominik.evfinders.model.base.home;
 
+import android.util.Log;
+
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.inject.Inject;
 
 import io.reactivex.Single;
 
@@ -14,8 +20,14 @@ import static io.reactivex.Observable.fromArray;
  * Created by Dominik on 01.09.2017.
  */
 
-public class MockMapRepository implements IMapRepository {
+public class MockEventsRepository implements IEventsRepository {
 
+   private IPrefs prefs;
+
+    @Inject
+    public MockEventsRepository(IPrefs prefs) {
+        this.prefs = prefs;
+    }
 
     @Override
     public Single<List<Event>> getEvents() {
@@ -28,7 +40,7 @@ public class MockMapRepository implements IMapRepository {
 
     @Override
     public boolean removeUserKey() {
-        return false;
+        return prefs.del(Prefs.API_KEY);
     }
 
     @Override

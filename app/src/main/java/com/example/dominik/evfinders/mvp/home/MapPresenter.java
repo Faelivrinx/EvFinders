@@ -1,14 +1,9 @@
 package com.example.dominik.evfinders.mvp.home;
 
 import com.example.dominik.evfinders.application.DeleteToken;
-import com.example.dominik.evfinders.base.BaseView;
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IMapRepository;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.example.dominik.evfinders.model.base.home.IEventsRepository;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,11 +18,11 @@ import io.reactivex.disposables.Disposable;
 
 public class MapPresenter implements MapContract.Presenter, SingleObserver<List<Event>> {
 
-    private IMapRepository repository;
+    private IEventsRepository repository;
     private MapContract.View view;
 
     @Inject
-    public MapPresenter(IMapRepository repository) {
+    public MapPresenter(IEventsRepository repository) {
         this.repository = repository;
     }
 

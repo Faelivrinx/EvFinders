@@ -1,8 +1,8 @@
 package com.example.dominik.evfinders.mvp.home;
 
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IMapRepository;
-import com.example.dominik.evfinders.model.base.home.MockMapRepository;
+import com.example.dominik.evfinders.model.base.home.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.MockEventsRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.verify;
 public class MapPresenterTest {
 
     private MapContract.View view;
-    private IMapRepository repository;
+    private IEventsRepository repository;
     private MapPresenter presenter;
     private List<Event> mockedList = new ArrayList<>();
 
     @Before
     public void setUp(){
-        repository = mock(MockMapRepository.class);
+        repository = mock(MockEventsRepository.class);
         view = mock(MainActivity.class);
         presenter = new MapPresenter(repository);
         presenter.attach(view);

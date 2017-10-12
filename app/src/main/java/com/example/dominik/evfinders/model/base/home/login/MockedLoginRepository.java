@@ -39,4 +39,14 @@ public class MockedLoginRepository implements ILoginRepository {
     public String getFcmToken() {
         return null;
     }
+
+    @Override
+    public boolean removeFcmToken() {
+        return false;
+    }
+
+    @Override
+    public boolean removeUserKey() {
+        return false;
+    }
 }

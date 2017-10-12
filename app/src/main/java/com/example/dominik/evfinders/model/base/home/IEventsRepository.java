@@ -10,7 +10,7 @@ import io.reactivex.Single;
  * Created by Dominik on 8/19/2017.
  */
 
-public interface IMapRepository {
+public interface IEventsRepository {
 
     Single<List<Event>> getEvents();
 

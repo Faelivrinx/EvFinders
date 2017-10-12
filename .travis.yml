@@ -56,4 +56,4 @@ notifications:
   email: false
   slack: evfinders:GDZiF2SKeUrXjPDCNt1VBEeW
   template:
-  - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit_message}>) of %{repository}@%{branch} by %{author} %{result} in %{duration}"
+  - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit_message}>) of %{loginRepo}@%{branch} by %{author} %{result} in %{duration}"

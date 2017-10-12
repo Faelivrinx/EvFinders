@@ -13,4 +13,7 @@ public interface ILoginRepository {
     Observable<ApiKeyResponse> getLoginResponse(String username, String password, String fcm_token);
     void saveKey(ApiKeyResponse key);
     String getFcmToken();
+    boolean removeFcmToken();
+    boolean removeUserKey();
+
 }
