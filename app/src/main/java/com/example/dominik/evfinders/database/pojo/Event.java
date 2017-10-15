@@ -98,7 +98,7 @@ public class Event {
             return EventType.SPORT_AND_RECREATION;
         } else if (getProfileVector()[14] == 1) {
             return EventType.MUSIC;
-        } else if (getProfileVector()[26] == 1) {
+        } else if (getProfileVector()[27] == 1) {
             return EventType.CINEMA;
         } else {
             return EventType.FRIENDS;

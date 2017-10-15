@@ -18,15 +18,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.database.pojo.Marker;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
-import com.example.dominik.evfinders.mvp.start.StartActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -40,6 +39,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,16 +48,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private GoogleMap googleMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
+    private List<Marker> markerList;
 
     @BindView(R.id.activity_main_drawer_layout)
     DrawerLayout drawerLayout;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -70,6 +72,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setNavigation();
+        markerList = new ArrayList<>();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
         mapFragment.getMapAsync(this);
@@ -105,17 +108,31 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void showEvents(List<Event> events) {
-        LatLng position = new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude());
-        zoomMapToFirstEvent(position);
-        for (Event event : events) {
-            addMarker(event);
+        createMarkersFromEvents(events);
+
+        zoomMapToFirstEvent(new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude()));
+        addMarkersToMap();
+    }
+
+    private void addMarker(Marker marker) {
+        googleMap.addMarker(new MarkerOptions().position(marker.getCoordinates()).title(marker.getName()));
+    }
+
+    private void addMarkersToMap() {
+        for (Marker marker : markerList) {
+            addMarker(marker);
         }
     }
 
-    private void addMarker(Event event){
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(event.getLatituide(), event.getLongitude())).title(event.getName()));
+    private void createMarkersFromEvents(List<Event> events) {
+        for (Event event : events) {
+            Marker marker = new Marker();
+            marker.setId(event.getId());
+            marker.setName(event.getName());
+            marker.setCoordinates(new LatLng(event.getLatituide(), event.getLongitude()));
+            markerList.add(marker);
+        }
     }
-
 
     @Override
     public void onLogoutClicked() {
@@ -153,20 +170,21 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
                     == PackageManager.PERMISSION_GRANTED) {
                 //Location Permission already granted
                 buildGoogleApiClient();
-                this.googleMap.setMyLocationEnabled(true);
+//                this.googleMap.setMyLocationEnabled(true);
             } else {
                 //Request Location Permission
                 checkLocationPermission();
             }
         } else {
             buildGoogleApiClient();
-            this.googleMap.setMyLocationEnabled(true);
+//            this.googleMap.setMyLocationEnabled(true);
         }
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        drawerLayout.closeDrawer(GravityCompat.START);
         if (item.getItemId() == R.id.nav_logout) {
             onLogoutClicked();
         } else if (item.getItemId() == R.id.nav_friends) {
@@ -178,7 +196,6 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
             intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_events);
             startActivity(intent);
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -271,7 +288,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
                         if (googleApiClient == null) {
                             buildGoogleApiClient();
                         }
-                        this.googleMap.setMyLocationEnabled(true);
+//                        this.googleMap.setMyLocationEnabled(true);
                     }
 
                 } else {
@@ -296,5 +313,16 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     private void addMarkerWithMyPosition(String s, LatLng latLng) {
         // TODO: 09.10.2017
+    }
+
+    @Override
+    public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+        for (Marker customMarker : markerList) {
+            if (customMarker.getCoordinates() == marker.getPosition()) {
+                // TODO: 14.10.2017 current marker clicked
+            }
+        }
+
+        return true;
     }
 }

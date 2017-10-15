@@ -10,6 +10,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +36,10 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     public static final int LOGIN_STATE = 1;
     public static final int REGISTER_STATE = 2;
 
-    @BindView(R.id.activity_start_start)    ScrollView mainLayout;
+    @BindView(R.id.activity_start_start)            ScrollView mainLayout;
 
-    @BindView(R.id.activity_start_login)    ScrollView loginLayout;
+    @BindView(R.id.activity_start_login)            ScrollView loginLayout;
+    @BindView(R.id.activity_start_test_backView)    LinearLayout backView;
 
     @BindView(R.id.activity_start_start_btnLogin)    AppCompatButton btnStartLogin;
 
@@ -103,6 +105,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
         ObjectAnimator animationLogin = ObjectAnimator.ofFloat(loginLayout, "x", 1500, 16);
         animationLogin.setDuration(400);
         animationLogin.start();
+        backView.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.activity_start_start_register)
@@ -120,6 +123,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
         ObjectAnimator animationLogin = ObjectAnimator.ofFloat(registerLayout, "x", 1500, 16);
         animationLogin.setDuration(400);
         animationLogin.start();
+        backView.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.back_animation)
@@ -127,7 +131,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
         AnimationState state = animationFactory.createState(current_state);
         switch (state) {
             case START_STATE:
-                throw new IllegalStateException();
+                break;
             case LOGIN_STATE:
                 imageView.setBackgroundResource(R.drawable.background_to_left);
                 AnimationDrawable leftAnimation = (AnimationDrawable) imageView.getBackground();
@@ -140,6 +144,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
                 ObjectAnimator animatorlogin = ObjectAnimator.ofFloat(loginLayout, "x", 1500);
                 animatorlogin.setDuration(400);
                 animatorlogin.start();
+                backView.setVisibility(View.GONE);
                 break;
             case REGISTER_STATE:
                 imageView.setBackgroundResource(R.drawable.background_to_left);
@@ -153,6 +158,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
                 ObjectAnimator animatorRegi = ObjectAnimator.ofFloat(registerLayout, "x", 1500);
                 animatorRegi.setDuration(400);
                 animatorRegi.start();
+                backView.setVisibility(View.GONE);
                 break;
 
             default:
@@ -213,5 +219,9 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        onBackClicked();
+    }
 }
 

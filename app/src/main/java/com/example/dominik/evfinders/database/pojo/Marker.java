@@ -8,9 +8,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Marker {
 
+    private long id;
     private String name;
     private LatLng coordinates;
     private MarkerType markerType;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public MarkerType getMarkerType() {
         return markerType;

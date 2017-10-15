@@ -18,7 +18,7 @@
             android:value="AIzaSyBVU5di9i8eyt6WZ2DfXGp3H3lZumiADB8" />
 
         <activity
-            android:name=".mvp.start_test.StartActivityTest"
+            android:name=".mvp.events.EventsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait">
@@ -48,7 +48,7 @@
         </service>
         <service android:name=".application.services.FCMFriendService" />
 
-        <activity android:name=".mvp.events.EventsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.start_test.StartActivityTest" android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".mvp.home.MainActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>

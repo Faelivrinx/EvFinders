@@ -24,7 +24,9 @@ import android.widget.Toast;
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.database.pojo.Friend;
+import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,12 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     private Boolean STATE = false;
 
 
-    @BindView(R.id.activity_friends_list_recyclerView)    RecyclerView recyclerView;
-    @BindView(R.id.activity_friends_list_drawer_layout)   DrawerLayout drawerLayout;
-    @BindView(R.id.toolbar)                               Toolbar toolbar;
+    @BindView(R.id.activity_friends_list_recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.activity_friends_list_drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
@@ -59,7 +64,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     private Button btnDialogAccept;
     private Button btnDialogCancel;
 
-    @Inject FriendsPresenter presenter;
+    @Inject
+    FriendsPresenter presenter;
 
     private FriendsAdapter adapter;
     CompositeDisposable disposable = new CompositeDisposable();
@@ -89,9 +95,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         if (STATE) {
             getMenuInflater().inflate(R.menu.friend_menu, menu);
             return true;
-        }
-         else {
-            return  false;
+        } else {
+            return false;
         }
     }
 
@@ -109,17 +114,17 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
             etDialogUsername.setText("");
             alertDialog.dismiss();
         });
-        btnDialogCancel.setOnClickListener(view -> {alertDialog.dismiss();});
+        btnDialogCancel.setOnClickListener(view -> {
+            alertDialog.dismiss();
+        });
     }
 
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_map);
-//        mapFragment.getMapAsync(this);
 
 
     private void setNavigation() {
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -129,7 +134,7 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     }
 
     @OnClick(R.id.activity_friends_list_addFriend)
-    public void addFriendClicked(){
+    public void addFriendClicked() {
         alertDialog.show();
     }
 
@@ -163,6 +168,11 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         adapter.notifyDataChange(friends);
     }
 
+    @Override
+    public void startActivity() {
+        startActivity(new Intent(this, StartActivityTest.class));
+    }
+
 
     @Override
     protected void onStart() {
@@ -172,11 +182,11 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_delete_friend:
                 List<Friend> selected = new ArrayList<>();
                 for (Friend friend : adapter.getFriendList()) {
-                    if (friend.isSelected()){
+                    if (friend.isSelected()) {
                         selected.add(friend);
                     }
                 }
@@ -201,10 +211,12 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.nav_map){
+        if (item.getItemId() == R.id.nav_map) {
             startActivity(new Intent(this, MainActivity.class));
-        } else if(item.getItemId() == R.id.nav_friends){
-//            startActivity(new Intent(this, FriendsListActivity.class));
+        } else if (item.getItemId() == R.id.nav_events) {
+            startActivity(new Intent(this, EventsActivity.class));
+        } else if (item.getItemId() == R.id.nav_logout) {
+            presenter.logoutUser();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

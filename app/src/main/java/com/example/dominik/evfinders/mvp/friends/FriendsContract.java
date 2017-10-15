@@ -15,6 +15,7 @@ public interface FriendsContract {
         void showDialog(String message);
         void hideDialog();
         void onFriendsLoaded(List<Friend> friends);
+        void startActivity();
     }
 
     interface Presenter {
@@ -23,5 +24,6 @@ public interface FriendsContract {
         void getFriendsList();
         void addFriend(String username);
         void deleteFriends(List<Friend> friends);
+        void logoutUser();
     }
 }

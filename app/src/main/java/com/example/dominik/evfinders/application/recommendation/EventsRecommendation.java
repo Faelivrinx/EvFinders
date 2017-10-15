@@ -49,14 +49,14 @@ public class EventsRecommendation implements Recommendation {
         }
 
         for (int i = 0; i < 40; i++) {
-            if (user.getProfile()[i] == 1) {
-                sumUser++;
+            if (user.getProfile()[i] != 0) {
+                sumUser += Math.pow(user.getProfile()[i], 2);
             }
         }
 
         for (int i = 0; i < 40; i++) {
-            if (event.getProfileVector()[i] == 1) {
-                sumEvent++;
+            if (event.getProfileVector()[i] != 1) {
+                sumEvent += Math.pow(event.getProfileVector()[i], 2);
             }
         }
 

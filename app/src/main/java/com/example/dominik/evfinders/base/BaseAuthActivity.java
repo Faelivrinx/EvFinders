@@ -9,6 +9,7 @@ import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
 import com.example.dominik.evfinders.mvp.start.StartActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import javax.inject.Inject;
 
@@ -39,7 +40,7 @@ public abstract class BaseAuthActivity extends AppCompatActivity {
         if(!prefs.get(Prefs.API_KEY).isEmpty()){
             return;
         } else {
-            startActivity(new Intent(this, StartActivity.class));
+            startActivity(new Intent(this, StartActivityTest.class));
         }
     }
 

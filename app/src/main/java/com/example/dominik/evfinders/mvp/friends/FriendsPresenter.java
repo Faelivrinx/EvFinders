@@ -1,9 +1,11 @@
 package com.example.dominik.evfinders.mvp.friends;
 
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.database.pojo.network.FriendResponse;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
+import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,11 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
 
     private FriendsContract.View view;
     private IFriendsRepository repository;
+    private ILoginRepository loginRepository;
 
     @Inject
-    public FriendsPresenter(IFriendsRepository repository) {
+    public FriendsPresenter(IFriendsRepository repository, ILoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
         this.repository = repository;
     }
 
@@ -123,6 +127,18 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
             }
         } else {
             view.showToast("Something went wrong!");
+        }
+    }
+
+
+    @Override
+    public void logoutUser() {
+        new DeleteToken().execute();
+
+        loginRepository.removeFcmToken();
+//        view.showProgressBar();
+        if (loginRepository.removeUserKey()) {
+            view.startActivity();
         }
     }
 }

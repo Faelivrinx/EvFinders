@@ -2,7 +2,11 @@ package com.example.dominik.evfinders.model.base.home;
 
 import android.util.Log;
 
+import com.example.dominik.evfinders.application.recommendation.EventsRecommendation;
+import com.example.dominik.evfinders.application.recommendation.Recommendation;
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.database.pojo.Rating;
+import com.example.dominik.evfinders.database.pojo.User;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 
@@ -22,7 +26,8 @@ import static io.reactivex.Observable.fromArray;
 
 public class MockEventsRepository implements IEventsRepository {
 
-   private IPrefs prefs;
+    private IPrefs prefs;
+    private Recommendation systemRecomendation;
 
     @Inject
     public MockEventsRepository(IPrefs prefs) {
@@ -50,6 +55,14 @@ public class MockEventsRepository implements IEventsRepository {
 
 
     private List<Event> createMockEvents() {
+        User user = new User();
+        user.setProfile(new int[]{1, 6, 6, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        systemRecomendation = new EventsRecommendation(user);
+
+        List<Rating> ratings = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         Random random = new Random();
         List<Event> events = new ArrayList<>();
         Event koncertMetallica = new Event();
@@ -60,8 +73,10 @@ public class MockEventsRepository implements IEventsRepository {
         koncertMetallica.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         koncertMetallica.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         koncertMetallica.setProfileVector(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                1, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        koncertMetallica.setRatings(ratings);
+        koncertMetallica.setUsersRegisteredToEvent(users);
         events.add(koncertMetallica);
 
         Event meczPolskiPilkaNozna = new Event();
@@ -71,10 +86,26 @@ public class MockEventsRepository implements IEventsRepository {
 
         meczPolskiPilkaNozna.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         meczPolskiPilkaNozna.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
-        meczPolskiPilkaNozna.setProfileVector(new int[]{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        meczPolskiPilkaNozna.setProfileVector(new int[]{1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        meczPolskiPilkaNozna.setRatings(ratings);
+        meczPolskiPilkaNozna.setUsersRegisteredToEvent(users);
         events.add(meczPolskiPilkaNozna);
+
+        Event mecz = new Event();
+        mecz.setId((long) 1);
+        mecz.setDescription("Mecz ligowy. Siatkarze Bielska bialej zmierza sie z tegoo rocznymi mistrzami Polski Skra");
+        mecz.setName("Mecz BBTS Bielsko biaa - Skra Belchatow");
+
+        mecz.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
+        mecz.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
+        mecz.setProfileVector(new int[]{1, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        mecz.setRatings(ratings);
+        mecz.setUsersRegisteredToEvent(users);
+        events.add(mecz);
 
         Event filmWladcaPierscienia = new Event();
         filmWladcaPierscienia.setId((long) 1);
@@ -85,7 +116,9 @@ public class MockEventsRepository implements IEventsRepository {
         filmWladcaPierscienia.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         filmWladcaPierscienia.setProfileVector(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0});
+                1, 6, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0});
+        filmWladcaPierscienia.setRatings(ratings);
+        filmWladcaPierscienia.setUsersRegisteredToEvent(users);
         events.add(filmWladcaPierscienia);
 
         Event filmChlopakiNiePlacz = new Event();
@@ -97,7 +130,10 @@ public class MockEventsRepository implements IEventsRepository {
         filmChlopakiNiePlacz.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         filmChlopakiNiePlacz.setProfileVector(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+                1, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        filmChlopakiNiePlacz.setRatings(ratings);
+        filmChlopakiNiePlacz.setUsersRegisteredToEvent(users);
+
         events.add(filmChlopakiNiePlacz);
 
         Event koncertDiscoPop = new Event();
@@ -108,9 +144,25 @@ public class MockEventsRepository implements IEventsRepository {
         koncertDiscoPop.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         koncertDiscoPop.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
         koncertDiscoPop.setProfileVector(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                1, 0, 6, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        koncertDiscoPop.setRatings(ratings);
+        koncertDiscoPop.setUsersRegisteredToEvent(users);
         events.add(koncertDiscoPop);
+
+        Event koncert = new Event();
+        koncert.setId((long) 1);
+        koncert.setDescription("Plenerowy koncert grupy Dream Theatre!");
+        koncert.setName("Koncert Dream Theatre");
+
+        koncert.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
+        koncert.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
+        koncert.setProfileVector(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                1, 1, 6, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        koncert.setRatings(ratings);
+        koncert.setUsersRegisteredToEvent(users);
+        events.add(koncert);
 
         Event bieganie = new Event();
         bieganie.setId((long) 1);
@@ -119,12 +171,28 @@ public class MockEventsRepository implements IEventsRepository {
 
         bieganie.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
         bieganie.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
-        bieganie.setProfileVector(new int[]{1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        bieganie.setProfileVector(new int[]{1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        bieganie.setRatings(ratings);
+        bieganie.setUsersRegisteredToEvent(users);
         events.add(bieganie);
 
+        Event bieganie2 = new Event();
+        bieganie2.setId((long) 1);
+        bieganie2.setDescription("Bieg po zdrowie! Wydarzenie charytatywne, zapraszamy wszystkich chetnych!");
+        bieganie2.setName("Biegaj juz dzis z nami!");
 
-        return events;
+        bieganie2.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());
+        bieganie2.setLongitude(19.065 + (19.1842 - 19.065) * random.nextDouble());
+        bieganie2.setProfileVector(new int[]{1, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+       bieganie2.setRatings(ratings);
+       bieganie2.setUsersRegisteredToEvent(users);
+        events.add(bieganie2);
+
+        return systemRecomendation.sortEventsByRecommendation(events);
+
     }
 }
