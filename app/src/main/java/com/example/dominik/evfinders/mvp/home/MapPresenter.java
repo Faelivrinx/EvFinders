@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Dominik on 23.06.2017.
  */
 
-public class MapPresenter implements MapContract.Presenter, SingleObserver<List<Event>> {
+public class MapPresenter implements MapContract.Presenter {
 
     private IEventsRepository repository;
     private MapContract.View view;
@@ -37,14 +37,18 @@ public class MapPresenter implements MapContract.Presenter, SingleObserver<List<
 
     @Override
     public void detach() {
-        //// TODO: 01.09.2017 Null Object
         view = null;
     }
 
     @Override
     public void getEvents() {
+        view.showProgressBar();
         Single<List<Event>> events = repository.getEvents();
-        events.subscribe(this);
+        events.subscribe(eventsResponse -> {
+            view.showEvents(eventsResponse);
+            view.hideProgressBar();
+        }, throwable -> view.hideProgressBar());
+
     }
 
     @Override
@@ -58,19 +62,9 @@ public class MapPresenter implements MapContract.Presenter, SingleObserver<List<
         }
     }
 
-    @Override
-    public void onSubscribe(Disposable d) {
-        view.showProgressBar();
+    public MapContract.View getView(){
+        return this.view;
     }
 
-    @Override
-    public void onSuccess(List<Event> events) {
-        view.showEvents(events);
-        view.hideProgressBar();
-    }
 
-    @Override
-    public void onError(Throwable e) {
-        view.hideProgressBar();
-    }
 }

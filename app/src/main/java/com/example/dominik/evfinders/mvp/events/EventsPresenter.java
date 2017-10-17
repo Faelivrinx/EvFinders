@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.mvp.events;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.IEventsRepository;
@@ -53,5 +55,10 @@ public class EventsPresenter implements EventsContract.Presenter {
         if (repository.removeUserKey()) {
             view.startActivity();
         }
+    }
+
+    @VisibleForTesting
+    public EventsContract.View getView(){
+        return this.view;
     }
 }
