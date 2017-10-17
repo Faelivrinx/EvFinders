@@ -46,7 +46,8 @@ public class LoginPresenter implements LoginContract.Presenter, Observer<ApiKeyR
         if (!fcmToken.isEmpty()) {
             if (validateData(username, password)) {
                 Observable<ApiKeyResponse> loginReponse = repository.getLoginResponse(username, password, fcmToken);
-                loginReponse.subscribeOn(Schedulers.newThread())
+                loginReponse
+                        .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .timeout(10, TimeUnit.SECONDS)
                         .subscribe(this);

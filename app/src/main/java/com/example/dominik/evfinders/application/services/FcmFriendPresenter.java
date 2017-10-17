@@ -2,10 +2,12 @@ package com.example.dominik.evfinders.application.services;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
+import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
 
 import org.json.JSONObject;
@@ -65,22 +67,24 @@ public class FcmFriendPresenter implements FcmFriendContract.Presenter, Observer
         if (response.code() == 200) {
             TaskResponse body = response.body();
             if (body.getName().equals("success")) {
-                Log.d("add_friend", "onNext: added");
                 view.closeNotification(context);
             }
         } else {
-            Log.d("add_friend", "onNext: error" + response.code());
         }
     }
 
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        Log.d("add_friend", "onNext: throwable");
     }
 
     @Override
     public void onComplete() {
 
+    }
+
+    @VisibleForTesting
+    public FcmFriendContract.View getView(){
+        return this.view;
     }
 }
