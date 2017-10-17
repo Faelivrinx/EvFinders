@@ -18,6 +18,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
@@ -27,6 +29,8 @@ import com.example.dominik.evfinders.database.pojo.Marker;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
+import com.example.dominik.evfinders.utils.MarkerFactory;
+import com.example.dominik.evfinders.utils.MarkerFactoryImp;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -36,6 +40,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -48,9 +54,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener {
+public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static final String CHOOSEN_EVENT = "CHOOSEN_EVENT";
 
     private GoogleMap googleMap;
     private GoogleApiClient googleApiClient;
@@ -63,8 +70,14 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.activity_main_detailEvent)
+    Button btnDetailEvent;
+
     @Inject
     MapPresenter presenter;
+
+
+    MarkerFactory markerFactory = new MarkerFactoryImp();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,12 +123,28 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     public void showEvents(List<Event> events) {
         createMarkersFromEvents(events);
 
-        zoomMapToFirstEvent(new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude()));
+        zoomMapToPosition(new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude()));
         addMarkersToMap();
     }
 
     private void addMarker(Marker marker) {
-        googleMap.addMarker(new MarkerOptions().position(marker.getCoordinates()).title(marker.getName()));
+        BitmapDescriptor icon = null;
+
+        switch (marker.getMarkerType()){
+            case MUSIC:
+                 icon = BitmapDescriptorFactory.fromResource(R.drawable.music);
+                break;
+            case SPORT:
+                 icon = BitmapDescriptorFactory.fromResource(R.drawable.sport);
+                 break;
+            case CINEMA:
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.cinema);
+                break;
+            default:
+                break;
+        }
+
+        googleMap.addMarker(new MarkerOptions().position(marker.getCoordinates()).title(marker.getName()).icon(icon));
     }
 
     private void addMarkersToMap() {
@@ -126,10 +155,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     private void createMarkersFromEvents(List<Event> events) {
         for (Event event : events) {
-            Marker marker = new Marker();
-            marker.setId(event.getId());
-            marker.setName(event.getName());
-            marker.setCoordinates(new LatLng(event.getLatituide(), event.getLongitude()));
+            Marker marker = markerFactory.createMarkerByEventType(event);
             markerList.add(marker);
         }
     }
@@ -149,7 +175,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void zoomMapToFirstEvent(LatLng eventPosition) {
+    public void zoomMapToPosition(LatLng eventPosition) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventPosition, 14));
     }
 
@@ -161,6 +187,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        this.googleMap.setOnMarkerClickListener(this);
+        this.googleMap.setOnMapClickListener(this);
         presenter.attach(this);
         presenter.getEvents();
 
@@ -217,6 +245,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
         googleApiClient.connect();
     }
 
@@ -318,11 +347,18 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
         for (Marker customMarker : markerList) {
-            if (customMarker.getCoordinates() == marker.getPosition()) {
+            if (customMarker.getCoordinates().latitude == marker.getPosition().latitude && customMarker.getCoordinates().longitude == marker.getPosition().longitude) {
                 // TODO: 14.10.2017 current marker clicked
+                zoomMapToPosition(customMarker.getCoordinates());
+                btnDetailEvent.setVisibility(View.VISIBLE);
             }
         }
 
         return true;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        btnDetailEvent.setVisibility(View.GONE);
     }
 }

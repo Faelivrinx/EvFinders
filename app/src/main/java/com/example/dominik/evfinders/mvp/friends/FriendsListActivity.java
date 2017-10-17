@@ -77,7 +77,7 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setNavigation();
-        adapter = new FriendsAdapter(new ArrayList<>(), getLayoutInflater());
+        adapter = new FriendsAdapter(new ArrayList<>(), getLayoutInflater(), this);
         disposable.add(adapter.getSelectionModeSubject().subscribe(
                 selectionMode -> {
                     STATE = selectionMode;

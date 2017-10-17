@@ -36,7 +36,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     public static final int LOGIN_STATE = 1;
     public static final int REGISTER_STATE = 2;
 
-    @BindView(R.id.activity_start_start)            ScrollView mainLayout;
+    @BindView(R.id.activity_start_start)            LinearLayout mainLayout;
 
     @BindView(R.id.activity_start_login)            ScrollView loginLayout;
     @BindView(R.id.activity_start_test_backView)    LinearLayout backView;

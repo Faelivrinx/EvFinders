@@ -23,7 +23,7 @@ public interface MapContract {
 
         void hideProgressBar();
 
-        void zoomMapToFirstEvent(LatLng eventPosition);
+        void zoomMapToPosition(LatLng eventPosition);
 
         void startActivity();
     }

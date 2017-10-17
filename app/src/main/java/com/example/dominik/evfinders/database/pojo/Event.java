@@ -1,12 +1,15 @@
 package com.example.dominik.evfinders.database.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by Dominik on 23.06.2017.
  */
 
-public class Event {
+public class Event implements Parcelable{
 
     private Long id;
     private String name;
@@ -15,6 +18,25 @@ public class Event {
     private double longitude;
     private int[] profileVector = new int[40];
     private double correlation;
+
+    public Event() {
+    }
+
+    public Event(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        name = in.readString();
+        description = in.readString();
+        latituide = in.readDouble();
+        longitude = in.readDouble();
+        profileVector = in.createIntArray();
+        correlation = in.readDouble();
+    }
+
+
 
     public double getCorrelation() {
         return correlation;
@@ -105,6 +127,40 @@ public class Event {
         }
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeDouble(latituide);
+        parcel.writeDouble(longitude);
+        parcel.writeIntArray(profileVector);
+        parcel.writeDouble(correlation);
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public enum EventType {
         SPORT_AND_RECREATION, MUSIC, CINEMA, FRIENDS

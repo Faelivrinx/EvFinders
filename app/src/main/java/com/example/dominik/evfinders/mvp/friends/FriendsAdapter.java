@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.friends;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.database.pojo.Friend;
 
@@ -26,7 +28,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
+    private Context context;
     private List<Friend> friendList;
     private LayoutInflater inflater;
     private boolean selectionMode = false;
@@ -34,9 +36,10 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
 
-    public FriendsAdapter(List<Friend> friendList, LayoutInflater inflater) {
+    public FriendsAdapter(List<Friend> friendList, LayoutInflater inflater, Context context) {
         this.friendList = friendList;
         this.inflater = inflater;
+        this.context = context;
     }
 
     @Override
@@ -154,6 +157,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void populate(String imagePath, String username, String name) {
             //avatar.setImageBitmap();
+            Glide.with(context).load("http://www.gravatar.com/avatar/51?d=identicon").into(avatar);
             this.username.setText(username);
             this.name.setText(name);
         }
@@ -179,6 +183,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void populate(String imagePath, String username, String name, boolean isSelected) {
             //avatar.setImageBitmap();
+            Glide.with(context).load("http://www.gravatar.com/avatar/51?d=identicon").into(avatar);
             if (isSelected) {
                 mainLayout.setBackgroundColor(Color.CYAN);
             } else {

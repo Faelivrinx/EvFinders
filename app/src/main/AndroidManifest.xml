@@ -51,6 +51,7 @@
         <activity android:name=".mvp.start_test.StartActivityTest" android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".mvp.home.MainActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.home.event.EventActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
