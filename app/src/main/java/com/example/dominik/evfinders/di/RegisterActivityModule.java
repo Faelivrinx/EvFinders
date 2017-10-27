@@ -19,21 +19,21 @@ import retrofit2.Retrofit;
 @Module
 public class RegisterActivityModule {
 
-    @ActivityScope
-    @Provides
-    static RegisterService provideRegisterService(@Named("non-auth")Retrofit retrofit){
-        return retrofit.create(RegisterService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static IRegisterRepository provideRepository(IPrefs prefs, RegisterService service){
-        return new RegisterRepository(prefs, service);
-    }
-
-    @ActivityScope
-    @Provides
-    static RegisterPresenter providePresenter(IRegisterRepository repository){
-        return new RegisterPresenter(repository);
-    }
+//    @ActivityScope
+//    @Provides
+//    static RegisterService provideRegisterService(@Named("non-auth")Retrofit retrofit){
+//        return retrofit.create(RegisterService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static IRegisterRepository provideRepository(IPrefs prefs, RegisterService service){
+//        return new RegisterRepository(prefs, service);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static RegisterPresenter providePresenter(IRegisterRepository repository){
+//        return new RegisterPresenter(repository);
+//    }
 }

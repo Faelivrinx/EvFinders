@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Dominik on 11.10.2017.
  */
 
-public class StartActivityTestPresenter implements StartActivityTestContract.Presenter, Observer<ApiKeyResponse> {
+public class StartActivityTestPresenter implements StartActivityTestContract.Presenter {
 
     private StartActivityTestContract.View view;
     private ILoginRepository loginRepo;
@@ -52,10 +52,21 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
         if (!fcmToken.isEmpty()) {
             if (validateData(username, password)) {
                 Observable<ApiKeyResponse> loginReponse = loginRepo.getLoginResponse(username, password, fcmToken);
-                loginReponse.subscribeOn(Schedulers.newThread())
+                loginReponse
+                        .timeout(5, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .timeout(10, TimeUnit.SECONDS)
-                        .subscribe(this);
+                        .subscribe(apiKeyResponse -> {
+                            loginRepo.saveKey(apiKeyResponse);
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                            view.hideProgressDialog();
+                            view.showToast("Network problem! Check connection");
+
+                        }, () -> {
+                            view.startActivity();
+                            view.hideProgressDialog();
+                        });
             } else {
                 view.hideProgressDialog();
                 view.showToast("Wrong data");
@@ -64,8 +75,6 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
             view.hideProgressDialog();
             view.showToast("Refresh FCM key");
         }
-
-
     }
 
     @Override
@@ -109,31 +118,8 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
         return true;
     }
 
-    @Override
-    public void onSubscribe(Disposable d) {
-
-    }
-
     private UserRequest createUser(String username, String password, String email) {
         return new UserRequest(username, password, email);
-    }
-
-    @Override
-    public void onNext(ApiKeyResponse apiKeyResponse) {
-        loginRepo.saveKey(apiKeyResponse);
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        e.printStackTrace();
-        view.hideProgressDialog();
-        view.showToast("Can't login");
-    }
-
-    @Override
-    public void onComplete() {
-        view.startActivity();
-        view.hideProgressDialog();
     }
 
     @Override

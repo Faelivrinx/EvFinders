@@ -23,29 +23,29 @@ import retrofit2.Retrofit;
 @Module
 abstract class StartActivityModule {
 
-    @ActivityScope
-    @Provides
-    static LoginService provideService(@Named("non-auth") Retrofit retrofit){
-        return retrofit.create(LoginService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static RegisterService provideServiceRegister(@Named("non-auth") Retrofit retrofit){
-        return retrofit.create(RegisterService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static ILoginRepository provideRepository(IPrefs prefs, LoginService service){
-        return new LoginRepository(prefs, service);
-    }
-
-    @ActivityScope
-    @Provides
-    static IRegisterRepository provideRepositoryRegister(IPrefs prefs, RegisterService service){
-        return new RegisterRepository(prefs, service);
-    }
+//    @ActivityScope
+//    @Provides
+//    static LoginService provideService(@Named("non-auth") Retrofit retrofit){
+//        return retrofit.create(LoginService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static RegisterService provideServiceRegister(@Named("non-auth") Retrofit retrofit){
+//        return retrofit.create(RegisterService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static ILoginRepository provideRepository(IPrefs prefs, LoginService service){
+//        return new LoginRepository(prefs, service);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static IRegisterRepository provideRepositoryRegister(IPrefs prefs, RegisterService service){
+//        return new RegisterRepository(prefs, service);
+//    }
 
     @ActivityScope
     @Provides

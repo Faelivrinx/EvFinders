@@ -25,29 +25,29 @@ import retrofit2.Retrofit;
 abstract class FriendsActivityModule {
 
 
-    @ActivityScope
-    @Provides
-    static FriendsService provideService(@Named("auth") Retrofit retrofit) {
-        return retrofit.create(FriendsService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static LoginService provideLoginService(@Named("auth") Retrofit retrofit) {
-        return retrofit.create(LoginService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service){
-        return new FriendsRepository(prefs, service);
-    }
-
-    @ActivityScope
-    @Provides
-    static ILoginRepository provideLoginRepository(IPrefs prefs, LoginService loginService){
-        return new LoginRepository(prefs, loginService);
-    }
+//    @ActivityScope
+//    @Provides
+//    static FriendsService provideService(@Named("auth") Retrofit retrofit) {
+//        return retrofit.create(FriendsService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static LoginService provideLoginService(@Named("auth") Retrofit retrofit) {
+//        return retrofit.create(LoginService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service){
+//        return new FriendsRepository(prefs, service);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static ILoginRepository provideLoginRepository(IPrefs prefs, LoginService loginService){
+//        return new LoginRepository(prefs, loginService);
+//    }
 
     @ActivityScope
     @Provides

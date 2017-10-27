@@ -16,11 +16,11 @@ import dagger.Provides;
 @Module
 abstract class EventsActivityModule {
 
-    @ActivityScope
-    @Provides
-    static IEventsRepository provideRepository(IPrefs prefs){
-        return new MockEventsRepository(prefs);
-    }
+//    @ActivityScope
+//    @Provides
+//    static IEventsRepository provideRepository(IPrefs prefs){
+//        return new MockEventsRepository(prefs);
+//    }
 
     @ActivityScope
     @Provides

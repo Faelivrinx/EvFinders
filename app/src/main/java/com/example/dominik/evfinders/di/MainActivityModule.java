@@ -14,13 +14,12 @@ import dagger.Provides;
 @Module
 abstract class MainActivityModule {
 
-    @ActivityScope
-    @Provides
-    static IEventsRepository repository(IPrefs prefs){
-        return new MockEventsRepository( prefs);
-    }
+//    @ActivityScope
+//    @Provides
+//    static IEventsRepository repository(IPrefs prefs){
+//        return new MockEventsRepository( prefs);
+//    }
 
-    @ActivityScope
     @Provides
     static MapPresenter porovidePresenter(IEventsRepository repository){
         return new MapPresenter(repository);

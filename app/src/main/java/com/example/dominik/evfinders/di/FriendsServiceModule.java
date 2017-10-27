@@ -22,17 +22,17 @@ import retrofit2.Retrofit;
 @Module
 abstract class FriendsServiceModule {
 
-    @ActivityScope
-    @Provides
-    static FriendsService provideService(@Named("auth") Retrofit retrofit) {
-        return retrofit.create(FriendsService.class);
-    }
-
-    @ActivityScope
-    @Provides
-    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service) {
-        return new FriendsRepository(prefs, service);
-    }
+//    @ActivityScope
+//    @Provides
+//    static FriendsService provideService(@Named("auth") Retrofit retrofit) {
+//        return retrofit.create(FriendsService.class);
+//    }
+//
+//    @ActivityScope
+//    @Provides
+//    static IFriendsRepository provideRepository(IPrefs prefs, FriendsService service) {
+//        return new FriendsRepository(prefs, service);
+//    }
 
     @ActivityScope
     @Provides
