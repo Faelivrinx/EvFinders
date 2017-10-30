@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.events;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +9,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,8 +24,10 @@ import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.mvp.friends.FriendsAdapter;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
+import com.example.dominik.evfinders.mvp.home.event.EventActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,6 +38,7 @@ import dagger.android.AndroidInjection;
 
 public class EventsActivity extends BaseAuthActivity implements EventsContract.View, NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = EventsActivity.class.getSimpleName();
+    public static final String CHOOSE_EVENT = "CHOOSE_EVENT";
 
 
     @BindView(R.id.activity_events_mainLayout)
@@ -48,6 +54,7 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
     EventsPresenter presenter;
 
     private EventsAdapter adapter;
+    private List<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +63,34 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setNavigation();
+        events = new ArrayList<>();
 
-        adapter = new EventsAdapter(getLayoutInflater());
+        adapter = new EventsAdapter(getLayoutInflater(), this);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                removeItemOnSwipe(direction, position);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void removeItemOnSwipe(int direction, int position) {
+        if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT) {
+            adapter.notifyItemRemoved(position);
+            adapter.getEvents().remove(position);
+            adapter.notifyItemRangeChanged(0, adapter.getEvents().size());
+        }
     }
 
     @Override
@@ -90,6 +121,8 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
 
     @Override
     public void showEvents(List<Event> events) {
+        this.events.clear();
+        this.events.addAll(events);
         adapter.notifyDataChanged(events);
     }
 

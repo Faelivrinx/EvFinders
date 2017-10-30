@@ -28,6 +28,7 @@ import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.database.pojo.Marker;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
+import com.example.dominik.evfinders.mvp.home.event.EventActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 import com.example.dominik.evfinders.utils.MarkerFactory;
 import com.example.dominik.evfinders.utils.MarkerFactoryImp;
@@ -53,6 +54,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import io.reactivex.Observable;
 
 public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -63,6 +65,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private List<Marker> markerList;
+    private List<Event> actualEvents = new ArrayList<>();
 
     @BindView(R.id.activity_main_drawer_layout)
     DrawerLayout drawerLayout;
@@ -121,6 +124,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void showEvents(List<Event> events) {
+        actualEvents.clear();
+        actualEvents.addAll(events);
         createMarkersFromEvents(events);
 
         zoomMapToPosition(new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude()));
@@ -215,6 +220,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         drawerLayout.closeDrawer(GravityCompat.START);
         if (item.getItemId() == R.id.nav_logout) {
             onLogoutClicked();
+            finish();
         } else if (item.getItemId() == R.id.nav_friends) {
             Intent intent = new Intent(this, FriendsListActivity.class);
             intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_friends);
@@ -349,8 +355,12 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         for (Marker customMarker : markerList) {
             if (customMarker.getCoordinates().latitude == marker.getPosition().latitude && customMarker.getCoordinates().longitude == marker.getPosition().longitude) {
                 // TODO: 14.10.2017 current marker clicked
+                Event eventByCoordinates = findEventByCoordinates(customMarker.getCoordinates());
                 zoomMapToPosition(customMarker.getCoordinates());
-                btnDetailEvent.setVisibility(View.VISIBLE);
+//                btnDetailEvent.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(this, EventActivity.class);
+                intent.putExtra(CHOOSEN_EVENT, eventByCoordinates);
+                startActivity(intent);
             }
         }
 
@@ -360,5 +370,14 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         btnDetailEvent.setVisibility(View.GONE);
+    }
+
+    private Event findEventByCoordinates(LatLng coordinates){
+        for (Event actualEvent : actualEvents) {
+            if (actualEvent.getLatituide() == coordinates.latitude && actualEvent.getLongitude() == coordinates.longitude){
+                return actualEvent;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 }

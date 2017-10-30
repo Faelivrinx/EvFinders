@@ -200,6 +200,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     @Override
     public void startActivity() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override

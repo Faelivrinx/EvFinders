@@ -1,0 +1,127 @@
+package com.example.dominik.evfinders.mvp.events.detail;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.example.dominik.evfinders.R;
+import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.database.pojo.Event;
+
+import java.sql.Date;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
+
+import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVENT;
+
+/**
+ * Created by Dominik on 27.10.2017.
+ */
+
+public class EventDetailActivity extends BaseAuthActivity implements EventDetailContract.View {
+
+    @BindView(R.id.list_item_event_title)
+    TextView tvTitle;
+
+    @BindView(R.id.activity_events_event_place)
+    TextView tvPlace;
+
+    @BindView(R.id.activity_events_event_date)
+    TextView tvDate;
+
+    @BindView(R.id.list_item_event_description)
+    TextView tvDescription;
+
+    @BindView(R.id.activity_events_event_friends)
+    TextView tvFriendsCount;
+
+    @BindView(R.id.activity_events_event_progressBar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.activity_events_event_commentsLayout)
+    LinearLayout layoutComments;
+
+    @Inject
+    EventDetailContract.Presenter presenter;
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        presenter.attach(this);
+        getEvent();
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_events_event;
+    }
+
+    @Override
+    protected int getNavItem() {
+        return 0;
+    }
+
+    @Override
+    public void getEvent() {
+        Event currentEvent = getIntent().getParcelableExtra(CHOOSE_EVENT);
+        presenter.checkEvent(currentEvent);
+    }
+
+    @Override
+    public void showEvent(Event event) {
+        fillData(event);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackButtonClicked() {
+
+    }
+
+    @Override
+    public void onShowCommentsButtonClicked() {
+
+    }
+
+    @Override
+    public void onFriendsButtonClicked() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.detach();
+        super.onDestroy();
+    }
+
+    private void fillData(Event event) {
+        tvTitle.setText(event.getName());
+        tvPlace.setText(event.getPlace());
+        tvDate.setText(new Date(event.getDate()).toString());
+        tvDescription.setText(event.getDescription());
+    }
+}

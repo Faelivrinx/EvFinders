@@ -1,5 +1,10 @@
 package com.example.dominik.evfinders.mvp.events;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +15,15 @@ import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.mvp.events.detail.EventDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVENT;
 
 /**
  * Created by Dominik on 15.10.2017.
@@ -24,11 +32,13 @@ import butterknife.ButterKnife;
 public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Event> events;
-    private LayoutInflater inflater;
 
-    public EventsAdapter(LayoutInflater inflater) {
+    private LayoutInflater inflater;
+    private Context context;
+    public EventsAdapter(LayoutInflater inflater, Context context) {
         events = new ArrayList<>();
         this.inflater = inflater;
+        this.context = context;
     }
 
     @Override
@@ -40,6 +50,14 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
+        holder.itemView.setOnClickListener((View view) -> {
+            Intent intent = new Intent(context, EventDetailActivity.class);
+            intent.putExtra(CHOOSE_EVENT, events.get(position));
+            Pair<View, String> title = android.support.v4.util.Pair.create(((ViewHolder) holder).getTitle(), "title");
+            Pair<View, String> description = Pair.create(((ViewHolder) holder).getDescription(), "description");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, title, description);
+            context.startActivity(intent, options.toBundle());
+        });
         if (events != null) {
             viewHolder.populate(events.get(position));
         }
@@ -48,9 +66,13 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void notifyDataChanged(List<Event> events) {
         this.events.clear();
         if (events != null) {
-            this.events = events;
+            this.events.addAll(events);
             notifyDataSetChanged();
         }
+    }
+
+    public List<Event> getEvents() {
+        return events;
     }
 
     @Override
@@ -92,6 +114,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     mainView.setCardBackgroundColor(0xC58ade9e);
                     break;
                 case MUSIC:
+                    mainView.setCardBackgroundColor(0xDEffdbc5);
                     break;
                 case CINEMA:
                     mainView.setCardBackgroundColor(0xC5a4e9e7);
@@ -100,10 +123,22 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     break;
             }
             tvTitle.setText(event.getName());
-            tvDescription.setText(event.getDescription());
+            if (event.getDescription().length() > 70){
+                tvDescription.setText(event.getDescription().substring(0, 70) + "...");
+            } else {
+                tvDescription.setText(event.getDescription());
+            }
             tvCountFriends.setText(String.valueOf(event.getUsersRegisteredToEvent().size()));
             tvComment.setText(String.valueOf(event.getUsersRegisteredToEvent().size()));
         }
 
+        public View getTitle(){
+            return tvTitle;
+        }
+
+        public TextView getDescription() {
+            return tvDescription;
+        }
     }
+
 }

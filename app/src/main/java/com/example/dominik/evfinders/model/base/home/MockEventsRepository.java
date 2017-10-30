@@ -81,7 +81,7 @@ public class MockEventsRepository implements IEventsRepository {
 
         Event meczPolskiPilkaNozna = new Event();
         meczPolskiPilkaNozna.setId((long) 1);
-        meczPolskiPilkaNozna.setDescription("Mecz Polski w piłce nożnej z Armenią!");
+        meczPolskiPilkaNozna.setDescription("Nula Stankiewicz (wcześniej występująca jako Anna Stankiewicz) to artystka znana przede wszystkim w kręgach piosenki literackiej. Zadebiutowała jako laureatka kilku konkursów poezji śpiewanej, ale szybko odkryła, że konkursy nie są zadowalającą ją formą. Występowała w wielu składach, ale od kilkunastu niemal lat, na stałe współpracuje z Januszem Stroblem. W 2013 r. wspólnie stworzyli dwupłytowy album „Strobel Kofta Wołek” (21 piosenek do słów Jonasza Kofty i Jana Wołka z muzyką Janusza Strobla, śpiewane przez Nulę Stankiewicz), który rozszedł się niemal natychmiast. Obecnie artyści wznawiają nakład, a jednocześnie pracują nad kolejnymi płytami. Cechą charakterystyczną Nuli jest zachowanie poetyckości i subtelności, w połączeniu z jazzowymi aranżacjami muzyków, z którymi współpracuje. Ta kompilacja to znak firmowy artystki. Obecnie dla Nuli piosenki piszą Jan Wołek, Magda Czapińska.");
         meczPolskiPilkaNozna.setName("Mecz Polska-Armenia");
 
         meczPolskiPilkaNozna.setLatituide(49.53 + (49.63 - 49.53) * random.nextDouble());

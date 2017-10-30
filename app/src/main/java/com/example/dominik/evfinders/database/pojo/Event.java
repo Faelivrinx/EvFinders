@@ -5,15 +5,13 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-/**
- * Created by Dominik on 23.06.2017.
- */
-
 public class Event implements Parcelable{
 
     private Long id;
     private String name;
+    private String place;
     private String description;
+    private long date;
     private double latituide;
     private double longitude;
     private int[] profileVector = new int[40];
@@ -22,24 +20,40 @@ public class Event implements Parcelable{
     public Event() {
     }
 
-    public Event(Parcel in) {
+    protected Event(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
             id = in.readLong();
         }
         name = in.readString();
+        place = in.readString();
         description = in.readString();
+        date = in.readLong();
         latituide = in.readDouble();
         longitude = in.readDouble();
         profileVector = in.createIntArray();
         correlation = in.readDouble();
     }
 
-
-
     public double getCorrelation() {
         return correlation;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public void setCorrelation(double correlation) {
@@ -135,7 +149,6 @@ public class Event implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
         if (id == null) {
             parcel.writeByte((byte) 0);
         } else {
@@ -143,12 +156,15 @@ public class Event implements Parcelable{
             parcel.writeLong(id);
         }
         parcel.writeString(name);
+        parcel.writeString(place);
         parcel.writeString(description);
+        parcel.writeLong(date);
         parcel.writeDouble(latituide);
         parcel.writeDouble(longitude);
         parcel.writeIntArray(profileVector);
         parcel.writeDouble(correlation);
     }
+
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
         @Override
@@ -161,6 +177,7 @@ public class Event implements Parcelable{
             return new Event[size];
         }
     };
+
 
     public enum EventType {
         SPORT_AND_RECREATION, MUSIC, CINEMA, FRIENDS

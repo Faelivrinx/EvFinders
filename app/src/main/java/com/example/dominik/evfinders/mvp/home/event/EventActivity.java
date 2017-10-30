@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseActivity;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.database.pojo.Event;
 
 import static com.example.dominik.evfinders.mvp.home.MainActivity.CHOOSEN_EVENT;
 
@@ -15,21 +16,16 @@ import static com.example.dominik.evfinders.mvp.home.MainActivity.CHOOSEN_EVENT;
 
 public class EventActivity extends BaseActivity {
 
-
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getIntent().getSerializableExtra(CHOOSEN_EVENT);
+        Event event = getIntent().getParcelableExtra(CHOOSEN_EVENT);
     }
 
     @Override
     protected int getContentView() {
         return R.layout.activity_main_event;
     }
-
 
 }

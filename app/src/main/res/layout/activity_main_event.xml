@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:background="#fff">
+
 
     <LinearLayout
         android:layout_marginEnd="16dp"
@@ -36,11 +40,13 @@
                 android:gravity="start">
 
                 <TextView
+                    android:id="@+id/activity_main_event_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Film władca Pierścienia w kinie Janosik!"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="#000"/>
 
             </LinearLayout>
 
@@ -83,10 +89,12 @@
                 android:layout_weight=".8">
 
                 <TextView
+                    android:id="@+id/activity_main_event_date"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="jutro godz. 19:00!" />
+                    android:text="jutro godz. 19:00!"
+                    android:textColor="#000"/>
 
             </LinearLayout>
 
@@ -129,10 +137,12 @@
                 android:layout_weight=".8">
 
                 <TextView
+                    android:id="@+id/activity_main_event_place"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cisiec, ul Cicha 5" />
+                    android:text="Cisiec, ul Cicha 5"
+                    android:textColor="#000"/>
 
             </LinearLayout>
 
@@ -176,10 +186,12 @@
                 android:layout_weight=".8">
 
                 <TextView
+                    android:id="@+id/activity_main_event_description"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/description" />
+                    android:text="@string/description"
+                    android:textColor="#000"/>
 
             </LinearLayout>
 
@@ -194,13 +206,5 @@
             android:background="#22000000" />
 
     </LinearLayout>
-
-
-    <fragment
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/activity_main_event_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
 
 </ScrollView>
