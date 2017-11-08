@@ -9,6 +9,8 @@ import com.example.dominik.evfinders.model.base.home.friends.FriendsRepository;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
 import com.example.dominik.evfinders.model.base.home.login.LoginRepository;
+import com.example.dominik.evfinders.model.base.home.profile.IProfileRepository;
+import com.example.dominik.evfinders.model.base.home.profile.ProfileRepository;
 import com.example.dominik.evfinders.model.base.home.register.IRegisterRepository;
 import com.example.dominik.evfinders.model.base.home.register.RegisterRepository;
 import com.example.dominik.evfinders.model.repo.IPrefs;
@@ -43,5 +45,10 @@ abstract class RepositoryModule {
     @Provides
     static IEventsRepository provideEventsRepository(IPrefs prefs){
         return new MockEventsRepository(prefs);
+    }
+
+    @Provides
+    static IProfileRepository provideProfileRepository(){
+        return new ProfileRepository();
     }
 }

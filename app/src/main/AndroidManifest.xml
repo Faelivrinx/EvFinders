@@ -18,7 +18,7 @@
             android:value="AIzaSyBVU5di9i8eyt6WZ2DfXGp3H3lZumiADB8" />
 
         <activity
-            android:name=".mvp.events.EventsActivity"
+            android:name=".mvp.profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait">

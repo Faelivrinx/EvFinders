@@ -7,6 +7,7 @@ import com.example.dominik.evfinders.mvp.events.detail.EventDetailActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
+import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
 import com.example.dominik.evfinders.mvp.register.RegisterActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
@@ -75,4 +76,12 @@ abstract class AndroidBindingModule {
             }
     )
     abstract EventDetailActivity eventsDetail();
+
+    @ActivityScope
+    @ContributesAndroidInjector(
+            modules = {
+                    ProfileModule.class
+            }
+    )
+    abstract ProfileActivity profileActivity();
 }
