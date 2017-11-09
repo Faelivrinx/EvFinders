@@ -26,6 +26,7 @@ public class ProfileRepository implements IProfileRepository {
     private List<ProfileItem> createProfiles() {
         List<ProfileItem> profiles = createSportProfile();
         profiles.addAll(createMusicProfile());
+        profiles.addAll(createCultureProfile());
 
         return profiles;
     }
@@ -164,6 +165,56 @@ public class ProfileRepository implements IProfileRepository {
         profiles.add(filmowa);
         profiles.add(powazna);
         profiles.add(jazz);
+
+        return profiles;
+    }
+
+    private List<ProfileItem> createCultureProfile(){
+        List<ProfileItem> profiles = new ArrayList<>();
+        ProfileItem teatr = new ProfileItem();
+        teatr.setId(24L);
+        teatr.setName("Teatr");
+        teatr.setRating(0);
+
+        ProfileItem kino = new ProfileItem();
+        kino.setId(25L);
+        kino.setName("Kino");
+        kino.setRating(0);
+
+        ProfileItem taniec = new ProfileItem();
+        taniec.setId(26L);
+        taniec.setName("Taniec");
+        taniec.setRating(0);
+
+        ProfileItem sztuka = new ProfileItem();
+        sztuka.setId(27L);
+        sztuka.setName("Sztuka");
+        sztuka.setRating(0);
+
+        ProfileItem edukacja = new ProfileItem();
+        edukacja.setId(28L);
+        edukacja.setName("Edukacja");
+        edukacja.setRating(0);
+
+        ProfileItem dlaDzieci = new ProfileItem();
+        dlaDzieci.setId(29L);
+        dlaDzieci.setName("Dla dzieci");
+        dlaDzieci.setRating(0);
+
+        ProfileItem literatura = new ProfileItem();
+        literatura.setId(30L);
+        literatura.setName("Literatura");
+        literatura.setRating(0);
+
+
+
+        profiles.add(teatr);
+        profiles.add(kino);
+        profiles.add(taniec);
+        profiles.add(sztuka);
+        profiles.add(edukacja);
+        profiles.add(dlaDzieci);
+        profiles.add(literatura);
 
         return profiles;
     }

@@ -9,7 +9,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
+import com.example.dominik.evfinders.database.pojo.ProfileItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +25,7 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
 
     private LayoutInflater layoutInflater;
     private ProfileActivity activity;
+    List<ProfileItem> selectedItems = new ArrayList<>();
 
     public SelectedProfileAdapter(LayoutInflater layoutInflater, ProfileActivity activity) {
         this.layoutInflater = layoutInflater;
@@ -37,18 +40,28 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
 
     @Override
     public void onBindViewHolder(Viewholder holder, int position) {
-        holder.populate(activity.getSelectedItems().get(position).getName());
+        holder.populate(selectedItems.get(position).getName(), selectedItems.get(position).getRating());
 
         holder.ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> {
-            activity.getSelectedItems().get(position).setRating((int) v);
-            Log.d("test", activity.getSelectedItems().get(position).getName() +  " have rating: " + activity.getSelectedItems().get(position).getRating());
+            selectedItems.get(position).setRating((int)v);
         });
     }
 
 
     @Override
     public int getItemCount() {
-        return activity.getSelectedItems().size();
+        return selectedItems.size();
+    }
+
+    public void updateItems() {
+        selectedItems.clear();
+        for (ProfileItem profileItem : activity.getProfilesItem()) {
+            if (profileItem.isSelected()){
+                selectedItems.add(profileItem);
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     public class Viewholder extends RecyclerView.ViewHolder{
@@ -64,7 +77,8 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate(String title){
+        public void populate(String title, int rating){
+            ratingBar.setRating(rating);
             textView.setText(title);
         }
     }

@@ -17,24 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dominik on 07.11.2017.
+ * Created by Dominik on 08.11.2017.
  */
 
-public class SportFragment extends Fragment {
+public class CultureFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProfileAdapter adapter;
     private ProfileActivity activity;
 
-    private List<ProfileItem> sportItems = new ArrayList<>();
+   private List<ProfileItem> cultureItems = new ArrayList<>();
 
-    public SportFragment() {
+    public CultureFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sport, container, false);
+        return inflater.inflate(R.layout.fragment_culture, container, false);
     }
 
     @Override
@@ -46,46 +46,15 @@ public class SportFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.fragment_sport_recyclerView);
+        recyclerView = view.findViewById(R.id.fragment_culture_recyclerView);
         adapter = new ProfileAdapter(getLayoutInflater(), activity);
-        if (sportItems.size() == 0) {
-            for (ProfileItem profileItem : activity.getProfilesItem()) {
-                if (profileItem.getId() > 0L && profileItem.getId() < 12L) {
-                    sportItems.add(profileItem);
-                }
+        for (ProfileItem profileItem : activity.getProfilesItem()) {
+            if (profileItem.getId() > 23 && profileItem.getId() < 31){
+                cultureItems.add(profileItem);
             }
         }
-        adapter.onUpdateItems(sportItems);
+        adapter.onUpdateItems(cultureItems);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        ArrayList<Integer> values = new ArrayList<>();
-        for (ProfileItem sportItem : sportItems) {
-            if (sportItem.isSelected()){
-                values.add(sportItem.getId().intValue());
-            }
-        }
-
-
-        outState.putIntegerArrayList("Id", values);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }

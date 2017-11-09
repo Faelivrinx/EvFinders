@@ -24,12 +24,10 @@ import butterknife.ButterKnife;
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<ProfileItem> profileItems;
     private ProfileActivity activity;
+    List<ProfileItem> items = new ArrayList<>();
 
     public ProfileAdapter(LayoutInflater inflater, ProfileActivity activity) {
-        profileItems = new ArrayList<>();
-        profileItems.add(new ProfileItem());
         this.inflater = inflater;
         this.activity = activity;
     }
@@ -43,26 +41,33 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setOnClickListener(view -> {
-            if (!profileItems.get(position).isSelected()){
-                activity.setItemToSelected(profileItems.get(position));
+            if (!items.get(position).isSelected()) {
                 holder.layout.setBackgroundColor(0xDEffdbc5);
             } else {
-                activity.removeItemFromSelected(profileItems.get(position));
+//                activity.removeItemFromSelected(profileItems.get(position));
                 holder.layout.setBackgroundColor(0xFF7BDE6A);
+                items.get(position).setRating(0);
             }
-            profileItems.get(position).setSelected(!profileItems.get(position).isSelected());
+
+            Long id = items.get(position).getId();
+            for (ProfileItem profileItem : activity.getProfilesItem()) {
+                if (profileItem.getId() == id){
+//                    activity.getProfilesItem().get(position).setSelected(!activity.getProfilesItem().get(position).isSelected());
+                    profileItem.setSelected(!profileItem.isSelected());
+                }
+            }
+            activity.updateItemsAdapter();
         });
-        holder.populate(profileItems.get(position).getName());
+        holder.populate(items.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return profileItems.size();
+        return items.size();
     }
 
-    public void onUpdateItems(List<ProfileItem> profiles){
-        profileItems.clear();
-        profileItems.addAll(profiles);
+    public void onUpdateItems(List<ProfileItem> profiles) {
+        items.addAll(profiles);
         notifyDataSetChanged();
     }
 

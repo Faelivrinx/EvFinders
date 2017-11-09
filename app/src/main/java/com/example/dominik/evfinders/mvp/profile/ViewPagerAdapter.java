@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.dominik.evfinders.mvp.profile.fragments.CultureFragment;
 import com.example.dominik.evfinders.mvp.profile.fragments.MusicFragment;
 import com.example.dominik.evfinders.mvp.profile.fragments.SportFragment;
 
@@ -27,6 +28,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return new SportFragment();
             case 1:
                 return new MusicFragment();
+            case 2:
+                return new CultureFragment();
             default:
                 throw new IllegalStateException("Can't create fragment at this position!");
         }
@@ -34,7 +37,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -44,6 +47,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return "Sport";
             case 1:
                 return "Muzyka";
+            case 2:
+                return "Kultura";
             default:
                 return "???";
         }

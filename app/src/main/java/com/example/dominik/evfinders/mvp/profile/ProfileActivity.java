@@ -54,7 +54,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private SelectedProfileAdapter adapter;
 
     private List<ProfileItem> currentProfiles = new ArrayList<>();
-    private List<ProfileItem> selectedItems = new ArrayList<>();
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -108,11 +107,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         return currentProfiles;
     }
 
-    public void setItemToSelected(ProfileItem item){
-        selectedItems.add(item);
-        logSelectedList();
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     protected void onResume() {
@@ -127,25 +121,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         super.onDestroy();
     }
 
-    public List<ProfileItem> getSelectedItems() {
-        return selectedItems;
+    public void updateItemsAdapter(){
+        adapter.updateItems();
     }
 
-    public void removeItemFromSelected(ProfileItem profileItem) {
-        for (Iterator<ProfileItem> iterator = selectedItems.listIterator(); iterator.hasNext();) {
-            ProfileItem item = iterator.next();
-            if (item.getId() == profileItem.getId()){
-                iterator.remove();
-            }
-        }
-
-        adapter.notifyDataSetChanged();
-        logSelectedList();
-    }
-
-    private void logSelectedList(){
-        for (ProfileItem selectedItem : selectedItems) {
-            Log.e("TEST", selectedItem.getName());
-        }
-    }
 }
