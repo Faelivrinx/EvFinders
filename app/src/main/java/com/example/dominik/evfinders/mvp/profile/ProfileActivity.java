@@ -107,13 +107,13 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         return currentProfiles;
     }
 
-
     @Override
     protected void onResume() {
         presenter.onAttach(this);
         presenter.getProfiles();
         super.onResume();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -123,6 +123,10 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     public void updateItemsAdapter(){
         adapter.updateItems();
+    }
+
+    public SelectedProfileAdapter getAdapter() {
+        return adapter;
     }
 
 }

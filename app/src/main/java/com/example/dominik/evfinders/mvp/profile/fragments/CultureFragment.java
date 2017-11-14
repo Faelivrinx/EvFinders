@@ -26,7 +26,7 @@ public class CultureFragment extends Fragment {
     private ProfileAdapter adapter;
     private ProfileActivity activity;
 
-   private List<ProfileItem> cultureItems = new ArrayList<>();
+    private List<ProfileItem> cultureItems = new ArrayList<>();
 
     public CultureFragment() {
     }
@@ -48,9 +48,11 @@ public class CultureFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.fragment_culture_recyclerView);
         adapter = new ProfileAdapter(getLayoutInflater(), activity);
-        for (ProfileItem profileItem : activity.getProfilesItem()) {
-            if (profileItem.getId() > 23 && profileItem.getId() < 31){
-                cultureItems.add(profileItem);
+        if (cultureItems.size() == 0) {
+            for (ProfileItem profileItem : activity.getProfilesItem()) {
+                if (profileItem.getId() > 23 && profileItem.getId() < 31) {
+                    cultureItems.add(profileItem);
+                }
             }
         }
         adapter.onUpdateItems(cultureItems);

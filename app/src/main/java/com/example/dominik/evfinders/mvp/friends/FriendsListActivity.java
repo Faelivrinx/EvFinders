@@ -100,6 +100,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         }
     }
 
+
+
     private void createAlertDialog() {
         alertDialogBuilder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.add_friend_dialog, null);

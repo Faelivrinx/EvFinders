@@ -54,7 +54,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import io.reactivex.Observable;
 
 public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback, MapContract.View, NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -66,6 +65,9 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     private LocationRequest locationRequest;
     private List<Marker> markerList;
     private List<Event> actualEvents = new ArrayList<>();
+    private com.google.android.gms.maps.model.Marker newEventMarker;
+
+    private static int CREATE_EVENT_STATE = 0;
 
     @BindView(R.id.activity_main_drawer_layout)
     DrawerLayout drawerLayout;
@@ -107,9 +109,68 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_mainActivity_add_event) {
+            CREATE_EVENT_STATE = 1;
+        } else if (item.getItemId() == R.id.action_mainActivity_back) {
+            CREATE_EVENT_STATE = 0;
+        } else if (item.getItemId() == R.id.action_mainActivity_cancel_create){
+            CREATE_EVENT_STATE = 0;
+            newEventMarker.remove();
+        } else {
+            // TODO: 10.11.2017 CREATE EVENT
+        }
+        invalidateOptionsMenu();
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        chooseMenuItems(menu);
+        chooseActionBarTitle();
         return true;
+    }
+
+    private void chooseMenuItems(Menu menu) {
+        switch (CREATE_EVENT_STATE) {
+            case 0:
+                menu.findItem(R.id.action_mainActivity_back).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_cancel_create).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_add_event).setVisible(true);
+                menu.findItem(R.id.action_mainActivity_accept_event).setVisible(false);
+                break;
+            case 1:
+                menu.findItem(R.id.action_mainActivity_back).setVisible(true);
+                menu.findItem(R.id.action_mainActivity_cancel_create).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_add_event).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_accept_event).setVisible(false);
+                break;
+            case 2:
+                menu.findItem(R.id.action_mainActivity_back).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_cancel_create).setVisible(true);
+                menu.findItem(R.id.action_mainActivity_add_event).setVisible(false);
+                menu.findItem(R.id.action_mainActivity_accept_event).setVisible(true);
+                break;
+            default:
+                throw new IllegalStateException("Illegal state in create event! " + CREATE_EVENT_STATE);
+        }
+    }
+
+    private void chooseActionBarTitle() {
+        switch (CREATE_EVENT_STATE) {
+            case 0:
+                getSupportActionBar().setTitle("");
+                break;
+            case 1:
+                getSupportActionBar().setTitle("Wskaż lokację...");
+                break;
+            case 2:
+                getSupportActionBar().setTitle("Stworz wydarzenie");
+                break;
+            default:
+                throw new IllegalStateException("Illegatl state to create title of action bar " + CREATE_EVENT_STATE);
+        }
     }
 
     @Override
@@ -135,13 +196,13 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     private void addMarker(Marker marker) {
         BitmapDescriptor icon = null;
 
-        switch (marker.getMarkerType()){
+        switch (marker.getMarkerType()) {
             case MUSIC:
-                 icon = BitmapDescriptorFactory.fromResource(R.drawable.music);
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.music);
                 break;
             case SPORT:
-                 icon = BitmapDescriptorFactory.fromResource(R.drawable.sport);
-                 break;
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.sport);
+                break;
             case CINEMA:
                 icon = BitmapDescriptorFactory.fromResource(R.drawable.cinema);
                 break;
@@ -343,11 +404,11 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        addMarkerWithMyPosition("My positon", new LatLng(49.592372, 19.097012));
+//        addNewEventMarker("My positon", new LatLng(49.592372, 19.097012));
     }
 
-    private void addMarkerWithMyPosition(String s, LatLng latLng) {
-        // TODO: 09.10.2017
+    private void addNewEventMarker(String s, LatLng latLng) {
+        newEventMarker = googleMap.addMarker(new MarkerOptions().title(s).position(latLng));
     }
 
     @Override
@@ -370,11 +431,16 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
         btnDetailEvent.setVisibility(View.GONE);
+        if (CREATE_EVENT_STATE == 1){
+            CREATE_EVENT_STATE = 2;
+            addNewEventMarker("Tworzone wydarzenie", latLng);
+            invalidateOptionsMenu();
+        }
     }
 
-    private Event findEventByCoordinates(LatLng coordinates){
+    private Event findEventByCoordinates(LatLng coordinates) {
         for (Event actualEvent : actualEvents) {
-            if (actualEvent.getLatituide() == coordinates.latitude && actualEvent.getLongitude() == coordinates.longitude){
+            if (actualEvent.getLatituide() == coordinates.latitude && actualEvent.getLongitude() == coordinates.longitude) {
                 return actualEvent;
             }
         }

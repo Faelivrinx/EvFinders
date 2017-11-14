@@ -43,10 +43,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.itemView.setOnClickListener(view -> {
             if (!items.get(position).isSelected()) {
                 holder.layout.setBackgroundColor(0xDEffdbc5);
+                items.get(position).setRating(1);
             } else {
 //                activity.removeItemFromSelected(profileItems.get(position));
                 holder.layout.setBackgroundColor(0xFF7BDE6A);
-                items.get(position).setRating(0);
             }
 
             Long id = items.get(position).getId();
@@ -58,7 +58,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             }
             activity.updateItemsAdapter();
         });
-        holder.populate(items.get(position).getName());
+        holder.populate(items.get(position));
+        if (items.get(position).isSelected()){
+            holder.layout.setBackgroundColor(0xDEffdbc5);
+        } else {
+            holder.layout.setBackgroundColor(0xFF7BDE6A);
+        }
     }
 
     @Override
@@ -84,8 +89,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate(String text) {
-            tvName.setText(text);
+        public void populate(ProfileItem item) {
+            tvName.setText(item.getName());
         }
 
     }

@@ -65,7 +65,7 @@ public class SportFragment extends Fragment {
         super.onSaveInstanceState(outState);
         ArrayList<Integer> values = new ArrayList<>();
         for (ProfileItem sportItem : sportItems) {
-            if (sportItem.isSelected()){
+            if (sportItem.isSelected()) {
                 values.add(sportItem.getId().intValue());
             }
         }

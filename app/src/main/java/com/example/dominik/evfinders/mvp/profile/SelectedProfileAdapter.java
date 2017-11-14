@@ -25,6 +25,7 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
 
     private LayoutInflater layoutInflater;
     private ProfileActivity activity;
+
     List<ProfileItem> selectedItems = new ArrayList<>();
 
     public SelectedProfileAdapter(LayoutInflater layoutInflater, ProfileActivity activity) {
@@ -47,11 +48,11 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
         });
     }
 
-
     @Override
     public int getItemCount() {
         return selectedItems.size();
     }
+
 
     public void updateItems() {
         selectedItems.clear();
@@ -62,6 +63,10 @@ public class SelectedProfileAdapter extends RecyclerView.Adapter<SelectedProfile
         }
 
         notifyDataSetChanged();
+    }
+
+    public List<ProfileItem> getSelectedItems() {
+        return selectedItems;
     }
 
     public class Viewholder extends RecyclerView.ViewHolder{

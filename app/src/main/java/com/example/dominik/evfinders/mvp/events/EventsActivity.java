@@ -166,7 +166,7 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.blank, menu);
         return true;
     }
 }
