@@ -119,7 +119,7 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
 
     private void checkTaskResponse(Response<TaskResponse> response) {
         if (response.code() == 200) {
-            if (response.body().getName().equals("success")) {
+            if (response.body().getValue().equals("success")) {
                 view.showToast("Task success!");
                 getFriendsList();
             } else {

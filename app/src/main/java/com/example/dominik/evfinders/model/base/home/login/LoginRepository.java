@@ -28,7 +28,7 @@ public class LoginRepository implements ILoginRepository{
 
     @Override
     public Observable<ApiKeyResponse> getLoginResponse(String username, String password, String token) {
-        return service.getToken(username, password, token).filter(apiKeyResponse -> apiKeyResponse != null);
+        return service.getToken(username, password, token).filter(apiKeyResponse -> !apiKeyResponse.getValue().equals(""));
     }
 
     @Override

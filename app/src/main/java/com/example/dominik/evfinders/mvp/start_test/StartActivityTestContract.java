@@ -6,7 +6,7 @@ import com.example.dominik.evfinders.mvp.login.LoginContract;
  * Created by Dominik on 11.10.2017.
  */
 
-public interface StartActivityTestContract {
+public interface    StartActivityTestContract {
 
     interface View{
         void showToast(String message);

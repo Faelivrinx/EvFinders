@@ -10,6 +10,7 @@ public class ApiKeyResponse implements Response {
 
     @SerializedName("name")
     private String name;
+
     @SerializedName("value")
     private String value;
 

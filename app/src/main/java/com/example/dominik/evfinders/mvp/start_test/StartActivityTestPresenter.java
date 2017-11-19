@@ -53,18 +53,19 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
             if (validateData(username, password)) {
                 Observable<ApiKeyResponse> loginReponse = loginRepo.getLoginResponse(username, password, fcmToken);
                 loginReponse
+                        .map(apiKeyResponse -> apiKeyResponse)
                         .timeout(5, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(apiKeyResponse -> {
                             loginRepo.saveKey(apiKeyResponse);
+                            view.startActivity();
                         }, throwable -> {
                             throwable.printStackTrace();
                             view.hideProgressDialog();
                             view.showToast("Network problem! Check connection");
 
                         }, () -> {
-                            view.startActivity();
                             view.hideProgressDialog();
                         });
             } else {
@@ -73,6 +74,7 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
             }
         } else {
             view.hideProgressDialog();
+            new DeleteToken().execute();
             view.showToast("Refresh FCM key");
         }
     }
@@ -83,13 +85,13 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
         if (validateData(username, password, email)) {
             registerRepo.getRegisterResponse(createUser(username, password, email))
                     .filter(apiKeyResponseResponse -> !apiKeyResponseResponse.message().isEmpty())
-                    .timeout(10, TimeUnit.SECONDS)
+                    .timeout(5, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(apiKeyResponseResponse -> {
                         if (apiKeyResponseResponse.code() == 200) {
                             registerRepo.saveKey(apiKeyResponseResponse.body());
-                            // TODO: 06.09.2017 start activity
+                            view.startActivity();
                         } else {
                             view.showToast("Error: " + apiKeyResponseResponse.code());
                         }
