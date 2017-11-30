@@ -1,6 +1,8 @@
 package com.example.dominik.evfinders.mvp.home;
 
 import com.example.dominik.evfinders.base.BasePresenter;
+import com.example.dominik.evfinders.command.CoordinateCommand;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.base.BaseView;
 import com.google.android.gms.maps.model.LatLng;
@@ -15,7 +17,7 @@ public interface MapContract {
 
     interface View extends BaseView {
 
-        void showEvents(List<Event> events);
+        void showEvents(List<EventCommand> events);
 
         void onLogoutClicked();
 
@@ -34,7 +36,7 @@ public interface MapContract {
 
         void detach();
 
-        void getEvents();
+        void getEvents(CoordinateCommand coordinateCommand);
 
         void logoutUser();
 

@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.database.pojo;
 
+import com.google.gson.JsonObject;
+
 /**
  * Created by Dominik on 07.11.2017.
  */

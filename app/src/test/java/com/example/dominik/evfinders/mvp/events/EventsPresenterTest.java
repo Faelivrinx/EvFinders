@@ -1,7 +1,7 @@
 package com.example.dominik.evfinders.mvp.events;
 
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
 import org.junit.Assert;
 import org.junit.Before;

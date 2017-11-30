@@ -4,7 +4,7 @@ import android.support.annotation.VisibleForTesting;
 
 import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
 import java.util.List;
 
@@ -39,10 +39,10 @@ public class EventsPresenter implements EventsContract.Presenter {
 
     @Override
     public void getEvents() {
-        Single<List<Event>> events = repository.getEvents();
-        events.subscribe(
-                eventsResponse -> view.showEvents(eventsResponse),
-                throwable -> {});
+//        Single<List<Event>> events = repository.getEvents();
+//        events.subscribe(
+//                eventsResponse -> view.showEvents(eventsResponse),
+//                throwable -> {});
     }
 
 

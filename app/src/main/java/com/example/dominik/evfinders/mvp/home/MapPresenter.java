@@ -1,16 +1,21 @@
 package com.example.dominik.evfinders.mvp.home;
 
+import android.util.Log;
+
 import com.example.dominik.evfinders.application.DeleteToken;
+import com.example.dominik.evfinders.command.CoordinateCommand;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * Created by Dominik on 23.06.2017.
@@ -41,13 +46,15 @@ public class MapPresenter implements MapContract.Presenter {
     }
 
     @Override
-    public void getEvents() {
+    public void getEvents(CoordinateCommand coordinateCommand) {
         view.showProgressBar();
-        Single<List<Event>> events = repository.getEvents();
-        events.subscribe(eventsResponse -> {
-            view.showEvents(eventsResponse);
-            view.hideProgressBar();
-        }, throwable -> view.hideProgressBar());
+        Single<Response<List<EventCommand>>> events = repository.getEvents(coordinateCommand);
+        events
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkResponse, throwable -> {
+            Log.d("TAG", "getEvents: " + throwable.getMessage());
+        });
 
     }
 
@@ -66,5 +73,13 @@ public class MapPresenter implements MapContract.Presenter {
         return this.view;
     }
 
+    private void checkResponse(Response<List<EventCommand>> response){
+        view.hideProgressBar();
+        if (response.code() == 200){
+            view.showEvents(response.body());
+        } else {
+
+        }
+    }
 
 }

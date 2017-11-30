@@ -1,8 +1,8 @@
 package com.example.dominik.evfinders.mvp.home;
 
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
-import com.example.dominik.evfinders.model.base.home.MockEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.MockEventsRepository;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,8 +15,6 @@ import io.reactivex.Single;
 
 import static io.reactivex.Observable.fromArray;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

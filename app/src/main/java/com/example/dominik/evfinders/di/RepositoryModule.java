@@ -1,10 +1,12 @@
 package com.example.dominik.evfinders.di;
 
+import com.example.dominik.evfinders.model.api.EventService;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.api.RegisterService;
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
-import com.example.dominik.evfinders.model.base.home.MockEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.EventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
+import com.example.dominik.evfinders.model.base.home.event.MockEventsRepository;
 import com.example.dominik.evfinders.model.base.home.friends.FriendsRepository;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
@@ -17,7 +19,6 @@ import com.example.dominik.evfinders.model.repo.IPrefs;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 /**
  * Created by Dominik on 19.10.2017.
@@ -43,8 +44,8 @@ abstract class RepositoryModule {
     }
 
     @Provides
-    static IEventsRepository provideEventsRepository(IPrefs prefs){
-        return new MockEventsRepository(prefs);
+    static IEventsRepository provideEventsRepository(IPrefs prefs, EventService service){
+        return new EventsRepository(prefs, service);
     }
 
     @Provides

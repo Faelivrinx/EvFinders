@@ -1,12 +1,13 @@
-package com.example.dominik.evfinders.model.base.home;
-
-import android.util.Log;
+package com.example.dominik.evfinders.model.base.home.event;
 
 import com.example.dominik.evfinders.application.recommendation.EventsRecommendation;
 import com.example.dominik.evfinders.application.recommendation.Recommendation;
+import com.example.dominik.evfinders.command.CoordinateCommand;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.database.pojo.Rating;
 import com.example.dominik.evfinders.database.pojo.User;
+import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 
@@ -16,7 +17,9 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import retrofit2.Response;
 
 import static io.reactivex.Observable.fromArray;
 
@@ -35,11 +38,16 @@ public class MockEventsRepository implements IEventsRepository {
     }
 
     @Override
-    public Single<List<Event>> getEvents() {
-        List<Event> events = createMockEvents();
+    public Single<Response<TaskResponse>> createEvent(EventCommand eventCommand) {
+        return null;
+    }
+
+    @Override
+    public  Single<Response<List<EventCommand>>> getEvents(CoordinateCommand coordinateCommand) {
+        List<EventCommand> events = createMockEvents();
 
 
-        return Single.fromObservable(fromArray(events));
+        return null;
     }
 
 
@@ -54,7 +62,7 @@ public class MockEventsRepository implements IEventsRepository {
     }
 
 
-    private List<Event> createMockEvents() {
+    private List<EventCommand> createMockEvents() {
         User user = new User();
         user.setProfile(new int[]{1, 6, 6, 6, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -192,7 +200,7 @@ public class MockEventsRepository implements IEventsRepository {
        bieganie2.setUsersRegisteredToEvent(users);
         events.add(bieganie2);
 
-        return systemRecomendation.sortEventsByRecommendation(events);
+        return null;
 
     }
 }

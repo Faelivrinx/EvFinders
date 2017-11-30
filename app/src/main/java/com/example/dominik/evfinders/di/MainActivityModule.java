@@ -1,8 +1,6 @@
 package com.example.dominik.evfinders.di;
 
-import com.example.dominik.evfinders.model.base.home.IEventsRepository;
-import com.example.dominik.evfinders.model.base.home.MockEventsRepository;
-import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 import com.example.dominik.evfinders.mvp.home.MapPresenter;
 
 import dagger.Module;

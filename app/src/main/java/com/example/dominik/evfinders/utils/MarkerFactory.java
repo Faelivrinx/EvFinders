@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.utils;
 
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.database.pojo.Marker;
 
@@ -8,5 +9,5 @@ import com.example.dominik.evfinders.database.pojo.Marker;
  */
 
 public interface MarkerFactory {
-    Marker createMarkerByEventType(Event event);
+    Marker createMarkerByEventType(EventCommand event);
 }

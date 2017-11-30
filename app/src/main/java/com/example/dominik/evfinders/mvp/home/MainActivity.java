@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +25,13 @@ import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.command.CoordinateCommand;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.database.pojo.Marker;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
+import com.example.dominik.evfinders.mvp.home.create.event.CreateEventActivity;
 import com.example.dominik.evfinders.mvp.home.event.EventActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 import com.example.dominik.evfinders.utils.MarkerFactory;
@@ -59,13 +63,15 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static final String CHOOSEN_EVENT = "CHOOSEN_EVENT";
+    public static final int ADD_EVENT_REQUEST = 1;
 
     private GoogleMap googleMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private List<Marker> markerList;
-    private List<Event> actualEvents = new ArrayList<>();
+    private List<EventCommand> actualEvents = new ArrayList<>();
     private com.google.android.gms.maps.model.Marker newEventMarker;
+    private Location currentLocation;
 
     private static int CREATE_EVENT_STATE = 0;
 
@@ -117,11 +123,25 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         } else if (item.getItemId() == R.id.action_mainActivity_cancel_create){
             CREATE_EVENT_STATE = 0;
             newEventMarker.remove();
+        } else if(item.getItemId() == R.id.action_mainActivity_refresh){
+            if (currentLocation != null){
+                presenter.getEvents(new CoordinateCommand(currentLocation.getLatitude(), currentLocation.getLongitude()));
+            } else {
+
+            }
         } else {
-            // TODO: 10.11.2017 CREATE EVENT
+            Intent intent = new Intent(this, CreateEventActivity.class);
+            intent.putExtra("LATITUDE", newEventMarker.getPosition().latitude);
+            intent.putExtra("LONGITUDE", newEventMarker.getPosition().longitude);
+            startActivityForResult(intent, ADD_EVENT_REQUEST);
         }
         invalidateOptionsMenu();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -184,13 +204,15 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void showEvents(List<Event> events) {
+    public void showEvents(List<EventCommand> events) {
         actualEvents.clear();
         actualEvents.addAll(events);
         createMarkersFromEvents(events);
 
-        zoomMapToPosition(new LatLng(events.get(0).getLatituide(), events.get(0).getLongitude()));
-        addMarkersToMap();
+        if (actualEvents.size() >0){
+            zoomMapToPosition(new LatLng(events.get(0).getLatitude(), events.get(0).getLongitude()));
+            addMarkersToMap();
+        }
     }
 
     private void addMarker(Marker marker) {
@@ -219,8 +241,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         }
     }
 
-    private void createMarkersFromEvents(List<Event> events) {
-        for (Event event : events) {
+    private void createMarkersFromEvents(List<EventCommand> events) {
+        for (EventCommand event : events) {
             Marker marker = markerFactory.createMarkerByEventType(event);
             markerList.add(marker);
         }
@@ -256,7 +278,6 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         this.googleMap.setOnMarkerClickListener(this);
         this.googleMap.setOnMapClickListener(this);
         presenter.attach(this);
-        presenter.getEvents();
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -384,13 +405,11 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
                         if (googleApiClient == null) {
                             buildGoogleApiClient();
                         }
-//                        this.googleMap.setMyLocationEnabled(true);
+                        this.googleMap.setMyLocationEnabled(true);
                     }
 
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
             }
@@ -404,7 +423,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-//        addNewEventMarker("My positon", new LatLng(49.592372, 19.097012));
+        Log.d(TAG, "onLocationChanged: " + location.getLatitude() + ", " + location.getLongitude());
+        currentLocation = location;
     }
 
     private void addNewEventMarker(String s, LatLng latLng) {
@@ -416,7 +436,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         for (Marker customMarker : markerList) {
             if (customMarker.getCoordinates().latitude == marker.getPosition().latitude && customMarker.getCoordinates().longitude == marker.getPosition().longitude) {
                 // TODO: 14.10.2017 current marker clicked
-                Event eventByCoordinates = findEventByCoordinates(customMarker.getCoordinates());
+                EventCommand eventByCoordinates = findEventByCoordinates(customMarker.getCoordinates());
                 zoomMapToPosition(customMarker.getCoordinates());
 //                btnDetailEvent.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(this, EventActivity.class);
@@ -438,9 +458,9 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         }
     }
 
-    private Event findEventByCoordinates(LatLng coordinates) {
-        for (Event actualEvent : actualEvents) {
-            if (actualEvent.getLatituide() == coordinates.latitude && actualEvent.getLongitude() == coordinates.longitude) {
+    private EventCommand findEventByCoordinates(LatLng coordinates) {
+        for (EventCommand actualEvent : actualEvents) {
+            if (actualEvent.getLatitude() == coordinates.latitude && actualEvent.getLongitude() == coordinates.longitude) {
                 return actualEvent;
             }
         }

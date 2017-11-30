@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.di;
 
+import com.example.dominik.evfinders.model.api.EventService;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.api.RegisterService;
@@ -30,6 +31,11 @@ abstract class ServicesModule {
     @Provides
     static FriendsService provideFriendsService(@Named("auth") Retrofit retrofit){
         return retrofit.create(FriendsService.class);
+    }
+
+    @Provides
+    static EventService provideEventService(@Named("auth") Retrofit retrofit){
+        return retrofit.create(EventService.class);
     }
 
 }

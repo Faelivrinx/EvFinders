@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 public class CreateEventAdapter extends RecyclerView.Adapter<CreateEventAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
+
     private List<ProfileItem> profileItems = new ArrayList<>();
 
     public CreateEventAdapter(LayoutInflater layoutInflater) {
@@ -39,6 +40,11 @@ public class CreateEventAdapter extends RecyclerView.Adapter<CreateEventAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mainLayout.setOnClickListener(view -> {
             profileItems.get(position).setSelected(!profileItems.get(position).isSelected());
+            if (profileItems.get(position).isSelected()){
+                profileItems.get(position).setRating(6);
+            } else {
+                profileItems.get(position).setRating(0);
+            }
             notifyDataSetChanged();
         });
 
@@ -56,6 +62,10 @@ public class CreateEventAdapter extends RecyclerView.Adapter<CreateEventAdapter.
             profileItems.addAll(items);
         }
         notifyDataSetChanged();
+    }
+
+    public List<ProfileItem> getProfileItems() {
+        return profileItems;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

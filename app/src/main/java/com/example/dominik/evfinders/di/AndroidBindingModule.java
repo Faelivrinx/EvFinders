@@ -6,6 +6,7 @@ import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.events.detail.EventDetailActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
+import com.example.dominik.evfinders.mvp.home.create.event.CreateEventActivity;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
 import com.example.dominik.evfinders.mvp.register.RegisterActivity;
@@ -84,4 +85,12 @@ abstract class AndroidBindingModule {
             }
     )
     abstract ProfileActivity profileActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(
+            modules = {
+                    CreateEventActivityModule.class
+            }
+    )
+    abstract CreateEventActivity createEventActivity();
 }
