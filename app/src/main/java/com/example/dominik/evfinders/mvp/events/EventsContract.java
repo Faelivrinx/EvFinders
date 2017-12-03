@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.events;
 
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface EventsContract {
 
         void startActivity();
 
-        void showEvents(List<Event> events);
+        void showEvents(List<EventCommand> events);
 
     }
 

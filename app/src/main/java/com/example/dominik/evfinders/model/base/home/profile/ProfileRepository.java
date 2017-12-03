@@ -3,15 +3,34 @@ package com.example.dominik.evfinders.model.base.home.profile;
 import android.support.annotation.NonNull;
 
 import com.example.dominik.evfinders.database.pojo.ProfileItem;
+import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
+import com.example.dominik.evfinders.model.api.ProfileService;
+import com.example.dominik.evfinders.model.repo.IPrefs;
+import com.example.dominik.evfinders.model.repo.Prefs;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import retrofit2.Response;
 
 /**
  * Created by Dominik on 07.11.2017.
  */
 
 public class ProfileRepository implements IProfileRepository {
+
+    private IPrefs prefs;
+    private ProfileService service;
+
+    @Inject
+    public ProfileRepository(IPrefs prefs, ProfileService service) {
+        this.prefs = prefs;
+        this.service = service;
+    }
 
     @Override
     public List<ProfileItem> getAllProfiles() {
@@ -21,6 +40,11 @@ public class ProfileRepository implements IProfileRepository {
     @Override
     public ProfileItem getProfileById(Long id) {
         return null;
+    }
+
+    @Override
+    public Single<Response<TaskResponse>> saveProfile(String profile) {
+        return service.saveOrUpdate(prefs.get(Prefs.API_KEY), profile);
     }
 
     private List<ProfileItem> createProfiles() {
@@ -103,7 +127,7 @@ public class ProfileRepository implements IProfileRepository {
         return profiles;
     }
 
-    private List<ProfileItem> createMusicProfile(){
+    private List<ProfileItem> createMusicProfile() {
         List<ProfileItem> profiles = new ArrayList<>();
         ProfileItem rock = new ProfileItem();
         rock.setId(13L);
@@ -169,7 +193,7 @@ public class ProfileRepository implements IProfileRepository {
         return profiles;
     }
 
-    private List<ProfileItem> createCultureProfile(){
+    private List<ProfileItem> createCultureProfile() {
         List<ProfileItem> profiles = new ArrayList<>();
         ProfileItem teatr = new ProfileItem();
         teatr.setId(24L);
@@ -205,7 +229,6 @@ public class ProfileRepository implements IProfileRepository {
         literatura.setId(30L);
         literatura.setName("Literatura");
         literatura.setRating(0);
-
 
 
         profiles.add(teatr);

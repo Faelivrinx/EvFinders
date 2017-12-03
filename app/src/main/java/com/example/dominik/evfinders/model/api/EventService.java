@@ -24,4 +24,7 @@ public interface EventService {
     @POST("events")
     Single<Response<List<EventCommand>>> getEvents(@Header("Authorization") String key, @Body CoordinateCommand coordinates);
 
+    @POST("events/recommendation")
+    Single<Response<List<EventCommand>>> getEventsWithRecommendation(@Header("Authorization") String key, @Body CoordinateCommand coordinates);
+
 }

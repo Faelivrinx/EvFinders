@@ -2,6 +2,8 @@ package com.example.dominik.evfinders.mvp.events.detail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
 import java.sql.Date;
@@ -48,6 +51,9 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     @BindView(R.id.activity_events_event_commentsLayout)
     LinearLayout layoutComments;
 
+    @BindView(R.id.activity_events_event_mainLayout)
+    ConstraintLayout mainLayout;
+
     @Inject
     EventDetailContract.Presenter presenter;
 
@@ -73,12 +79,12 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
 
     @Override
     public void getEvent() {
-        Event currentEvent = getIntent().getParcelableExtra(CHOOSE_EVENT);
+        EventCommand currentEvent = getIntent().getParcelableExtra(CHOOSE_EVENT);
         presenter.checkEvent(currentEvent);
     }
 
     @Override
-    public void showEvent(Event event) {
+    public void showEvent(EventCommand event) {
         fillData(event);
     }
 
@@ -118,9 +124,23 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         super.onDestroy();
     }
 
-    private void fillData(Event event) {
+    private void fillData(EventCommand event) {
+        switch (event.getEventType()){
+            case SPORT_AND_RECREATION:
+                mainLayout.setBackgroundColor(0xC58ade9e);
+                break;
+            case MUSIC:
+                mainLayout.setBackgroundColor(0xDEffdbc5);
+                break;
+            case CINEMA:
+                mainLayout.setBackgroundColor(0xC5a4e9e7);
+                break;
+            default:
+                break;
+        }
+
         tvTitle.setText(event.getName());
-        tvPlace.setText(event.getPlace());
+        tvPlace.setText(event.getAddress());
         tvDate.setText(new Date(event.getDate()).toString());
         tvDescription.setText(event.getDescription());
     }

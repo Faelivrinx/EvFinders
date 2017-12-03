@@ -3,6 +3,7 @@ package com.example.dominik.evfinders.di;
 import com.example.dominik.evfinders.model.api.EventService;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.api.LoginService;
+import com.example.dominik.evfinders.model.api.ProfileService;
 import com.example.dominik.evfinders.model.api.RegisterService;
 import com.example.dominik.evfinders.model.base.home.event.EventsRepository;
 import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
@@ -49,7 +50,7 @@ abstract class RepositoryModule {
     }
 
     @Provides
-    static IProfileRepository provideProfileRepository(){
-        return new ProfileRepository();
+    static IProfileRepository provideProfileRepository(IPrefs prefs, ProfileService service){
+        return new ProfileRepository(prefs, service);
     }
 }

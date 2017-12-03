@@ -50,6 +50,11 @@ public class MockEventsRepository implements IEventsRepository {
         return null;
     }
 
+    @Override
+    public Single<Response<List<EventCommand>>> getEventsWithRecommendation(CoordinateCommand coordinateCommand) {
+        return null;
+    }
+
 
     @Override
     public boolean removeUserKey() {

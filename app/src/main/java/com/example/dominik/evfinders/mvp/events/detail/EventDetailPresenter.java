@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.events.detail;
 
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
 /**
@@ -23,7 +24,7 @@ public class EventDetailPresenter implements EventDetailContract.Presenter {
     }
 
     @Override
-    public void checkEvent(Event event) {
+    public void checkEvent(EventCommand event) {
         view.showProgressBar();
         if (event != null){
             view.showEvent(event);

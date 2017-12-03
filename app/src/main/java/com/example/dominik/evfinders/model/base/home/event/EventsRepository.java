@@ -38,6 +38,11 @@ public class EventsRepository implements IEventsRepository {
     }
 
     @Override
+    public Single<Response<List<EventCommand>>> getEventsWithRecommendation(CoordinateCommand coordinateCommand) {
+        return eventService.getEventsWithRecommendation(prefs.get(Prefs.API_KEY), coordinateCommand);
+    }
+
+    @Override
     public Single<Response<TaskResponse>> createEvent(EventCommand eventCommand) {
         return eventService.createEvent(prefs.get(Prefs.API_KEY), eventCommand);
     }

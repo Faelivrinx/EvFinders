@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.events.detail;
 
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
 /**
@@ -11,7 +12,7 @@ public interface EventDetailContract {
     interface View {
         void getEvent();
 
-        void showEvent(Event event);
+        void showEvent(EventCommand event);
 
         void showProgressBar();
 
@@ -30,6 +31,6 @@ public interface EventDetailContract {
 
         void detach();
 
-        void checkEvent(Event event);
+        void checkEvent(EventCommand event);
     }
 }

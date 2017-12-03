@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.mvp.friends.FriendsAdapter;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
@@ -54,7 +55,7 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
     EventsPresenter presenter;
 
     private EventsAdapter adapter;
-    private List<Event> events;
+    private List<EventCommand> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,7 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
     }
 
     @Override
-    public void showEvents(List<Event> events) {
+    public void showEvents(List<EventCommand> events) {
         this.events.clear();
         this.events.addAll(events);
         adapter.notifyDataChanged(events);

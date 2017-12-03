@@ -3,12 +3,17 @@ package com.example.dominik.evfinders.mvp.events;
 import android.support.annotation.VisibleForTesting;
 
 import com.example.dominik.evfinders.application.DeleteToken;
+import com.example.dominik.evfinders.application.services.LocationService;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
 import java.util.List;
 
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * Created by Dominik on 09.10.2017.
@@ -39,10 +44,19 @@ public class EventsPresenter implements EventsContract.Presenter {
 
     @Override
     public void getEvents() {
-//        Single<List<Event>> events = repository.getEvents();
-//        events.subscribe(
-//                eventsResponse -> view.showEvents(eventsResponse),
-//                throwable -> {});
+        Single<Response<List<EventCommand>>> events = repository.getEventsWithRecommendation(LocationService.LocationListener.getLastKnowCoordinate());
+        events
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                this::checkResponse,
+                throwable -> {});
+    }
+
+    private void checkResponse(Response<List<EventCommand>> eventsResponse) {
+        if (eventsResponse.isSuccessful()){
+            view.showEvents(eventsResponse.body());
+        }
     }
 
 

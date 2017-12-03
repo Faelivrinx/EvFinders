@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
+import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.mvp.events.detail.EventDetailActivity;
 
@@ -23,6 +24,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dominik.evfinders.database.pojo.Event.EventType.CINEMA;
+import static com.example.dominik.evfinders.database.pojo.Event.EventType.SPORT_AND_RECREATION;
+import static com.example.dominik.evfinders.database.pojo.Marker.MarkerType.MUSIC;
 import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVENT;
 
 /**
@@ -31,7 +35,7 @@ import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVE
 
 public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Event> events;
+    private List<EventCommand> events;
 
     private LayoutInflater inflater;
     private Context context;
@@ -63,7 +67,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void notifyDataChanged(List<Event> events) {
+    public void notifyDataChanged(List<EventCommand> events) {
         this.events.clear();
         if (events != null) {
             this.events.addAll(events);
@@ -71,7 +75,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public List<Event> getEvents() {
+    public List<EventCommand> getEvents() {
         return events;
     }
 
@@ -108,7 +112,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate(Event event) {
+        public void populate(EventCommand event) {
             switch (event.getEventType()){
                 case SPORT_AND_RECREATION:
                     mainView.setCardBackgroundColor(0xC58ade9e);
@@ -128,8 +132,8 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 tvDescription.setText(event.getDescription());
             }
-            tvCountFriends.setText(String.valueOf(event.getUsersRegisteredToEvent().size()));
-            tvComment.setText(String.valueOf(event.getUsersRegisteredToEvent().size()));
+            tvCountFriends.setText("0");
+            tvComment.setText("0");
         }
 
         public View getTitle(){

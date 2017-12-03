@@ -23,5 +23,7 @@ public interface ProfileContract {
         void onDetach();
 
         void getProfiles();
+        void updateProfile(List<ProfileItem> profileItems);
+        void logout();
     }
 }

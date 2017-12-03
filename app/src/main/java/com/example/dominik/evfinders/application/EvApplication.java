@@ -1,11 +1,11 @@
 package com.example.dominik.evfinders.application;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.dominik.evfinders.application.services.FCMFriendService;
 import com.example.dominik.evfinders.application.services.FcmService;
+import com.example.dominik.evfinders.application.services.LocationService;
 import com.example.dominik.evfinders.di.DaggerApplicationComponent;
 
 import dagger.android.AndroidInjector;
@@ -29,6 +29,7 @@ public class EvApplication extends DaggerApplication {
         context = getApplicationContext();
         startService(new Intent(this, FcmService.class));
         startService(new Intent(this, FCMFriendService.class));
+        startService(new Intent(this, LocationService.class));
     }
 
     @Override
