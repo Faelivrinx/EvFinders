@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 
 import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVENT;
@@ -54,6 +59,16 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     @BindView(R.id.activity_events_event_mainLayout)
     ConstraintLayout mainLayout;
 
+    @BindView(R.id.activity_events_event_detailLayout)
+    ConstraintLayout detailLayout;
+
+
+    @BindView(R.id.activity_events_event_comments)
+    RecyclerView recyclerView;
+
+    private CommentsAdapter commentsAdapter;
+
+
     @Inject
     EventDetailContract.Presenter presenter;
 
@@ -64,7 +79,22 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         presenter.attach(this);
+        commentsAdapter = new CommentsAdapter(getLayoutInflater());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(commentsAdapter);
         getEvent();
+    }
+
+    @OnClick(R.id.activity_events_event_show_comments)
+    public void onShowEventsClick(){
+        detailLayout.setVisibility(View.GONE);
+        layoutComments.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.activity_events_event_comment_back)
+    public void onBackToEventClicked(){
+        detailLayout.setVisibility(View.VISIBLE);
+        layoutComments.setVisibility(View.GONE);
     }
 
     @Override
@@ -85,6 +115,7 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
 
     @Override
     public void showEvent(EventCommand event) {
+        commentsAdapter.notifyDataChanged(event.getCommentCommands());
         fillData(event);
     }
 

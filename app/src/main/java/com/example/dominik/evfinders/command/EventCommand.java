@@ -8,7 +8,9 @@ import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.database.pojo.Marker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +19,7 @@ import java.util.Map;
 
 public class EventCommand implements Parcelable{
 
+    private Long id;
     private String name;
     private String address;
     private long date;
@@ -25,11 +28,19 @@ public class EventCommand implements Parcelable{
     private double longitude;
     private double latitude;
 
+    private List<CommentCommand> commentCommands = new ArrayList<>();
+
 
     public EventCommand() {
     }
 
+
     protected EventCommand(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
         name = in.readString();
         address = in.readString();
         date = in.readLong();
@@ -37,6 +48,7 @@ public class EventCommand implements Parcelable{
         profile = in.readString();
         longitude = in.readDouble();
         latitude = in.readDouble();
+        commentCommands = in.createTypedArrayList(CommentCommand.CREATOR);
     }
 
     public static final Creator<EventCommand> CREATOR = new Creator<EventCommand>() {
@@ -107,20 +119,12 @@ public class EventCommand implements Parcelable{
         this.latitude = latitude;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<CommentCommand> getCommentCommands() {
+        return commentCommands;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(address);
-        parcel.writeLong(date);
-        parcel.writeString(description);
-        parcel.writeString(profile);
-        parcel.writeDouble(longitude);
-        parcel.writeDouble(latitude);
+    public void setCommentCommands(List<CommentCommand> commentCommands) {
+        this.commentCommands = commentCommands;
     }
 
     public Event.EventType getEventType() {
@@ -169,5 +173,28 @@ public class EventCommand implements Parcelable{
 
     private boolean isSport(Map.Entry<String, Long> pair) {
         return Long.valueOf(pair.getKey()) > 0L && Long.valueOf(pair.getKey()) < 11L && pair.getValue() > 0L;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(id);
+        }
+        parcel.writeString(name);
+        parcel.writeString(address);
+        parcel.writeLong(date);
+        parcel.writeString(description);
+        parcel.writeString(profile);
+        parcel.writeDouble(longitude);
+        parcel.writeDouble(latitude);
+        parcel.writeTypedList(commentCommands);
     }
 }

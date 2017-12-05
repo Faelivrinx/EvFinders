@@ -133,7 +133,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 tvDescription.setText(event.getDescription());
             }
             tvCountFriends.setText("0");
-            tvComment.setText("0");
+            tvComment.setText(String.valueOf(event.getCommentCommands().size()));
         }
 
         public View getTitle(){
