@@ -1,7 +1,9 @@
 package com.example.dominik.evfinders.mvp.start_test;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -38,7 +42,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
 
     @BindView(R.id.activity_start_start)            LinearLayout mainLayout;
 
-    @BindView(R.id.activity_start_login)            ScrollView loginLayout;
+    @BindView(R.id.activity_start_login)            LinearLayout loginLayout;
     @BindView(R.id.activity_start_test_backView)    LinearLayout backView;
 
     @BindView(R.id.activity_start_start_btnLogin)    AppCompatButton btnStartLogin;
@@ -47,7 +51,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
 
     @BindView(R.id.activity_start_login_etUsername)    TextInputEditText etLoginUsername;
 
-    @BindView(R.id.activity_start_register)     ScrollView registerLayout;
+    @BindView(R.id.activity_start_register)     LinearLayout registerLayout;
 
     @BindView(R.id.activity_start_register_etUsername)      TextInputEditText etRegisterUsername;
     @BindView(R.id.activity_start_register_etPassword)      TextInputEditText etRegisterPassword;
@@ -65,12 +69,16 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
     private TextView alertMessage;
+    private View currentView;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         current_state = 0;
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         animationFactory = new AnimationFactoryImp();
@@ -93,6 +101,9 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
 
     @OnClick(R.id.activity_start_start_btnLogin)
     public void onLoginClicked() {
+        etLoginUsername.setText("");
+        etLoginPassword.setText("");
+
         imageView.setBackgroundResource(R.drawable.background);
         changeCurrentState(LOGIN_STATE);
         AnimationDrawable frameAnimation = (AnimationDrawable) imageView.getBackground();
@@ -110,6 +121,10 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
 
     @OnClick(R.id.activity_start_start_register)
     public void onRegister() {
+        etRegisterUsername.setText("");
+        etRegisterPassword.setText("");
+        etRegisterEmail.setText("");
+
         current_state = REGISTER_STATE;
         imageView.setBackgroundResource(R.drawable.background);
         changeCurrentState(REGISTER_STATE);
@@ -129,6 +144,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     @OnClick(R.id.back_animation)
     public void onBackClicked() {
         AnimationState state = animationFactory.createState(current_state);
+        hideKeyboard(getWindow().getCurrentFocus());
         switch (state) {
             case START_STATE:
                 break;
@@ -211,6 +227,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     @Override
     protected void onResume() {
         presenter.attach(this);
+        currentView = this.getCurrentFocus();
         super.onResume();
     }
 
@@ -223,6 +240,11 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     @Override
     public void onBackPressed() {
         onBackClicked();
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 

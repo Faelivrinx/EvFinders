@@ -101,7 +101,6 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
                             view.showToast("Username already exist");
                         } else {
                             view.showToast("Error connection");
-
                         }
                     }, () -> {
                         view.startActivity();

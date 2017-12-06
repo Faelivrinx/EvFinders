@@ -26,6 +26,7 @@ import com.example.dominik.evfinders.base.BaseAuthActivity;
 import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
+import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import java.util.ArrayList;
@@ -175,6 +176,12 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         startActivity(new Intent(this, StartActivityTest.class));
     }
 
+    @Override
+    public void onFriendsDeleted() {
+        STATE = false;
+        invalidateOptionsMenu();
+    }
+
 
     @Override
     protected void onStart() {
@@ -219,6 +226,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
             startActivity(new Intent(this, EventsActivity.class));
         } else if (item.getItemId() == R.id.nav_logout) {
             presenter.logoutUser();
+        } else if(item.getItemId() == R.id.nav_preferences){
+            startActivity(new Intent(this, ProfileActivity.class));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

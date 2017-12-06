@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.mvp.profile;
 
+import android.content.Intent;
+
 import com.example.dominik.evfinders.converters.ProfileConverter;
 import com.example.dominik.evfinders.database.pojo.ProfileItem;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
@@ -59,9 +61,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     private void checkResponse(Response<TaskResponse> taskResponseResponse) {
         if (taskResponseResponse.isSuccessful()){
-
+            view.showMessage("Profile updated");
         } else {
-
+            view.showMessage("Can't update profile!");
         }
     }
 

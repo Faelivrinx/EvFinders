@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme.NoActionBar"
+
     >
 
     <ImageView
@@ -106,7 +107,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/activity_start_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -163,9 +164,9 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/activity_start_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -231,6 +232,6 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

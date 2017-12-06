@@ -72,6 +72,7 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
         super.onViewReady(savedInstanceState, intent);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        setNavigation();
 
         adapter = new SelectedProfileAdapter(getLayoutInflater(), this);
 
@@ -111,7 +112,7 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
 
     @Override
     public void showMessage(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

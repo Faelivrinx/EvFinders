@@ -121,6 +121,7 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
         if (response.code() == 200) {
             if (response.body().getValue().equals("success")) {
                 view.showToast("Task success!");
+                view.onFriendsDeleted();
                 getFriendsList();
             } else {
                 view.showToast("Something went wrong!");

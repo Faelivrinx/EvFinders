@@ -16,6 +16,8 @@ public interface FriendsContract {
         void hideDialog();
         void onFriendsLoaded(List<Friend> friends);
         void startActivity();
+
+        void onFriendsDeleted();
     }
 
     interface Presenter {
