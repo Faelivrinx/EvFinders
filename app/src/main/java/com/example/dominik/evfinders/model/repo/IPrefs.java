@@ -7,7 +7,9 @@ package com.example.dominik.evfinders.model.repo;
 public interface IPrefs {
 
     void save(String key, String value);
+    void save(String key, int value);
     String get(String key);
+    int get(String key, int defaultValue);
 
     boolean del(String key);
 }

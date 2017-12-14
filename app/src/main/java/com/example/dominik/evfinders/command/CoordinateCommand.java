@@ -9,6 +9,8 @@ public class CoordinateCommand {
     private double latitude;
     private double longitude;
 
+    private int recommendationType;
+
     public CoordinateCommand() {
     }
 
@@ -32,4 +34,13 @@ public class CoordinateCommand {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public int getRecommendationType() {
+        return recommendationType;
+    }
+
+    public void setRecommendationType(int recommendationType) {
+        this.recommendationType = recommendationType;
+    }
+
 }

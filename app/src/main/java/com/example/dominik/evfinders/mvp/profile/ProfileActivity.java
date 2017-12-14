@@ -26,6 +26,7 @@ import com.example.dominik.evfinders.database.pojo.ProfileItem;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
+import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,6 +177,9 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
         } else if(item.getItemId() == R.id.nav_map){
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_map);
+            startActivity(intent);
+        }else if(item.getItemId() == R.id.nav_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
         return true;

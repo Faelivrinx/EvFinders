@@ -33,6 +33,7 @@ import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.create.event.CreateEventActivity;
 import com.example.dominik.evfinders.mvp.home.event.EventActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
+import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 import com.example.dominik.evfinders.utils.MarkerFactory;
 import com.example.dominik.evfinders.utils.MarkerFactoryImp;
@@ -314,6 +315,10 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
         } else if(item.getItemId() == R.id.nav_preferences){
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_preferences);
+            startActivity(intent);
+        }else if(item.getItemId() == R.id.nav_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(BaseAuthActivity.DRAWER_ITEM, R.id.nav_settings);
             startActivity(intent);
         }
         return true;

@@ -27,6 +27,7 @@ import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.home.event.EventActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
+import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import java.util.ArrayList;
@@ -163,6 +164,9 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
             presenter.logoutUser();
         } else if(item.getItemId() == R.id.nav_preferences){
             startActivity(new Intent(this, ProfileActivity.class));
+        }else if(item.getItemId() == R.id.nav_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         mainLayout.closeDrawer(GravityCompat.START);

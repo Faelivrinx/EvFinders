@@ -10,6 +10,7 @@ import com.example.dominik.evfinders.mvp.home.create.event.CreateEventActivity;
 import com.example.dominik.evfinders.mvp.login.LoginActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
 import com.example.dominik.evfinders.mvp.register.RegisterActivity;
+import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import dagger.Module;
@@ -93,4 +94,12 @@ abstract class AndroidBindingModule {
             }
     )
     abstract CreateEventActivity createEventActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(
+            modules = {
+                    SettingsActivityModule.class
+            }
+    )
+    abstract SettingsActivity settingsActivity();
 }

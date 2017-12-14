@@ -27,6 +27,7 @@ import com.example.dominik.evfinders.database.pojo.Friend;
 import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
+import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
 import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import java.util.ArrayList;
@@ -228,6 +229,9 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
             presenter.logoutUser();
         } else if(item.getItemId() == R.id.nav_preferences){
             startActivity(new Intent(this, ProfileActivity.class));
+        }else if(item.getItemId() == R.id.nav_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
