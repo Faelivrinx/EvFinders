@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.command.EventCommand;
-import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.mvp.events.detail.EventDetailActivity;
 
 import java.util.ArrayList;
@@ -24,9 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.dominik.evfinders.database.pojo.Event.EventType.CINEMA;
-import static com.example.dominik.evfinders.database.pojo.Event.EventType.SPORT_AND_RECREATION;
-import static com.example.dominik.evfinders.database.pojo.Marker.MarkerType.MUSIC;
 import static com.example.dominik.evfinders.mvp.events.EventsActivity.CHOOSE_EVENT;
 
 /**
@@ -132,7 +128,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 tvDescription.setText(event.getDescription());
             }
-            tvCountFriends.setText("0");
+            tvCountFriends.setText(String.valueOf(event.getUsers().size()));
             tvComment.setText(String.valueOf(event.getCommentCommands().size()));
         }
 

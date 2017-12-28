@@ -17,6 +17,9 @@ public class CommentCommand implements Parcelable{
     private String author;
     private int rating;
 
+    public CommentCommand() {
+    }
+
     protected CommentCommand(Parcel in) {
         if (in.readByte() == 0) {
             id = null;

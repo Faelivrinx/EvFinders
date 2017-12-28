@@ -1,20 +1,26 @@
 package com.example.dominik.evfinders.mvp.events.detail;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
+import com.example.dominik.evfinders.command.CommentCommand;
 import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
@@ -62,16 +68,25 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     @BindView(R.id.activity_events_event_detailLayout)
     ConstraintLayout detailLayout;
 
+    @BindView(R.id.activity_events_event_addComment)
+    FloatingActionButton fabAddComment;
+
 
     @BindView(R.id.activity_events_event_comments)
     RecyclerView recyclerView;
 
-    private CommentsAdapter commentsAdapter;
-
+   private EventCommand eventCommand;
 
     @Inject
     EventDetailContract.Presenter presenter;
 
+    private CommentsAdapter commentsAdapter;
+    private AlertDialog alertDialog;
+    private AlertDialog.Builder alertDialogBuilder;
+    private EditText etDialogComment;
+    private Button btnDialogAccept;
+    private Button btnDialogCancel;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +98,12 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(commentsAdapter);
         getEvent();
+        createAlertDialog();
+
+
+        fabAddComment.setOnClickListener(view -> {
+            alertDialog.show();
+        });
     }
 
     @OnClick(R.id.activity_events_event_show_comments)
@@ -95,6 +116,11 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     public void onBackToEventClicked(){
         detailLayout.setVisibility(View.VISIBLE);
         layoutComments.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.activity_events_event_btnAttend)
+    public void onAttendButtonClick(){
+        presenter.attend(eventCommand.getId());
     }
 
     @Override
@@ -115,6 +141,7 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
 
     @Override
     public void showEvent(EventCommand event) {
+        this.eventCommand = event;
         commentsAdapter.notifyDataChanged(event.getCommentCommands());
         fillData(event);
     }
@@ -142,6 +169,11 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     @Override
     public void onFriendsButtonClicked() {
 
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -174,5 +206,26 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         tvPlace.setText(event.getAddress());
         tvDate.setText(new Date(event.getDate()).toString());
         tvDescription.setText(event.getDescription());
+    }
+
+    private void createAlertDialog() {
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_comment, null);
+        alertDialogBuilder.setView(dialogView);
+        alertDialog = alertDialogBuilder.create();
+        etDialogComment = dialogView.findViewById(R.id.dialog_add_comment_comment);
+        btnDialogAccept = dialogView.findViewById(R.id.dialog_add_comment_btnAdd);
+        btnDialogCancel = dialogView.findViewById(R.id.dialog_add_comment_btnCancel);
+        ratingBar = dialogView.findViewById(R.id.dialog_add_comment_rating);
+
+        btnDialogAccept.setOnClickListener(view -> {
+            if (!etDialogComment.getText().toString().equals(""))
+            presenter.addComment(etDialogComment.getText().toString(), eventCommand.getId(), (int)ratingBar.getRating());
+            etDialogComment.setText("");
+            alertDialog.dismiss();
+        });
+        btnDialogCancel.setOnClickListener(view -> {
+            alertDialog.dismiss();
+        });
     }
 }

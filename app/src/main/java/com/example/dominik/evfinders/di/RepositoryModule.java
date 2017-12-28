@@ -1,10 +1,13 @@
 package com.example.dominik.evfinders.di;
 
+import com.example.dominik.evfinders.model.api.CommentService;
 import com.example.dominik.evfinders.model.api.EventService;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.api.LoginService;
 import com.example.dominik.evfinders.model.api.ProfileService;
 import com.example.dominik.evfinders.model.api.RegisterService;
+import com.example.dominik.evfinders.model.base.home.comment.CommentRepository;
+import com.example.dominik.evfinders.model.base.home.comment.ICommentRepository;
 import com.example.dominik.evfinders.model.base.home.event.EventsRepository;
 import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 import com.example.dominik.evfinders.model.base.home.event.MockEventsRepository;
@@ -52,5 +55,10 @@ abstract class RepositoryModule {
     @Provides
     static IProfileRepository provideProfileRepository(IPrefs prefs, ProfileService service){
         return new ProfileRepository(prefs, service);
+    }
+
+    @Provides
+    static ICommentRepository provideCommentRepository(IPrefs prefs, CommentService service){
+        return new CommentRepository(prefs, service);
     }
 }

@@ -21,6 +21,8 @@ public interface IEventsRepository {
 
     Single<Response<List<EventCommand>>> getEventsWithRecommendation(CoordinateCommand coordinateCommand);
 
+    Single<Response<EventCommand>> attendAtEvent(Long userId);
+
     boolean removeUserKey();
 
     boolean removeFcmToken();

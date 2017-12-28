@@ -1,5 +1,7 @@
 package com.example.dominik.evfinders.di;
 
+import com.example.dominik.evfinders.model.base.home.comment.ICommentRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 import com.example.dominik.evfinders.mvp.events.detail.EventDetailContract;
 import com.example.dominik.evfinders.mvp.events.detail.EventDetailPresenter;
 
@@ -15,7 +17,7 @@ abstract class EventDetailModule {
 
     @ActivityScope
     @Provides
-    static EventDetailContract.Presenter providePresenter(){
-        return new EventDetailPresenter();
+    static EventDetailContract.Presenter providePresenter(ICommentRepository commentRepository, IEventsRepository eventsRepository){
+        return new EventDetailPresenter(commentRepository, eventsRepository);
     }
 }

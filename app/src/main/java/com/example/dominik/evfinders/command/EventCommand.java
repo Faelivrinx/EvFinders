@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.example.dominik.evfinders.database.pojo.Event;
-import com.example.dominik.evfinders.database.pojo.Marker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class EventCommand implements Parcelable{
     private double latitude;
 
     private List<CommentCommand> commentCommands = new ArrayList<>();
+    private List<UserAttendCommand> users = new ArrayList<>();
 
 
     public EventCommand() {
@@ -49,6 +49,15 @@ public class EventCommand implements Parcelable{
         longitude = in.readDouble();
         latitude = in.readDouble();
         commentCommands = in.createTypedArrayList(CommentCommand.CREATOR);
+        users = in.createTypedArrayList(UserAttendCommand.CREATOR);
+    }
+
+    public List<UserAttendCommand> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserAttendCommand> users) {
+        this.users = users;
     }
 
     public static final Creator<EventCommand> CREATOR = new Creator<EventCommand>() {
@@ -62,6 +71,14 @@ public class EventCommand implements Parcelable{
             return new EventCommand[size];
         }
     };
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -196,5 +213,6 @@ public class EventCommand implements Parcelable{
         parcel.writeDouble(longitude);
         parcel.writeDouble(latitude);
         parcel.writeTypedList(commentCommands);
+        parcel.writeTypedList(users);
     }
 }

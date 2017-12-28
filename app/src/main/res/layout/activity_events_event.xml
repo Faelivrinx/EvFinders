@@ -16,6 +16,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,12 +129,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="#2A000000"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="end"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:background="#2A000000"
             android:gravity="center|end"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -215,6 +216,7 @@
 
         </LinearLayout>
 
+
         <android.support.v7.widget.RecyclerView
 
             android:id="@+id/activity_events_event_comments"
@@ -229,6 +231,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_events_event_addComment"
+        android:src="@mipmap/ic_lwhite_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:elevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

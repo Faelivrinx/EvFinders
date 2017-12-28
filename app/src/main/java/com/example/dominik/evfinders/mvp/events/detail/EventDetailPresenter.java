@@ -1,7 +1,18 @@
 package com.example.dominik.evfinders.mvp.events.detail;
 
+import android.util.Log;
+
+import com.example.dominik.evfinders.command.CommentCommand;
 import com.example.dominik.evfinders.command.EventCommand;
-import com.example.dominik.evfinders.database.pojo.Event;
+import com.example.dominik.evfinders.model.base.home.comment.ICommentRepository;
+import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
+
+import javax.inject.Inject;
+
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * Created by Dominik on 27.10.2017.
@@ -10,6 +21,14 @@ import com.example.dominik.evfinders.database.pojo.Event;
 public class EventDetailPresenter implements EventDetailContract.Presenter {
 
     private EventDetailContract.View view;
+    private ICommentRepository commentRepository;
+    private IEventsRepository eventsRepository;
+
+    @Inject
+    public EventDetailPresenter(ICommentRepository commentRepository, IEventsRepository eventRepository) {
+        this.commentRepository = commentRepository;
+        this.eventsRepository = eventRepository;
+    }
 
     @Override
     public void attach(EventDetailContract.View view) {
@@ -29,6 +48,56 @@ public class EventDetailPresenter implements EventDetailContract.Presenter {
         if (event != null){
             view.showEvent(event);
             view.hideProgressBar();
+        }
+    }
+
+    @Override
+    public void addComment(String comment, Long eventCommandId, int numStars) {
+        view.showProgressBar();
+        CommentCommand commentCommand = createEventCommant(comment, eventCommandId, numStars);
+        Single<Response<CommentCommand>> comments = commentRepository.addComment(commentCommand);
+        comments.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkResponseComment, throwable -> {
+                    view.hideProgressBar();
+                });
+
+    }
+
+    @Override
+    public void attend(Long id) {
+        Single<Response<EventCommand>> responseSingle = eventsRepository.attendAtEvent(id);
+        responseSingle
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::checkResponseEvent, throwable -> {
+                    Log.d("DETAIL CLASS",  "attend: " + throwable.getMessage());
+                });
+    }
+
+    private CommentCommand createEventCommant(String comment, Long eventCommandId, int stars) {
+        CommentCommand commentCommand = new CommentCommand();
+        commentCommand.setComment(comment);
+        commentCommand.setEventId(eventCommandId);
+        commentCommand.setRating(stars);
+        return commentCommand;
+    }
+
+    private void checkResponseComment(Response<CommentCommand> response){
+        view.hideProgressBar();
+        if (response.code() == 200 && response.body().getId() != null){
+            view.showMessage("Comment added");
+        } else {
+            view.showMessage("Can't add comment");
+        }
+    }
+
+    private void checkResponseEvent(Response<EventCommand> response){
+        view.hideProgressBar();
+        if (response.code() == 200 && response.body().getId() != null){
+            view.showMessage("You now attend at event!");
+        } else {
+            view.showMessage("Can't attend at event");
         }
     }
 }

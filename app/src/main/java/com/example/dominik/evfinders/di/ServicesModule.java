@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.di;
 
+import com.example.dominik.evfinders.model.api.CommentService;
 import com.example.dominik.evfinders.model.api.EventService;
 import com.example.dominik.evfinders.model.api.FriendsService;
 import com.example.dominik.evfinders.model.api.LoginService;
@@ -44,4 +45,8 @@ abstract class ServicesModule {
         return retrofit.create(ProfileService.class);
     }
 
+    @Provides
+    static CommentService provideCommentService(@Named("auth") Retrofit retrofit){
+        return retrofit.create(CommentService.class);
+    }
 }

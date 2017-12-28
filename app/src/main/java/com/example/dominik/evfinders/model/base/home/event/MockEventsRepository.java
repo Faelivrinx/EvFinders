@@ -55,6 +55,11 @@ public class MockEventsRepository implements IEventsRepository {
         return null;
     }
 
+    @Override
+    public Single<Response<EventCommand>> attendAtEvent(Long userId) {
+        return null;
+    }
+
 
     @Override
     public boolean removeUserKey() {

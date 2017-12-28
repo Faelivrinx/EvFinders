@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:text="Wspomóż siebie i znajomych w wyszukiwaniu najciekawszych wydarzeń! Warte czy nie?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Oceń!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <RatingBar
+        android:id="@+id/dialog_add_comment_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:numStars="6"
+        android:rating="1"
+        android:stepSize="1" />
+
+    <EditText
+        android:layout_marginBottom="8dp"
+        android:id="@+id/dialog_add_comment_comment"
+        android:hint="Comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/dialog_add_comment_btnAdd"
+            android:text="Add"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/dialog_add_comment_btnCancel"
+            android:text="Cancel"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

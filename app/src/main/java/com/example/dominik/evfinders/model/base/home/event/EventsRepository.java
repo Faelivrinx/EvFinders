@@ -44,6 +44,11 @@ public class EventsRepository implements IEventsRepository {
     }
 
     @Override
+    public Single<Response<EventCommand>> attendAtEvent(Long userId) {
+        return eventService.attendEvent(prefs.get(Prefs.API_KEY), userId);
+    }
+
+    @Override
     public Single<Response<TaskResponse>> createEvent(EventCommand eventCommand) {
         return eventService.createEvent(prefs.get(Prefs.API_KEY), eventCommand);
     }
