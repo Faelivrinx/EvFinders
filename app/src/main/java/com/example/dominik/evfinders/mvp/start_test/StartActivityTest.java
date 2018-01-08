@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.base.BaseActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 
@@ -40,25 +42,38 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     public static final int LOGIN_STATE = 1;
     public static final int REGISTER_STATE = 2;
 
-    @BindView(R.id.activity_start_start)            LinearLayout mainLayout;
+    @BindView(R.id.activity_start_start)
+    LinearLayout mainLayout;
 
-    @BindView(R.id.activity_start_login)            LinearLayout loginLayout;
-    @BindView(R.id.activity_start_test_backView)    LinearLayout backView;
+    @BindView(R.id.activity_start_login)
+    LinearLayout loginLayout;
+    @BindView(R.id.activity_start_test_backView)
+    LinearLayout backView;
 
-    @BindView(R.id.activity_start_start_btnLogin)    AppCompatButton btnStartLogin;
+    @BindView(R.id.activity_start_start_btnLogin)
+    AppCompatButton btnStartLogin;
 
-    @BindView(R.id.activity_start_login_etPassword)    TextInputEditText etLoginPassword;
+    @BindView(R.id.activity_start_login_etPassword)
+    TextInputEditText etLoginPassword;
 
-    @BindView(R.id.activity_start_login_etUsername)    TextInputEditText etLoginUsername;
+    @BindView(R.id.activity_start_login_etUsername)
+    TextInputEditText etLoginUsername;
 
-    @BindView(R.id.activity_start_register)     LinearLayout registerLayout;
+    @BindView(R.id.activity_start_register)
+    LinearLayout registerLayout;
 
-    @BindView(R.id.activity_start_register_etUsername)      TextInputEditText etRegisterUsername;
-    @BindView(R.id.activity_start_register_etPassword)      TextInputEditText etRegisterPassword;
-    @BindView(R.id.activity_start_register_etEmail)      TextInputEditText etRegisterEmail;
+    @BindView(R.id.activity_start_register_etUsername)
+    TextInputEditText etRegisterUsername;
+    @BindView(R.id.activity_start_register_etPassword)
+    TextInputEditText etRegisterPassword;
+    @BindView(R.id.activity_start_register_etEmail)
+    TextInputEditText etRegisterEmail;
 
     @BindView(R.id.imageView3)
     ImageView imageView;
+
+    @BindView(R.id.activity_start_test_status)
+    TextView tvStatus;
 
     @Inject
     StartActivityTestPresenter presenter;
@@ -70,6 +85,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     private AlertDialog.Builder alertDialogBuilder;
     private TextView alertMessage;
     private View currentView;
+    private boolean readyToLogin = false;
 
 
     @Override
@@ -83,12 +99,16 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
         ButterKnife.bind(this);
         animationFactory = new AnimationFactoryImp();
         createAlertDialog();
-
     }
 
     @OnClick(R.id.activity_start_login_btnLogin)
     public void loginBtnClicked() {
-        presenter.login(etLoginUsername.getText().toString(), etLoginPassword.getText().toString());
+        if (readyToLogin){
+            presenter.login(etLoginUsername.getText().toString(), etLoginPassword.getText().toString());
+        } else {
+            new DeleteToken().execute();
+            showProgressDialog("Getting fcm token...");
+        }
     }
 
     @OnClick(R.id.activity_start_register_btnRegister)
@@ -208,8 +228,8 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     }
 
     @Override
-    public void showProgressDialog() {
-        alertMessage.setText("Getting key");
+    public void showProgressDialog(String message) {
+        alertMessage.setText(message);
         alertDialog.show();
     }
 
@@ -217,6 +237,18 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     public void startActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void setLoginStatus(boolean isReady) {
+        readyToLogin = isReady;
+        if (isReady){
+            tvStatus.setText("OK");
+            tvStatus.setTextColor(Color.GREEN);
+        } else {
+            tvStatus.setText("NOT OK");
+            tvStatus.setTextColor(Color.RED);
+        }
     }
 
     @Override
@@ -228,6 +260,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     protected void onResume() {
         presenter.attach(this);
         currentView = this.getCurrentFocus();
+        presenter.checkLoginState();
         super.onResume();
     }
 
@@ -243,9 +276,11 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         assert inputMethodManager != null;
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
 

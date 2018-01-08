@@ -142,6 +142,8 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        CREATE_EVENT_STATE = 0;
+        invalidateOptionsMenu();
         super.onActivityResult(requestCode, resultCode, data);
     }
 

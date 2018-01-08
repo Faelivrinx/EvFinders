@@ -13,9 +13,11 @@ public interface    StartActivityTestContract {
 
         void hideProgressDialog();
 
-        void showProgressDialog();
+        void showProgressDialog(String message);
 
         void startActivity();
+
+        void setLoginStatus(boolean isReady);
 
     }
 
@@ -34,6 +36,8 @@ public interface    StartActivityTestContract {
         boolean validateData(String username, String password, String email);
 
         void logoutUser();
+
+        void checkLoginState();
 
     }
 }

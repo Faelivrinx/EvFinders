@@ -79,6 +79,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             tvComment.setText(commentCommand.getComment());
             tvUsername.setText(commentCommand.getAuthor());
             rbRating.setRating(commentCommand.getRating());
+            rbRating.setIsIndicator(true);
         }
     }
 }

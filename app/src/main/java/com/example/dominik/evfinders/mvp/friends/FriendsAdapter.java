@@ -86,15 +86,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ((ViewHolder) defaultHolder).populate(friendDefault.getImagePath(), friendDefault.getUsername(), friendDefault.getName());
         }
 
-//        if (selectionMode) {
-//            switch (holder.getItemViewType()) {
-//                case 0:
-//                    ViewHolderSelectionMode holderUnselected = (ViewHolderSelectionMode) holder;
-//                    Friend friend = friendList.get(position);
-//                    ((ViewHolderSelectionMode) holder).populate(friend.getImagePath(), friend.getUsername(), friend.getName(), friend.isSelected());
-//            }
-//        }
-
     }
 
     private void unselectItems() {

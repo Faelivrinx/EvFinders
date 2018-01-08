@@ -28,8 +28,6 @@ public class EventsPresenter implements EventsContract.Presenter {
         this.repository = repository;
     }
 
-
-
     @Override
     public void attach(EventsContract.View view) {
         if (this.view == null) {

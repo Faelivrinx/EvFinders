@@ -71,7 +71,7 @@ public class NetworkModule {
     static Retrofit provideRetrofitNonAuth(@Named("non-auth") OkHttpClient client, GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory adapterFactory){
         return new Retrofit.Builder()
 //                .baseUrl("http://jurasz-dev.pl/login.php/")
-                .baseUrl("http://192.168.55.103:8080/")
+                .baseUrl("http://192.168.55.101:8080/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(adapterFactory)
                 .client(client)
@@ -82,7 +82,7 @@ public class NetworkModule {
     @Named("auth")
     static Retrofit provideRetrofitAuth(@Named("auth") OkHttpClient client, GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory adapterFactory){
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.55.103:8080/")
+                .baseUrl("http://192.168.55.101:8080/")
 //                .baseUrl("http://jurasz-dev.pl/index.php/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(adapterFactory)

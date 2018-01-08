@@ -86,18 +86,22 @@ public class EventDetailPresenter implements EventDetailContract.Presenter {
     private void checkResponseComment(Response<CommentCommand> response){
         view.hideProgressBar();
         if (response.code() == 200 && response.body().getId() != null){
-            view.showMessage("Comment added");
+            view.showMessage("Komentarz został dodany");
+        } else if(response.code() == 200 && response.body().getId() == null){
+            view.showMessage("Już to komentowałeś!");
         } else {
-            view.showMessage("Can't add comment");
+            view.showMessage("Coś poszło nie tak!");
         }
     }
 
     private void checkResponseEvent(Response<EventCommand> response){
         view.hideProgressBar();
         if (response.code() == 200 && response.body().getId() != null){
-            view.showMessage("You now attend at event!");
+            view.showMessage("Uczęszczasz na to wydarzenie!");
+        } else if(response.code() == 200 && response.body().getId() == null){
+            view.showMessage("Uczeszczasz już na to wydarzenie!");
         } else {
-            view.showMessage("Can't attend at event");
+            view.showMessage("Coś poszło nie tak!");
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dominik.evfinders.mvp.start_test;
 
 import com.example.dominik.evfinders.application.DeleteToken;
+import com.example.dominik.evfinders.application.services.FirebaseInstanceIdService;
 import com.example.dominik.evfinders.database.pojo.network.ApiKeyResponse;
 import com.example.dominik.evfinders.database.pojo.network.UserRequest;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
@@ -26,6 +27,8 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
     private StartActivityTestContract.View view;
     private ILoginRepository loginRepo;
     private IRegisterRepository registerRepo;
+    private Disposable disposable;
+
 
     @Inject
     public StartActivityTestPresenter(ILoginRepository loginRepo, IRegisterRepository registerRepo) {
@@ -35,19 +38,30 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
 
     @Override
     public void attach(StartActivityTestContract.View view) {
-        if (this.view == null){
+        if (this.view == null) {
             this.view = view;
         }
+        disposable = FirebaseInstanceIdService.GET_TOKEN_SUBJECT()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(message -> {
+                    view.setLoginStatus(true);
+                    view.hideProgressDialog();
+                }, throwable -> {
+                    view.hideProgressDialog();
+                    view.showToast("Sprawdź połączenie internetowe!");
+                });
     }
 
     @Override
     public void detach() {
         view = null;
+        disposable.dispose();
     }
 
     @Override
     public void login(String username, String password) {
-        view.showProgressDialog();
+        view.showProgressDialog("Logowanie...");
         String fcmToken = loginRepo.getFcmToken();
         if (!fcmToken.isEmpty()) {
             if (validateData(username, password)) {
@@ -81,7 +95,7 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
 
     @Override
     public void register(String username, String password, String email) {
-        view.showProgressDialog();
+        view.showProgressDialog("Rejestruje...");
         if (validateData(username, password, email)) {
             registerRepo.getRegisterResponse(createUser(username, password, email))
                     .filter(apiKeyResponseResponse -> !apiKeyResponseResponse.message().isEmpty())
@@ -128,9 +142,18 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
         new DeleteToken().execute();
 
         loginRepo.removeFcmToken();
-        view.showProgressDialog();
+        view.showProgressDialog("Wylogowanie...");
         if (loginRepo.removeUserKey()) {
             view.startActivity();
+        }
+    }
+
+    @Override
+    public void checkLoginState() {
+        if (!loginRepo.getFcmToken().equals("")) {
+            view.setLoginStatus(true);
+        } else {
+            view.setLoginStatus(false);
         }
     }
 }

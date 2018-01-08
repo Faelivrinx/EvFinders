@@ -100,6 +100,8 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         getEvent();
         createAlertDialog();
 
+        fabAddComment.setVisibility(View.GONE);
+
 
         fabAddComment.setOnClickListener(view -> {
             alertDialog.show();
@@ -110,12 +112,14 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     public void onShowEventsClick(){
         detailLayout.setVisibility(View.GONE);
         layoutComments.setVisibility(View.VISIBLE);
+        fabAddComment.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.activity_events_event_comment_back)
     public void onBackToEventClicked(){
         detailLayout.setVisibility(View.VISIBLE);
         layoutComments.setVisibility(View.GONE);
+        fabAddComment.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.activity_events_event_btnAttend)
@@ -201,7 +205,7 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
             default:
                 break;
         }
-
+        tvFriendsCount.setText(String.valueOf(event.getUsers().size()));
         tvTitle.setText(event.getName());
         tvPlace.setText(event.getAddress());
         tvDate.setText(new Date(event.getDate()).toString());

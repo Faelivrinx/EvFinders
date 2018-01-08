@@ -2,6 +2,7 @@ package com.example.dominik.evfinders.application;
 
 import android.os.AsyncTask;
 
+import com.example.dominik.evfinders.application.services.FirebaseInstanceIdService;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class DeleteToken extends AsyncTask<Void, String, Void> {
             FirebaseInstanceId.getInstance().deleteInstanceId();
             FirebaseInstanceId.getInstance().getToken();
         } catch (IOException e) {
+            FirebaseInstanceIdService.GET_TOKEN_SUBJECT().doOnError(throwable -> {});
             e.printStackTrace();
         }
         return null;
