@@ -89,7 +89,7 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
             view.onFriendsLoaded(friendList);
             view.hideDialog();
         } else {
-            view.showToast("Unauthorized :(");
+            view.showToast("Brak autoryzacji");
             view.hideDialog();
         }
     }
@@ -102,7 +102,7 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
 
     @Override
     public void onComplete() {
-        view.showToast("Complete");
+        view.showToast("Pobrano znajomych");
     }
 
     @Override

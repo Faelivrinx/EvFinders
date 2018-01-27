@@ -16,7 +16,7 @@ public interface FriendsContract {
         void hideDialog();
         void onFriendsLoaded(List<Friend> friends);
         void startActivity();
-
+        void onEmptyList();
         void onFriendsDeleted();
     }
 

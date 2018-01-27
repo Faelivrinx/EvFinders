@@ -1,6 +1,7 @@
 package com.example.dominik.evfinders.model.base.home.profile;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.dominik.evfinders.database.pojo.ProfileItem;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
@@ -54,6 +55,18 @@ public class ProfileRepository implements IProfileRepository {
 
         return profiles;
     }
+
+    @Override
+    public boolean removeUserKey() {
+        Log.d("MapRepo", "key deleted: ");
+        return prefs.del(Prefs.API_KEY);
+    }
+
+    @Override
+    public boolean removeFcmToken() {
+        return prefs.del(Prefs.FCM_TOKEN);
+    }
+
 
     @NonNull
     private List<ProfileItem> createSportProfile() {

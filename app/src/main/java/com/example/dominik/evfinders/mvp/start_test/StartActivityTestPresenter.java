@@ -72,8 +72,14 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(apiKeyResponse -> {
-                            loginRepo.saveKey(apiKeyResponse);
-                            view.startActivity();
+                            if(apiKeyResponse.getValue().equals("BAD_PASS")){
+                                view.showToast("Zly login lub haslo.");
+                            } else if(apiKeyResponse.getValue().equals("NOT_FOUND")){
+                                view.showToast("Nie znaleziono takiego użytkownika.");
+                            } else {
+                                loginRepo.saveKey(apiKeyResponse);
+                                view.startActivity();
+                            }
                         }, throwable -> {
                             throwable.printStackTrace();
                             view.hideProgressDialog();
@@ -120,6 +126,8 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
                         view.startActivity();
                         view.hideProgressDialog();
                     });
+        } else {
+            view.showToast("Wprowadź login oraz hasło");
         }
     }
 

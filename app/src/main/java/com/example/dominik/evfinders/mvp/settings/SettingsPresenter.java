@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.settings;
 
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.model.repo.IPrefs;
 import com.example.dominik.evfinders.model.repo.Prefs;
 
@@ -39,5 +40,14 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     @Override
     public void loadActualType() {
         view.onActualStateLoaded(prefs.get(Prefs.RECOMMENDATION_TYPE, 0));
+    }
+
+    @Override
+    public void logout() {
+        new DeleteToken().execute();
+        prefs.del(Prefs.FCM_TOKEN);
+        if (prefs.del(Prefs.FCM_TOKEN)) {
+            view.startLoginActivity();
+        }
     }
 }

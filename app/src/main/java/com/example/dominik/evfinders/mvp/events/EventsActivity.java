@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
@@ -49,6 +51,9 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
 
     @BindView(R.id.activity_events_recyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.activity_events_nullEvents)
+    LinearLayout lyNullEvents;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -127,6 +132,11 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
         this.events.clear();
         this.events.addAll(events);
         adapter.notifyDataChanged(events);
+        if (events.size() > 0){
+            lyNullEvents.setVisibility(View.GONE);
+        } else {
+            lyNullEvents.setVisibility(View.VISIBLE);
+        }   
     }
 
     @Override

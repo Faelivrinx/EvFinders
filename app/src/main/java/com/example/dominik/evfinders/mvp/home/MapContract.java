@@ -21,6 +21,8 @@ public interface MapContract {
 
         void onLogoutClicked();
 
+        void showMessage(String message);
+
         void showProgressBar();
 
         void hideProgressBar();

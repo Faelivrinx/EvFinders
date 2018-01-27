@@ -8,6 +8,8 @@ public interface SettingsContract {
 
     interface View {
         void onActualStateLoaded(int type);
+
+        void startLoginActivity();
     }
 
     interface Presenter {
@@ -15,5 +17,6 @@ public interface SettingsContract {
         void detach();
         void changeRecommendation(int type);
         void loadActualType();
+        void logout();
     }
 }

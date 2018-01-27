@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
@@ -59,6 +60,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.activity_friends_layout_nullFriends)
+    LinearLayout lyFriends;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
@@ -170,11 +173,21 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     @Override
     public void onFriendsLoaded(List<Friend> friends) {
         adapter.notifyDataChange(friends);
+        if (friends.size() > 0){
+            lyFriends.setVisibility(View.GONE);
+        } else {
+            onEmptyList();
+        }
     }
 
     @Override
     public void startActivity() {
         startActivity(new Intent(this, StartActivityTest.class));
+    }
+
+    @Override
+    public void onEmptyList() {
+        lyFriends.setVisibility(View.VISIBLE);
     }
 
     @Override

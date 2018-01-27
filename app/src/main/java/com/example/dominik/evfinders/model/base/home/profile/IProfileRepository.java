@@ -19,5 +19,7 @@ public interface IProfileRepository {
     List<ProfileItem> getAllProfiles();
     ProfileItem getProfileById(Long id);
     Single<Response<TaskResponse>> saveProfile(String profile);
+    boolean removeUserKey();
+    boolean removeFcmToken();
 
 }

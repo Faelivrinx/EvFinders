@@ -2,6 +2,7 @@ package com.example.dominik.evfinders.mvp.profile;
 
 import android.content.Intent;
 
+import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.converters.ProfileConverter;
 import com.example.dominik.evfinders.database.pojo.ProfileItem;
 import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
@@ -69,6 +70,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void logout() {
-
+        new DeleteToken().execute();
+        repository.removeFcmToken();
+        if (repository.removeUserKey()) {
+            view.startLoginActivity();
+        }
     }
 }

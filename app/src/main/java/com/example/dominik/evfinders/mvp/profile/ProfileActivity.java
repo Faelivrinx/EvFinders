@@ -27,6 +27,7 @@ import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.settings.SettingsActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,6 +123,11 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
         currentProfiles.addAll(profileItems);
     }
 
+    @Override
+    public void startLoginActivity() {
+        startActivity(new Intent(this, StartActivityTest.class));
+    }
+
     public List<ProfileItem> getProfilesItem(){
         return currentProfiles;
     }
@@ -181,6 +187,8 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
         }else if(item.getItemId() == R.id.nav_settings){
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+        } else if(item.getItemId() == R.id.nav_logout){
+            presenter.logout();
         }
         return true;
     }

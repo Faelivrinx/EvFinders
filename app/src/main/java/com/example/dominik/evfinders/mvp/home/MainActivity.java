@@ -128,7 +128,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
             if (currentLocation != null){
                 presenter.getEvents(new CoordinateCommand(currentLocation.getLatitude(), currentLocation.getLongitude()));
             } else {
-
+                showMessage("Nie można pobrać lokalizacji");
             }
         } else {
             Intent intent = new Intent(this, CreateEventActivity.class);
@@ -254,6 +254,11 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
     @Override
     public void onLogoutClicked() {
         presenter.logoutUser();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

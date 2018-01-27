@@ -14,7 +14,7 @@ public interface ProfileContract {
 
         void showMessage(String message);
         void onLoadProfiles(List<ProfileItem> profileItems);
-
+        void startLoginActivity();
     }
 
     interface Presenter {

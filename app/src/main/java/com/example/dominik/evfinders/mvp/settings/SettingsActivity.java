@@ -18,6 +18,7 @@ import com.example.dominik.evfinders.mvp.events.EventsActivity;
 import com.example.dominik.evfinders.mvp.friends.FriendsListActivity;
 import com.example.dominik.evfinders.mvp.home.MainActivity;
 import com.example.dominik.evfinders.mvp.profile.ProfileActivity;
+import com.example.dominik.evfinders.mvp.start_test.StartActivityTest;
 
 import javax.inject.Inject;
 
@@ -119,6 +120,11 @@ public class SettingsActivity extends BaseAuthActivity implements SettingsContra
         }
     }
 
+    @Override
+    public void startLoginActivity() {
+        startActivity(new Intent(this, StartActivityTest.class));
+    }
+
     private void setNavigation() {
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -135,8 +141,7 @@ public class SettingsActivity extends BaseAuthActivity implements SettingsContra
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
         if (item.getItemId() == R.id.nav_logout) {
-            // TODO: 13.12.2017 on logout click
-//            onLogoutClicked();
+            presenter.logout();
             finish();
         } else if (item.getItemId() == R.id.nav_friends) {
             Intent intent = new Intent(this, FriendsListActivity.class);
