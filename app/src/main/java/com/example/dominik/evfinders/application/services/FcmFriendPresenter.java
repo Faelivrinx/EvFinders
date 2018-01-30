@@ -66,10 +66,11 @@ public class FcmFriendPresenter implements FcmFriendContract.Presenter, Observer
     public void onNext(Response<TaskResponse> response) {
         if (response.code() == 200) {
             TaskResponse body = response.body();
-            if (body.getName().equals("success")) {
+            if (body != null && body.getValue().equals("success")) {
                 view.closeNotification(context);
             }
         } else {
+
         }
     }
 
@@ -86,5 +87,9 @@ public class FcmFriendPresenter implements FcmFriendContract.Presenter, Observer
     @VisibleForTesting
     public FcmFriendContract.View getView(){
         return this.view;
+    }
+
+    public void closeNotification(Context context) {
+        view.closeNotification(context);
     }
 }

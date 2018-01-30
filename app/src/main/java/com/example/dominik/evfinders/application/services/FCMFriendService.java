@@ -28,6 +28,7 @@ public class FCMFriendService extends Service implements FcmFriendContract.View{
     @Inject FcmFriendPresenter presenter;
 
     public static final String KEY_NEXT = "com.example.dominik.action.friend";
+    public static final String KEY_CANCEL = "com.example.dominik.action.cancel";
     private FriendReceiver receiver = new FriendReceiver();
 
     @Override
@@ -42,6 +43,7 @@ public class FCMFriendService extends Service implements FcmFriendContract.View{
     public int onStartCommand(Intent intent, int flags, int startId) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(KEY_NEXT);
+        intentFilter.addAction(KEY_CANCEL);
         registerReceiver(receiver, intentFilter);
         return START_NOT_STICKY;
     }
@@ -71,8 +73,12 @@ public class FCMFriendService extends Service implements FcmFriendContract.View{
         public void onReceive(Context context, Intent intent) {
             String username = intent.getStringExtra("username");
             Log.d("RECEIVE", "onReceive: " + username);
+            if (intent.getAction().equals(KEY_CANCEL)){
+                presenter.closeNotification(context);
+            } else {
+                presenter.addFriend(username, context);
+            }
 
-            presenter.addFriend(username, context);
 //            Observable<Response<Friend>> responseObservable = repository.addFriends(username);
         }
     }
