@@ -4,11 +4,14 @@ import android.support.annotation.VisibleForTesting;
 
 import com.example.dominik.evfinders.application.DeleteToken;
 import com.example.dominik.evfinders.application.services.LocationService;
+import com.example.dominik.evfinders.command.CoordinateCommand;
 import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
+import java.net.ConnectException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,19 +45,34 @@ public class EventsPresenter implements EventsContract.Presenter {
 
     @Override
     public void getEvents() {
-        Single<Response<List<EventCommand>>> events = repository.getEventsWithRecommendation(LocationService.LocationListener.getLastKnowCoordinate());
-        events
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                this::checkResponse,
-                throwable -> {});
+        CoordinateCommand lastKnowCoordinate = LocationService.LocationListener.getLastKnowCoordinate();
+        if (lastKnowCoordinate.getLatitude() == 0 && lastKnowCoordinate.getLongitude() == 0){
+            view.hideRefresh();
+            view.showMessage("Nie można pobrać lokalizacji!");
+        } else {
+            Single<Response<List<EventCommand>>> events = repository.getEventsWithRecommendation(lastKnowCoordinate);
+            events
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            this::checkResponse,
+                            this::checkError);
+        }
+    }
+
+    private void checkError(Throwable throwable) {
+        if (throwable instanceof TimeoutException)
+            view.showMessage("Zbyt długie nawiązywanie połączenia.");
+        else if (throwable instanceof ConnectException)
+            view.showMessage("Brak połączenia z serwerem!");
+        view.hideRefresh();
     }
 
     private void checkResponse(Response<List<EventCommand>> eventsResponse) {
         if (eventsResponse.isSuccessful()){
             view.showEvents(eventsResponse.body());
         }
+        view.hideRefresh();
     }
 
 

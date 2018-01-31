@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.mvp.events.detail;
 
+import com.example.dominik.evfinders.command.CommentCommand;
 import com.example.dominik.evfinders.command.EventCommand;
 
 /**
@@ -24,6 +25,8 @@ public interface EventDetailContract {
         void onFriendsButtonClicked();
 
         void showMessage(String message);
+
+        void updateComment(CommentCommand body);
     }
 
     interface Presenter {

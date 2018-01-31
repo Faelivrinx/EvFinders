@@ -8,7 +8,10 @@ import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 import com.example.dominik.evfinders.model.base.home.event.IEventsRepository;
 
+import java.net.ConnectException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
@@ -50,11 +53,18 @@ public class MapPresenter implements MapContract.Presenter {
         view.showProgressBar();
         Single<Response<List<EventCommand>>> events = repository.getEvents(coordinateCommand);
         events
+                .timeout(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::checkResponse, throwable -> {
-            Log.d("TAG", "getEvents: " + throwable.getMessage());
-        });
+                .subscribe(this::checkResponse,throwable -> checkError(throwable));
+
+    }
+
+    private void checkError(Throwable throwable) {
+        if (throwable instanceof ConnectException)
+            view.showMessage("Brak połączenia z serwerem!");
+        else if(throwable instanceof TimeoutException)
+            view.showMessage("Zbyt długie oczekiwanie od odpowiedź!");
 
     }
 

@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
@@ -58,6 +60,9 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.activity_events_refreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Inject
     EventsPresenter presenter;
 
@@ -69,6 +74,8 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        presenter.attach(this);
+        presenter.getEvents();
         setSupportActionBar(toolbar);
         setNavigation();
         events = new ArrayList<>();
@@ -91,7 +98,13 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.getEvents();
+        });
     }
+
+
 
     private void removeItemOnSwipe(int direction, int position) {
         if (direction == ItemTouchHelper.LEFT || direction == ItemTouchHelper.RIGHT) {
@@ -140,9 +153,17 @@ public class EventsActivity extends BaseAuthActivity implements EventsContract.V
     }
 
     @Override
+    public void hideRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onResume() {
-        presenter.attach(this);
-        presenter.getEvents();
         super.onResume();
     }
 

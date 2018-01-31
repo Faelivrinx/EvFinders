@@ -86,6 +86,7 @@ public class EventDetailPresenter implements EventDetailContract.Presenter {
     private void checkResponseComment(Response<CommentCommand> response){
         view.hideProgressBar();
         if (response.code() == 200 && response.body().getId() != null){
+            view.updateComment(response.body());
             view.showMessage("Komentarz został dodany");
         } else if(response.code() == 200 && response.body().getId() == null){
             view.showMessage("Już to komentowałeś!");

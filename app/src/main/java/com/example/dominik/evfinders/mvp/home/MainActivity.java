@@ -208,11 +208,13 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
 
     @Override
     public void showEvents(List<EventCommand> events) {
+        markerList.clear();
         actualEvents.clear();
         actualEvents.addAll(events);
         createMarkersFromEvents(events);
 
         if (actualEvents.size() >0){
+            googleMap.clear();
             zoomMapToPosition(new LatLng(events.get(0).getLatitude(), events.get(0).getLongitude()));
             addMarkersToMap();
         }

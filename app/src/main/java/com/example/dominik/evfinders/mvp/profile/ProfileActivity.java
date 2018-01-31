@@ -194,7 +194,6 @@ public class ProfileActivity extends BaseAuthActivity implements ProfileContract
     }
 
     private void onLogoutClicked() {
-        // TODO: 01.12.2017 implement
         presenter.logout();
     }
 }

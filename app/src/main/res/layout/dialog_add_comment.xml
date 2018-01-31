@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:padding="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -25,14 +26,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:numStars="6"
+        android:numStars="5"
         android:rating="1"
         android:stepSize="1" />
 
     <EditText
         android:layout_marginBottom="8dp"
         android:id="@+id/dialog_add_comment_comment"
-        android:hint="Comment"
+        android:hint="Komentarz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -44,7 +45,7 @@
 
         <Button
             android:id="@+id/dialog_add_comment_btnAdd"
-            android:text="Add"
+            android:text="Dodaj"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_weight=".5"
             android:layout_width="0dp"
@@ -52,7 +53,7 @@
 
         <Button
             android:id="@+id/dialog_add_comment_btnCancel"
-            android:text="Cancel"
+            android:text="Wyjdź"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_weight=".5"
             android:layout_width="0dp"

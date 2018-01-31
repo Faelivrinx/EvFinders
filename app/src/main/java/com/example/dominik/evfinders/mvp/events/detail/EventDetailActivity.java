@@ -25,6 +25,9 @@ import com.example.dominik.evfinders.command.EventCommand;
 import com.example.dominik.evfinders.database.pojo.Event;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -181,6 +184,14 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     }
 
     @Override
+    public void updateComment(CommentCommand comment) {
+        List<CommentCommand> currentComments = new ArrayList<>();
+        currentComments.addAll(eventCommand.getCommentCommands());
+        currentComments.add(comment);
+        commentsAdapter.notifyDataChanged(currentComments);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }
@@ -208,7 +219,8 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
         tvFriendsCount.setText(String.valueOf(event.getUsers().size()));
         tvTitle.setText(event.getName());
         tvPlace.setText(event.getAddress());
-        tvDate.setText(new Date(event.getDate()).toString());
+//        tvDate.setText(new Date(event.getDate()).toString());
+        tvDate.setText(android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", new java.util.Date(event.getDate())).toString());
         tvDescription.setText(event.getDescription());
     }
 

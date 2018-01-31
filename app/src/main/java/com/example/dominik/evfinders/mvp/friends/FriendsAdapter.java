@@ -176,7 +176,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             //avatar.setImageBitmap();
             Glide.with(context).load("http://www.gravatar.com/avatar/51?d=identicon").into(avatar);
             if (isSelected) {
-                mainLayout.setBackgroundColor(Color.CYAN);
+//                mainLayout.setBackgroundColor(Color.CYAN);
+                  mainLayout.setBackgroundColor(Color.rgb(236, 239	, 241));
             } else {
                 mainLayout.setBackgroundColor(Color.TRANSPARENT);
             }

@@ -9,7 +9,10 @@ import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.base.home.profile.IProfileRepository;
 import com.example.dominik.evfinders.model.base.home.profile.ProfileRepository;
 
+import java.net.ConnectException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
@@ -55,17 +58,26 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void updateProfile(List<ProfileItem> profileItems) {
         Single<Response<TaskResponse>> responseSingle = repository.saveProfile(profileConverter.convertArrayToJson(profileItems));
-        responseSingle.subscribeOn(Schedulers.newThread())
+        responseSingle
+                .timeout(10, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::checkResponse, throwable -> System.out.println(throwable.getMessage()));
+                .subscribe(this::checkResponse, this::checkError);
     }
 
     private void checkResponse(Response<TaskResponse> taskResponseResponse) {
         if (taskResponseResponse.isSuccessful()){
-            view.showMessage("Profile updated");
+            view.showMessage("Profil zaktualizowany!");
         } else {
-            view.showMessage("Can't update profile!");
+            view.showMessage("Nie można zaktualizować profilu!");
         }
+    }
+
+    private void checkError(Throwable throwable) {
+        if (throwable instanceof TimeoutException)
+            view.showMessage("Zbyt długie nawiązywanie połączenia.");
+        else if (throwable instanceof ConnectException)
+            view.showMessage("Brak połączenia z serwerem!");
     }
 
     @Override

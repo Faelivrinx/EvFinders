@@ -14,7 +14,7 @@
         <EditText
             android:id="@+id/dialog_add_friend_etUsername"
             android:textAlignment="center"
-            android:hint="USERNAME"
+            android:hint="Wpisz nazwe użytkownika"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -25,7 +25,7 @@
 
             <Button
                 android:id="@+id/dialog_add_friend_btnAdd"
-                android:text="Add"
+                android:text="Dodaj"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_weight=".5"
                 android:layout_width="0dp"
@@ -33,7 +33,7 @@
 
             <Button
                 android:id="@+id/dialog_add_friend_btnCancel"
-                android:text="Cancel"
+                android:text="Wyjdź"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_weight=".5"
                 android:layout_width="0dp"

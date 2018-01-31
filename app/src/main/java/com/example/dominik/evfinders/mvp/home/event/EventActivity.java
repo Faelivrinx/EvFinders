@@ -54,7 +54,7 @@ public class EventActivity extends BaseActivity {
     private void fillData(EventCommand event) {
         tvTitle.setText(event.getName());
         tvPlace.setText(event.getAddress());
-        tvDate.setText(new Date(event.getDate()).toString());
+        tvDate.setText(android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", new java.util.Date(event.getDate())).toString());
         tvDescription.setText(event.getDescription());
     }
 

@@ -21,6 +21,10 @@ public interface EventsContract {
 
         void showEvents(List<EventCommand> events);
 
+        void hideRefresh();
+
+        void showMessage(String message);
+
     }
 
     interface Presenter {

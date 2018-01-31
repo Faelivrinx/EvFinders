@@ -50,7 +50,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         if (newComments != null) {
             comments.clear();
             comments.addAll(newComments);
+            notifyDataSetChanged();
         }
+    }
+
+    public List<CommentCommand> getComments() {
+        return comments;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
