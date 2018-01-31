@@ -28,10 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.start.StartActivity" />
-        <activity android:name=".mvp.login.LoginActivity" />
-        <activity android:name=".mvp.register.RegisterActivity" />
+        <activity android:name=".mvp.start.StartActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.login.LoginActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.register.RegisterActivity"  android:screenOrientation="portrait" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".mvp.friends.FriendsListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -49,17 +50,17 @@
         <service android:name=".application.services.FCMFriendService" />
         <service android:name=".application.services.LocationService" />
 
-        <activity android:name=".mvp.start_test.StartActivityTest" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.start_test.StartActivityTest" android:theme="@style/AppTheme.NoActionBar"  android:screenOrientation="portrait"/>
 
-        <activity android:name=".mvp.events.EventsActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".mvp.home.event.EventActivity"
-            android:theme="@style/CustomDialogActivity"/>
+        <activity android:name=".mvp.events.EventsActivity" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.home.event.EventActivity" android:theme="@style/CustomDialogActivity" android:screenOrientation="portrait"/>
         <activity android:name=".mvp.events.detail.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             />
-        <activity android:name=".mvp.home.create.event.CreateEventActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.home.create.event.CreateEventActivity" android:theme="@style/AppTheme.NoActionBar"  android:screenOrientation="portrait"/>
         <activity android:name=".mvp.profile.ProfileActivity" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
-        <activity android:name=".mvp.settings.SettingsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".mvp.settings.SettingsActivity" android:theme="@style/AppTheme.NoActionBar"  android:screenOrientation="portrait"/>
 
     </application>
 

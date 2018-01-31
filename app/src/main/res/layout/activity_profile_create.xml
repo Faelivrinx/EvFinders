@@ -49,7 +49,7 @@
 
         <TextView
             android:layout_marginStart="8dp"
-            android:text="Oraz oceń w skali od 1-5"
+            android:text="Oraz oceń w skali od 1-6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
