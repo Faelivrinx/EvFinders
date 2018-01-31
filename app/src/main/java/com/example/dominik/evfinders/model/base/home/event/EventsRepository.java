@@ -34,11 +34,13 @@ public class EventsRepository implements IEventsRepository {
 
     @Override
     public Single<Response<List<EventCommand>>> getEvents(CoordinateCommand coordinateCommand) {
+        coordinateCommand.setRadius(prefs.get(Prefs.RADIUS, 20));
         return eventService.getEvents(prefs.get(Prefs.API_KEY), coordinateCommand);
     }
 
     @Override
     public Single<Response<List<EventCommand>>> getEventsWithRecommendation(CoordinateCommand coordinateCommand) {
+        coordinateCommand.setRadius(prefs.get(Prefs.RADIUS, 20));
         coordinateCommand.setRecommendationType(prefs.get(Prefs.RECOMMENDATION_TYPE, 0));
         return eventService.getEventsWithRecommendation(prefs.get(Prefs.API_KEY), coordinateCommand);
     }

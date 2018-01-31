@@ -84,8 +84,7 @@ public class MarkerFactoryImp implements MarkerFactory {
         } else if (cultureCount > sportCount && cultureCount > musicCount) {
             return Marker.MarkerType.CINEMA;
         } else {
-            return Marker.MarkerType.SPORT;
-            // TODO: 22.11.2017 various event
+            return Marker.MarkerType.CINEMA;
         }
 
     }

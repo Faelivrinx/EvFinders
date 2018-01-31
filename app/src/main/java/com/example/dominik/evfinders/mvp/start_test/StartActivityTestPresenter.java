@@ -81,21 +81,20 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
                                 view.startActivity();
                             }
                         }, throwable -> {
-                            throwable.printStackTrace();
                             view.hideProgressDialog();
-                            view.showToast("Network problem! Check connection");
+                            view.showToast("Sprawdź połączenie internetowe!");
 
                         }, () -> {
                             view.hideProgressDialog();
                         });
             } else {
                 view.hideProgressDialog();
-                view.showToast("Wrong data");
+                view.showToast("Uzupełnij dane");
             }
         } else {
             view.hideProgressDialog();
             new DeleteToken().execute();
-            view.showToast("Refresh FCM key");
+            view.showToast("Odśwież token FCM!");
         }
     }
 
@@ -113,14 +112,14 @@ public class StartActivityTestPresenter implements StartActivityTestContract.Pre
                             registerRepo.saveKey(apiKeyResponseResponse.body());
                             view.startActivity();
                         } else {
-                            view.showToast("Error: " + apiKeyResponseResponse.code());
+                            view.showToast("Błąd logowania");
                         }
                     }, throwable -> {
                         view.hideProgressDialog();
                         if (throwable instanceof EOFException) {
-                            view.showToast("Username already exist");
+                            view.showToast("Nazwa użytkownika już zajęta");
                         } else {
-                            view.showToast("Error connection");
+                            view.showToast("Sprawdź połączenie internetowe!");
                         }
                     }, () -> {
                         view.startActivity();

@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.dominik.evfinders.R;
 import com.example.dominik.evfinders.base.BaseAuthActivity;
@@ -53,6 +55,12 @@ public class SettingsActivity extends BaseAuthActivity implements SettingsContra
     @BindView(R.id.activity_settings_drawer_layout)
     DrawerLayout drawerLayout;
 
+    @BindView(R.id.activity_settings_radius_result)
+    TextView tvResultRadius;
+
+    @BindView(R.id.activity_settings_radius)
+    SeekBar seekBar;
+
     @Inject
     SettingsContract.Presenter presenter;
 
@@ -75,6 +83,25 @@ public class SettingsActivity extends BaseAuthActivity implements SettingsContra
                 presenter.changeRecommendation(2);
             } else {
                 presenter.changeRecommendation(3);
+            }
+        });
+        seekBar.setProgress(presenter.getRadius());
+        tvResultRadius.setText(presenter.getRadius() + " KM");
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tvResultRadius.setText(i + "KM");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                presenter.setRadius(seekBar.getProgress());
             }
         });
     }

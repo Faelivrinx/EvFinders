@@ -15,6 +15,7 @@ import javax.inject.Inject;
 public class Prefs implements IPrefs {
     public static final String TAG = Prefs.class.getSimpleName();
 
+    public static final String RADIUS = "RADIUS";
     public static final String API_KEY = "API_KEY";
     public static final String FCM_TOKEN = "FCM_TOKEN";
     public static final String RECOMMENDATION_TYPE = "RECOMMENDATION_TYPE";

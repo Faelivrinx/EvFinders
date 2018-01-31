@@ -41,7 +41,7 @@
             android:id="@+id/activity_start_test_status"
             android:textStyle="bold"
             android:textColor="@android:color/holo_green_dark"
-            android:text="OK"
+            android:text="Logowanie dostępne"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="end"
@@ -88,7 +88,7 @@
                 android:fontFamily="@font/timesnewroman"
                 android:paddingBottom="48dp"
                 android:paddingTop="48dp"
-                android:text="Login"
+                android:text="Logowanie"
                 android:textAllCaps="false"
                 android:textColor="#ffdbc5"
                 android:textSize="20sp"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/timesnewroman"
                 android:paddingBottom="48dp"
                 android:paddingTop="48dp"
-                android:text="Register"
+                android:text="Rejestracja"
                 android:textAllCaps="false"
                 android:textColor="#2e112d"
                 android:textSize="20sp"
@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Username"
+                android:hint="Nazwa użytkownika"
                 android:inputType="text"
                 android:textColorHint="#2e112d" />
 
@@ -158,7 +158,7 @@
                 android:id="@+id/activity_start_login_etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="Haslo"
                 android:inputType="textPassword"
                 android:textColorHint="#2e112d" />
 
@@ -171,7 +171,7 @@
                 android:background="@drawable/register_button"
                 android:paddingBottom="32dp"
                 android:paddingTop="32dp"
-                android:text="Login"
+                android:text="Zaloguj"
                 android:textColor="#2e112d"
                 android:textSize="18sp" />
 
@@ -209,7 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Username"
+                android:hint="Nazwa użytkownika"
                 android:inputType="text"
                 android:textColorHint="#2e112d" />
 
@@ -218,7 +218,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Password"
+                android:hint="Haslo"
                 android:inputType="textPassword"
                 android:textColorHint="#2e112d" />
 
@@ -239,7 +239,7 @@
                 android:background="@drawable/register_button"
                 android:paddingBottom="32dp"
                 android:paddingTop="32dp"
-                android:text="Login"
+                android:text="Zarejestruj"
                 android:textColor="#2e112d"
                 android:textSize="18sp" />
 

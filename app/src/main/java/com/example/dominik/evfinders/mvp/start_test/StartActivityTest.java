@@ -107,7 +107,7 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
             presenter.login(etLoginUsername.getText().toString(), etLoginPassword.getText().toString());
         } else {
             new DeleteToken().execute();
-            showProgressDialog("Getting fcm token...");
+            showProgressDialog("Pobierania tokenu FCM...\nJeśli trwa zbyt dlugo anuluj i upewnij się, że masz dostęp do internetu!");
         }
     }
 
@@ -243,10 +243,10 @@ public class StartActivityTest extends BaseActivity implements StartActivityTest
     public void setLoginStatus(boolean isReady) {
         readyToLogin = isReady;
         if (isReady){
-            tvStatus.setText("OK");
+            tvStatus.setText("Logowanie dostępne");
             tvStatus.setTextColor(Color.GREEN);
         } else {
-            tvStatus.setText("NOT OK");
+            tvStatus.setText("Logowanie nie dostępne");
             tvStatus.setTextColor(Color.RED);
         }
     }

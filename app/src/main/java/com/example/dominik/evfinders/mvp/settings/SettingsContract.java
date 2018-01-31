@@ -18,5 +18,7 @@ public interface SettingsContract {
         void changeRecommendation(int type);
         void loadActualType();
         void logout();
+        void setRadius(int radius);
+        int getRadius();
     }
 }

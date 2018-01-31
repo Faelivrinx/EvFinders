@@ -8,7 +8,7 @@ public class CoordinateCommand {
 
     private double latitude;
     private double longitude;
-
+    private int radius;
     private int recommendationType;
 
     public CoordinateCommand() {
@@ -17,6 +17,14 @@ public class CoordinateCommand {
     public CoordinateCommand(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public double getLatitude() {

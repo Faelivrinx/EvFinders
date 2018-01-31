@@ -50,4 +50,14 @@ public class SettingsPresenter implements SettingsContract.Presenter {
             view.startLoginActivity();
         }
     }
+
+    @Override
+    public void setRadius(int radius) {
+        prefs.save(Prefs.RADIUS, radius);
+    }
+
+    @Override
+    public int getRadius() {
+        return prefs.get(Prefs.RADIUS, 20);
+    }
 }
