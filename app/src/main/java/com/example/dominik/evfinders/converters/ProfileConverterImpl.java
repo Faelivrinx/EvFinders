@@ -36,4 +36,33 @@ public class ProfileConverterImpl implements ProfileConverter {
 
         return result;
     }
+
+    @Deprecated
+    @Override
+    public boolean isValid(String json) {
+        List<ProfileItem> profileItems = null;
+        try {
+            profileItems = LoganSquare.parseList(json, ProfileItem.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if ((isSport(profileItems) && isMusic(profileItems)) || (isSport(profileItems) && isCulture(profileItems)) || isMusic(profileItems) && isCulture(profileItems)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isCulture(List<ProfileItem> profileItems) {
+        return profileItems.get(23).getRating() == 1;
+    }
+
+    private boolean isMusic(List<ProfileItem> profileItems) {
+        return profileItems.get(12).getRating() == 1;
+    }
+
+    private boolean isSport(List<ProfileItem> profileItems) {
+        return profileItems.get(0).getRating() == 1;
+    }
 }

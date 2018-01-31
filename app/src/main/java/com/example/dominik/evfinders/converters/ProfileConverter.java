@@ -11,5 +11,6 @@ import java.util.List;
 public interface ProfileConverter {
 
     String convertArrayToJson(List<ProfileItem> profileItems);
+    boolean isValid(String json);
 
 }

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,6 +63,8 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     Toolbar toolbar;
     @BindView(R.id.activity_friends_layout_nullFriends)
     LinearLayout lyFriends;
+    @BindView(R.id.activity_friends_list_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private AlertDialog alertDialog;
     private AlertDialog.Builder alertDialogBuilder;
@@ -92,7 +95,9 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         createAlertDialog();
-
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.getFriendsList();
+        });
     }
 
     @Override
@@ -194,6 +199,11 @@ public class FriendsListActivity extends BaseAuthActivity implements FriendsCont
     public void onFriendsDeleted() {
         STATE = false;
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void hideRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 

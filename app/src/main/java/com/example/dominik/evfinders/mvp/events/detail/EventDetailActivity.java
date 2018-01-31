@@ -192,6 +192,16 @@ public class EventDetailActivity extends BaseAuthActivity implements EventDetail
     }
 
     @Override
+    public void incrementAttendNumber() {
+        tvFriendsCount.setText(String.valueOf(this.eventCommand.getUsers().size()+1));
+    }
+
+    @Override
+    public void decrementNumber() {
+        tvFriendsCount.setText(String.valueOf(this.eventCommand.getUsers().size()));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }

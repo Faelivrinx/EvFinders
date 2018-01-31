@@ -7,8 +7,11 @@ import com.example.dominik.evfinders.database.pojo.network.TaskResponse;
 import com.example.dominik.evfinders.model.base.home.friends.IFriendsRepository;
 import com.example.dominik.evfinders.model.base.home.login.ILoginRepository;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
@@ -39,7 +42,9 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
     public void getFriendsList() {
         view.showDialog("Retrieving friends list...");
         Observable<Response<List<FriendResponse>>> friends = repository.getFriends();
-        friends.subscribeOn(Schedulers.newThread())
+        friends
+                .timeout(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
     }
@@ -47,18 +52,30 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
     @Override
     public void addFriend(String username) {
         repository.addFriendsRequest(username)
+                .timeout(7, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::checkTaskResponse, Throwable::printStackTrace);
+                .subscribe(this::checkTaskResponse, this::checkError);
     }
 
     @Override
     public void deleteFriends(List<Friend> friends) {
         List<String> usernames = getUsernames(friends);
         repository.delFriends(usernames)
+                .timeout(7, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::checkTaskResponse, Throwable::printStackTrace);
+                .subscribe(this::checkTaskResponse, throwable -> checkError(throwable));
+    }
+
+    private void checkError(Throwable throwable) {
+        if (throwable instanceof ConnectException)
+            view.showToast("Brak połączenia z serwerem");
+        else if(throwable instanceof TimeoutException)
+            view.showToast("Zbyt długie oczekiwanie na odpowiedź");
+
+        view.hideDialog();
+        view.hideRefresh();
     }
 
     private List<String> getUsernames(List<Friend> friends) {
@@ -87,17 +104,24 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
                 friendList.add(friend);
             }
             view.onFriendsLoaded(friendList);
+
             view.hideDialog();
         } else {
             view.showToast("Brak autoryzacji");
             view.hideDialog();
         }
+        view.hideRefresh();
     }
 
     @Override
-    public void onError(Throwable e) {
-        view.showToast("Error");
-        e.printStackTrace();
+    public void onError(Throwable throwable) {
+        if (throwable instanceof ConnectException)
+            view.showToast("Brak połączenia z serwerem");
+        else if(throwable instanceof TimeoutException)
+            view.showToast("Zbyt długie oczekiwanie na odpowiedź");
+
+        view.hideDialog();
+        view.hideRefresh();
     }
 
     @Override
@@ -120,14 +144,14 @@ public class FriendsPresenter implements FriendsContract.Presenter, Observer<Res
     private void checkTaskResponse(Response<TaskResponse> response) {
         if (response.code() == 200) {
             if (response.body().getValue().equals("success")) {
-                view.showToast("Task success!");
+                view.showToast("Wysłano prośbe!");
                 view.onFriendsDeleted();
                 getFriendsList();
             } else {
-                view.showToast("Something went wrong!");
+                view.showToast("Coś poszło nie tak");
             }
         } else {
-            view.showToast("Something went wrong!");
+            view.showToast("Coś poszło nie tak");
         }
     }
 

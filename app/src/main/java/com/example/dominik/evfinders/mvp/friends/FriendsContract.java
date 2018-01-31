@@ -18,6 +18,8 @@ public interface FriendsContract {
         void startActivity();
         void onEmptyList();
         void onFriendsDeleted();
+
+        void hideRefresh();
     }
 
     interface Presenter {

@@ -27,6 +27,11 @@ public interface EventDetailContract {
         void showMessage(String message);
 
         void updateComment(CommentCommand body);
+
+        void incrementAttendNumber();
+
+        void decrementNumber();
+
     }
 
     interface Presenter {

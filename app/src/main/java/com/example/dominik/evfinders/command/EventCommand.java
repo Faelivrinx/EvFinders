@@ -174,8 +174,7 @@ public class EventCommand implements Parcelable{
         } else if (cultureCount > sportCount && cultureCount > musicCount) {
             return Event.EventType.CINEMA;
         } else {
-            return Event.EventType.SPORT_AND_RECREATION;
-            // TODO: 22.11.2017 various event
+            return Event.EventType.CINEMA;
         }
 
     }

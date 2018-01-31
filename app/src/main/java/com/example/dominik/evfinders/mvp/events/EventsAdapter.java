@@ -100,8 +100,6 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.list_item_event_cardView)
         CardView mainView;
 
-        @BindView(R.id.list_item_event_btnAttend)
-        Button btnAttend;
 
         public ViewHolder(View itemView) {
             super(itemView);

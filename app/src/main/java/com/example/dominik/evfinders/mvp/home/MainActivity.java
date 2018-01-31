@@ -234,6 +234,7 @@ public class MainActivity extends BaseAuthActivity implements OnMapReadyCallback
                 icon = BitmapDescriptorFactory.fromResource(R.drawable.cinema);
                 break;
             default:
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.cinema);
                 break;
         }
 

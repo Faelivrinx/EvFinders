@@ -1,5 +1,6 @@
 package com.example.dominik.evfinders.database.pojo;
 
+import com.bluelinelabs.logansquare.annotation.JsonIgnore;
 import com.google.gson.JsonObject;
 
 /**
@@ -8,8 +9,12 @@ import com.google.gson.JsonObject;
 
 public class ProfileItem {
     private Long id;
+    @JsonIgnore
     private String name;
+
     private int rating;
+
+    @JsonIgnore
     private boolean isSelected = false;
 
     public Long getId() {

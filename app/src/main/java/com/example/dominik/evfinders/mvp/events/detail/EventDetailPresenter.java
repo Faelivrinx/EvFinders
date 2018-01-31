@@ -99,8 +99,10 @@ public class EventDetailPresenter implements EventDetailContract.Presenter {
         view.hideProgressBar();
         if (response.code() == 200 && response.body().getId() != null){
             view.showMessage("Uczęszczasz na to wydarzenie!");
+            view.incrementAttendNumber();
         } else if(response.code() == 200 && response.body().getId() == null){
-            view.showMessage("Uczeszczasz już na to wydarzenie!");
+            view.showMessage("Już nie uczęszczasz na to wydarzenie!");
+            view.decrementNumber();
         } else {
             view.showMessage("Coś poszło nie tak!");
         }
